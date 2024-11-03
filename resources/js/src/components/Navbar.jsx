@@ -2,12 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import logo from "../constants/logo";
 
 const navigation = [
-    { name: "Product", href: "#" },
-    { name: "Features", href: "#" },
-    { name: "Marketplace", href: "#" },
-    { name: "Company", href: "#" },
+    { name: "Home", href: "#" },
+    { name: "Services", href: "#" },
+    { name: "About us", href: "#" },
+    { name: "Contact us", href: "#" },
 ];
 
 const Navbar = () => {
@@ -21,11 +22,7 @@ const Navbar = () => {
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
                         <span className="sr-only">Your Company</span>
-                        <img
-                            alt=""
-                            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                            className="h-8 w-auto"
-                        />
+                        <img alt="" src={logo.logo} className="h-8 w-auto" />
                     </a>
                 </div>
                 <div className="flex lg:hidden">
@@ -52,7 +49,7 @@ const Navbar = () => {
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <a
                         href="#"
-                        className="text-sm/6 font-semibold text-gray-900"
+                        className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         Log in <span aria-hidden="true">&rarr;</span>
                     </a>
