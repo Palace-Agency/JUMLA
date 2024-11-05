@@ -38,6 +38,7 @@
         --secondary-color-one: #f3f3fa;
         --secondary-color-two: #fcf2fa;
         --white-color: #ffffff;
+        --icon-delay: 1.3s;
     }
 
     .dark {

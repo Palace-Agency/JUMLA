@@ -1,0 +1,21 @@
+.link {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .mobile_indicator {
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        left: -30px;
+    }
+    .indicator {
+        width: 100%;
+        height: 1px;
+        background-color: rgb(199, 135, 16);
+        position: absolute;
+        bottom: -5px;
+    }
+}

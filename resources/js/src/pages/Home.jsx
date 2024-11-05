@@ -1,7 +1,21 @@
 import React from "react";
+import { useEffect } from "react";
+import { Header } from "../containers";
 
 const Home = () => {
-    return <div>Home</div>;
+    useEffect(() => {
+        (async () => {
+            const LocomotiveScroll = (await import("locomotive-scroll"))
+                .default;
+
+            const locomotiveScroll = new LocomotiveScroll();
+        })();
+    }, []);
+    return (
+        <div className="container">
+            <Header />
+        </div>
+    );
 };
 
 export default Home;
