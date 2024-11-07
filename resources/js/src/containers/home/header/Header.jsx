@@ -8,6 +8,7 @@ import {
     sourcing,
 } from "../../../constants/images";
 import Magnetic from "../../../common/Magnetic/Magnetic";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const images = [
@@ -32,7 +33,7 @@ const Header = () => {
                     className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                 />
             </div>
-            <div data-scroll data-scroll-speed="0.4" className={styles.plane}>
+            <div data-scroll data-scroll-speed="0.3" className={styles.plane}>
                 {images.map((img, key) => (
                     <Magnetic>
                         <img src={img} key={key} alt="image" width={60} />
@@ -40,7 +41,7 @@ const Header = () => {
                 ))}
             </div>
 
-            <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+            <div className="mx-auto max-w-2xl pt-32 sm:pt-48 lg:pt-56">
                 <div
                     data-scroll
                     data-scroll-speed="0.2"
@@ -55,18 +56,18 @@ const Header = () => {
                         world of e-commerce.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
-                        <a
-                            href="#"
+                        <Link
+                            to={"#"}
                             className="rounded-md z-10 bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Get started
-                        </a>
-                        <a
-                            href="#"
+                        </Link>
+                        <Link
+                            to={"#"}
                             className="text-sm/6 font-semibold text-gray-900"
                         >
                             Learn more <span aria-hidden="true">→</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

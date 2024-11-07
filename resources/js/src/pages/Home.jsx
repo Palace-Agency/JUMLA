@@ -1,6 +1,13 @@
 import React from "react";
 import { useEffect } from "react";
-import { Header } from "../containers";
+import {
+    AboutUs,
+    Header,
+    Location,
+    Partner,
+    Service,
+    State,
+} from "../containers";
 
 const Home = () => {
     useEffect(() => {
@@ -14,6 +21,11 @@ const Home = () => {
     return (
         <div className="container">
             <Header />
+            <AboutUs />
+            <Service />
+            <State />
+            <Location />
+            <Partner />
         </div>
     );
 };
