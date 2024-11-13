@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Title from "../../../components/Title";
+import React from "react";
 
 const blogs = [
     {

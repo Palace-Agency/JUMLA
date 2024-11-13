@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout";
 import Service from "../pages/Service";
 import Contact from "../pages/Contact";
 import AboutUs from "../pages/AboutUs";
+import React from "react";
 
 // export const DOCTOR_BASE_ROUTE = "/doctor";
 

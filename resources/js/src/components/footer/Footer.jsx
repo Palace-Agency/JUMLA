@@ -1,5 +1,5 @@
 import styles from "./style.module.scss";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useScroll, motion, useTransform, useSpring } from "framer-motion";
 import Rounded from "../../common/RoundedButton/Rounded";
 import Magnetic from "../../common/Magnetic/Magnetic";

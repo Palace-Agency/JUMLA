@@ -7,7 +7,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "../../../components/ui/carousel";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 const testimonials = [
     {

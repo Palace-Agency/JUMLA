@@ -7,6 +7,7 @@ import {
     Qatar,
     Saudi_Arabia,
 } from "../../../constants/flags";
+import React from "react";
 
 const flags = [
     { name: "Morocco", flag: Morocco },

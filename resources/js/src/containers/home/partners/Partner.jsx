@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Title from "../../../components/Title";
 import { ameex, dhl, maersk, shopify } from "../../../constants/partners";
+import React from "react";
 
 const partners = [ameex, dhl, maersk, shopify];
 
@@ -26,7 +27,7 @@ const Partner = () => {
             >
                 <motion.div
                     className="flex space-x-8"
-                    animate={{ x: [0, -totalLogoWidth] }}
+                    animate={{ x: [0, -200] }}
                     transition={{
                         ease: "linear",
                         duration: 10,

@@ -1,23 +1,10 @@
-/*
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-
-import { useRef, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Field, Label, Switch } from "@headlessui/react";
+import React, { useRef, useState } from "react";
+import { Field, Switch } from "@headlessui/react";
 import RoundedTransition from "../common/RoundedTransition/RoundedTransition";
 import Footer from "../components/footer/Footer";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
+import { PhoneInput } from "../components/ui/phone-input";
 
 export default function Contact() {
     const [agreed, setAgreed] = useState(false);
@@ -57,14 +44,14 @@ export default function Contact() {
                 >
                     <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                         <div>
-                            <label
+                            <Label
                                 htmlFor="first-name"
                                 className="block text-sm/6 font-semibold text-gray-900"
                             >
                                 First name
-                            </label>
+                            </Label>
                             <div className="mt-2.5">
-                                <input
+                                <Input
                                     id="first-name"
                                     name="first-name"
                                     type="text"
@@ -74,14 +61,14 @@ export default function Contact() {
                             </div>
                         </div>
                         <div>
-                            <label
+                            <Label
                                 htmlFor="last-name"
                                 className="block text-sm/6 font-semibold text-gray-900"
                             >
                                 Last name
-                            </label>
+                            </Label>
                             <div className="mt-2.5">
-                                <input
+                                <Input
                                     id="last-name"
                                     name="last-name"
                                     type="text"
@@ -91,14 +78,14 @@ export default function Contact() {
                             </div>
                         </div>
                         <div className="sm:col-span-2">
-                            <label
+                            <Label
                                 htmlFor="email"
                                 className="block text-sm/6 font-semibold text-gray-900"
                             >
                                 Email
-                            </label>
+                            </Label>
                             <div className="mt-2.5">
-                                <input
+                                <Input
                                     id="email"
                                     name="email"
                                     type="email"
@@ -108,40 +95,18 @@ export default function Contact() {
                             </div>
                         </div>
                         <div className="sm:col-span-2">
-                            <label
+                            <Label
                                 htmlFor="phone-number"
                                 className="block text-sm/6 font-semibold text-gray-900"
                             >
                                 Phone number
-                            </label>
-                            <div className="relative mt-2.5">
-                                <div className="absolute inset-y-0 left-0 flex items-center">
-                                    <label
-                                        htmlFor="country"
-                                        className="sr-only"
-                                    >
-                                        Country
-                                    </label>
-                                    <select
-                                        id="country"
-                                        name="country"
-                                        className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                                    >
-                                        <option>US</option>
-                                        <option>CA</option>
-                                        <option>EU</option>
-                                    </select>
-                                    {/* <ChevronDownIcon
-                                    aria-hidden="true"
-                                    className="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400"
-                                /> */}
-                                </div>
-                                <input
+                            </Label>
+                            <div className="mt-2.5">
+                                <PhoneInput
                                     id="phone-number"
                                     name="phone-number"
                                     type="tel"
                                     autoComplete="tel"
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                                 />
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
+import React from "react";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
 import { motion, useScroll, useSpring } from "framer-motion";

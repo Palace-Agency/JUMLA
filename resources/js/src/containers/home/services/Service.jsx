@@ -1,9 +1,3 @@
-import {
-    ArrowPathIcon,
-    CloudArrowUpIcon,
-    FingerPrintIcon,
-    LockClosedIcon,
-} from "@heroicons/react/24/outline";
 import Title from "../../../components/Title";
 import ServiceCard from "./components/ServiceCard";
 import { arrow } from "../../../constants/logo";
@@ -18,6 +12,8 @@ import {
     packaging,
     sourcing,
 } from "../../../constants/images";
+import React from "react";
+
 const features = [
     {
         name: "Sourcing",

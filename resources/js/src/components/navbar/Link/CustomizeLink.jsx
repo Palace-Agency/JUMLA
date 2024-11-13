@@ -2,6 +2,7 @@ import styles from "./style.module.scss";
 import { motion } from "framer-motion";
 import { slide, scale } from "../animation";
 import { Link } from "react-router-dom";
+import React from "react";
 
 export default function CustomizeLink({
     data,

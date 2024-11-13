@@ -49,13 +49,13 @@ const AboutUs = () => {
                     <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:gap-x-8 lg:px-8">
                         <div className="lg:pr-96">
                             <div className="lg:max-w-none">
-                                <p className="text-base/7 font-semibold text-indigo-600">
+                                <p className="text-4xl/7 mb-6 font-semibold text-indigo-600">
                                     About us
                                 </p>
-                                <h1 className="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+                                <h1 className="mt-2 text-pretty text-xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
                                     On a mission to empower remote teams
                                 </h1>
-                                <p className="mt-6 text-xl/8 text-gray-700">
+                                <p className="mt-4 text-xl/8 text-gray-700">
                                     Aliquet nec orci mattis amet quisque
                                     ullamcorper neque, nibh sem. At arcu, sit
                                     dui mi, nibh dui, diam eget aliquam. Quisque
@@ -116,6 +116,22 @@ const AboutUs = () => {
                                     Mauris varius vulputate et ultrices hac
                                     adipiscing egestas. Iaculis convallis ac
                                     tempor et ut. Ac lorem vel integer orci.
+                                </p>
+                            </div>
+                            <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+                                Our vision
+                            </h2>
+                            <div className="mt-6 text-lg/7 text-gray-500">
+                                <p>
+                                    Faucibus commodo massa rhoncus, volutpat.
+                                    Dignissim sed eget risus enim. Mattis mauris
+                                    semper sed amet vitae sed turpis id. Id
+                                    dolor praesent donec est. Odio penatibus
+                                    risus viverra tellus varius sit neque erat
+                                    velit. Faucibus commodo massa rhoncus,
+                                    volutpat. Dignissim sed eget risus enim.
+                                    Mattis mauris semper sed amet vitae sed
+                                    turpis id.
                                 </p>
                             </div>
                             <h2 className="mt-16 text-lg font-bold text-gray-500">
