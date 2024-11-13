@@ -5,20 +5,15 @@ import {
     fast,
     importing,
     inventory,
+    packaging,
     sourcing,
 } from "../../../constants/images";
 import Magnetic from "../../../common/Magnetic/Magnetic";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
+const images = [call_center, fast, importing, inventory, sourcing, packaging];
 const Header = () => {
-    const images = [
-        call_center,
-        fast,
-        importing,
-        inventory,
-        sourcing,
-        sourcing,
-    ];
     return (
         <div className="relative isolate px-6 pt-8 lg:px-8">
             <div
@@ -36,7 +31,27 @@ const Header = () => {
             <div data-scroll data-scroll-speed="0.3" className={styles.plane}>
                 {images.map((img, key) => (
                     <Magnetic>
-                        <img src={img} key={key} alt="image" width={60} />
+                        <motion.img
+                            initial={{
+                                transform: "translateZ(8px) translateY(-2px)",
+                            }}
+                            animate={{
+                                transform: "translateZ(32px) translateY(-8px)",
+                            }}
+                            transition={{
+                                repeat: Infinity,
+
+                                repeatType: "mirror",
+
+                                duration: 2,
+
+                                ease: "easeInOut",
+                            }}
+                            src={img}
+                            key={key}
+                            alt="image"
+                            width={60}
+                        />
                     </Magnetic>
                 ))}
             </div>
@@ -56,16 +71,14 @@ const Header = () => {
                         world of e-commerce.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
-                        <Link
-                            to={"#"}
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
                             className="rounded-md z-10 bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Get started
-                        </Link>
-                        <Link
-                            to={"#"}
-                            className="text-sm/6 font-semibold text-gray-900"
-                        >
+                        </motion.button>
+                        <Link className="text-sm/6 font-semibold text-gray-900">
                             Learn more <span aria-hidden="true">→</span>
                         </Link>
                     </div>

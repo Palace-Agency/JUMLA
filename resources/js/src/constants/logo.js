@@ -1,3 +1,4 @@
-import logo from "../../../../public/assets/images/logo.png";
+import logo from "../../../../public/assets/logo/logo.png";
+import arrow from "../../../../public/assets/logo/arrow.png";
 
-export { logo };
+export { logo, arrow };

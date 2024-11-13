@@ -7,7 +7,11 @@ import {
     Partner,
     Service,
     State,
+    Blog,
+    Testimonial,
 } from "../containers";
+import Footer from "../components/footer/Footer";
+import FAQ from "../containers/home/faq/FAQ";
 
 const Home = () => {
     useEffect(() => {
@@ -19,14 +23,20 @@ const Home = () => {
         })();
     }, []);
     return (
-        <div className="container">
-            <Header />
-            <AboutUs />
-            <Service />
-            <State />
-            <Location />
-            <Partner />
-        </div>
+        <>
+            <div className="container">
+                <Header />
+                <AboutUs />
+                <Service />
+                <State />
+                <Location />
+                <Partner />
+                <Blog />
+                <FAQ />
+            </div>
+            <Testimonial />
+            <Footer />
+        </>
     );
 };
 

@@ -10,6 +10,7 @@ import { AnimatePresence } from "framer-motion";
 import Nav from "./nav/Nav";
 import CustomizeLink from "../navbar/Link/CustomizeLink";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const navItems = [
     {
@@ -17,8 +18,8 @@ const navItems = [
         href: "/",
     },
     {
-        title: "Work",
-        href: "/work",
+        title: "Services",
+        href: "/services",
     },
     {
         title: "About us",
@@ -92,18 +93,20 @@ const Navbar = () => {
                     })}
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
-                    <Link
-                        to={"#"}
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                         className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         Log in <span aria-hidden="true">&rarr;</span>
-                    </Link>
-                    <Link
-                        to={"#"}
+                    </motion.button>
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                         className="rounded-md bg-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         Register
-                    </Link>
+                    </motion.button>
                 </div>
             </nav>
             <div ref={button} className={styles.headerButtonContainer}>

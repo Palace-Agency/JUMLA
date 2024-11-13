@@ -29,7 +29,9 @@ const AboutUs = () => {
                             className="mx-auto max-w-2xl lg:text-center"
                         >
                             <Title title={"About us"} />
-                            <p className="text-2xl mb-5">{phrase}</p>
+                            <p className="mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+                                {phrase}
+                            </p>
                             <Link
                                 to={"about-us"}
                                 className="rounded-md z-10 bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -43,7 +45,7 @@ const AboutUs = () => {
                 <div ref={description} className={styles.description}>
                     <div
                         data-scroll
-                        data-scroll-speed={0.1}
+                        data-scroll-speed={0.3}
                         className={styles.body}
                     >
                         <Title title={"About us"} />
@@ -72,7 +74,7 @@ const AboutUs = () => {
                                 display: "-webkit-box",
                                 WebkitBoxOrient: "vertical",
                                 overflow: "hidden",
-                                WebkitLineClamp: 2,
+                                WebkitLineClamp: 3,
                                 textOverflow: "ellipsis",
                             }}
                         >
