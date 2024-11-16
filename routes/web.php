@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +27,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
     return view('container.dashboard');
-});
+})->name('pages.dashboard');
+Route::get('/landing_page',[ PageController::class,'landingPage'])->name('pages.landing_page');
+Route::get('/service_page',[ PageController::class,'servicePage'])->name('pages.service_page');
+Route::get('/about_us_page',[ PageController::class,'aboutUsPage'])->name('pages.about_us_page');
+Route::post('/landing_page/{section}',[ PageController::class,'update'])->name('sections.update');
+Route::post('/sections/update-status', [PageController::class, 'updateStatus'])->name('sections.update.status');
+
 
 require __DIR__.'/auth.php';
 

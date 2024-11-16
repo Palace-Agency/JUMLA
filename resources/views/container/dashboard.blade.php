@@ -1,4 +1,4 @@
 @extends('dashboard')
 @section('main-content')
-<p>hello</p>
+<p>Dashboard</p>
 @endsection

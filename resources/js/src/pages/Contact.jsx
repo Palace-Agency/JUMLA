@@ -4,11 +4,71 @@ import RoundedTransition from "../common/RoundedTransition/RoundedTransition";
 import Footer from "../components/footer/Footer";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
 import { PhoneInput } from "../components/ui/phone-input";
+import { cn } from "../components/lib/utils";
+import { FaSpinner } from "react-icons/fa6";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "../components/ui/form";
 
+const formSchema = z.object({
+    email: z.string().email(),
+    first_name: z.string().min(4),
+    last_name: z.string().min(4),
+    message: z.string().min(10).max(200),
+    phone_number: z.string().min(10),
+});
 export default function Contact() {
     const [agreed, setAgreed] = useState(false);
     const container = useRef(null);
+
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+            first_name: "",
+            last_name: "",
+            message: "",
+            phone_number: "",
+        },
+    });
+
+    const {
+        setError,
+        formState: { isSubmitting },
+    } = form;
+
+    const onSubmit = async ({
+        email,
+        first_name,
+        last_name,
+        message,
+        phone_number,
+    }) => {
+        // try {
+        //     await getCsrfToken();
+        //     const { user } = await login({ email, password }).unwrap();
+        //     if (user.email_verified_at) {
+        //         window.location.href = HOME;
+        //     } else {
+        //         window.location.href = "/verify";
+        //         await sentCode({ email }).unwrap();
+        //     }
+        // } catch (error) {
+        //     setError("email", { message: error.data.errors.email.join() });
+        // }
+        console.log(email, first_name, last_name, message, phone_number);
+    };
 
     return (
         <>
@@ -37,133 +97,155 @@ export default function Contact() {
                         voluptate.
                     </p>
                 </div>
-                <form
-                    action="#"
-                    method="POST"
-                    className="mx-auto mt-16 max-w-xl sm:mt-20"
-                >
-                    <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                        <div>
-                            <Label
-                                htmlFor="first-name"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                First name
-                            </Label>
-                            <div className="mt-2.5">
-                                <Input
-                                    id="first-name"
-                                    name="first-name"
-                                    type="text"
-                                    autoComplete="given-name"
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-3 mx-auto mt-16 max-w-xl sm:mt-20"
+                    >
+                        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name="first_name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                First name
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div>
-                            <Label
-                                htmlFor="last-name"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Last name
-                            </Label>
-                            <div className="mt-2.5">
-                                <Input
-                                    id="last-name"
-                                    name="last-name"
-                                    type="text"
-                                    autoComplete="family-name"
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name="last_name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                Last name
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <Label
-                                htmlFor="email"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Email
-                            </Label>
-                            <div className="mt-2.5">
-                                <Input
-                                    id="email"
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
                                     name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                E-mail
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="example@domain.com"
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <Label
-                                htmlFor="phone-number"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Phone number
-                            </Label>
-                            <div className="mt-2.5">
-                                <PhoneInput
-                                    id="phone-number"
-                                    name="phone-number"
-                                    type="tel"
-                                    autoComplete="tel"
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
+                                    name="phone_number"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                Phone
+                                            </FormLabel>
+                                            <FormControl>
+                                                <PhoneInput
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <label
-                                htmlFor="message"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Message
-                            </label>
-                            <div className="mt-2.5">
-                                <textarea
-                                    id="message"
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
                                     name="message"
-                                    rows={4}
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
-                                    defaultValue={""}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                Message
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Textarea
+                                                    className={"rounded-lg"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
+                            <Field className="flex gap-x-4 sm:col-span-2">
+                                <div className="flex h-6 items-center">
+                                    <Switch
+                                        checked={agreed}
+                                        onChange={setAgreed}
+                                        className="group flex w-8 flex-none cursor-pointer rounded-full bg-gray-200 p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 data-[checked]:bg-indigo-600"
+                                    >
+                                        <span className="sr-only">
+                                            Agree to policies
+                                        </span>
+                                        <span
+                                            aria-hidden="true"
+                                            className="h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out group-data-[checked]:translate-x-3.5"
+                                        />
+                                    </Switch>
+                                </div>
+                                <Label className="text-sm/6 text-gray-600">
+                                    By selecting this, you agree to our{" "}
+                                    <a
+                                        href="#"
+                                        className="font-semibold text-indigo-600"
+                                    >
+                                        privacy&nbsp;policy
+                                    </a>
+                                    .
+                                </Label>
+                            </Field>
                         </div>
-                        <Field className="flex gap-x-4 sm:col-span-2">
-                            <div className="flex h-6 items-center">
-                                <Switch
-                                    checked={agreed}
-                                    onChange={setAgreed}
-                                    className="group flex w-8 flex-none cursor-pointer rounded-full bg-gray-200 p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 data-[checked]:bg-indigo-600"
-                                >
-                                    <span className="sr-only">
-                                        Agree to policies
-                                    </span>
-                                    <span
-                                        aria-hidden="true"
-                                        className="h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out group-data-[checked]:translate-x-3.5"
-                                    />
-                                </Switch>
-                            </div>
-                            <Label className="text-sm/6 text-gray-600">
-                                By selecting this, you agree to our{" "}
-                                <a
-                                    href="#"
-                                    className="font-semibold text-indigo-600"
-                                >
-                                    privacy&nbsp;policy
-                                </a>
-                                .
-                            </Label>
-                        </Field>
-                    </div>
-                    <div className="mt-10">
-                        <button
-                            type="submit"
-                            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            Let's talk
-                        </button>
-                    </div>
-                </form>
+                        <div className="mt-10">
+                            <Button
+                                type="submit"
+                                className={"w-full mt-4 bg-indigo-600"}
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting && (
+                                    <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
+                                )}
+                                Let's talk
+                            </Button>
+                        </div>
+                    </form>
+                </Form>
             </div>
             <RoundedTransition container={container} />
             <Footer />

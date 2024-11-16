@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Jumla</title>
-            <link rel="shortcut icon" href={{ asset("assets/images/favicon.ico") }}>
+    <link rel="shortcut icon" href={{ asset('assets/images/favicon.ico') }}>
 
-        <!-- bootstrap-touchspin -->
-        <link href={{ asset("assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css") }} rel="stylesheet" />
+    <!-- bootstrap-touchspin -->
+    <link href={{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }} rel="stylesheet" />
 
-        <!-- Bootstrap Css -->
-        <link href={{ asset("assets/css/bootstrap.min.css") }} id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <!-- Icons Css -->
-        <link href={{ asset("assets/css/icons.min.css") }} rel="stylesheet" type="text/css" />
-        <!-- App Css-->
-        <link href={{ asset("assets/css/app.min.css") }} id="app-style" rel="stylesheet" type="text/css" />
-        @stack('stylesheets')
+    <!-- Bootstrap Css -->
+    <link href={{ asset('assets/css/bootstrap.min.css') }} id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href={{ asset('assets/css/app.min.css') }} id="app-style" rel="stylesheet" type="text/css" />
+    @stack('stylesheets')
 </head>
+
 <body>
 
-        <!-- Begin page -->
-        <div id="layout-wrapper">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
 
 
-                @include('layouts.header')
-            <!-- ========== Left Sidebar Start ========== -->
-                @include('layouts.sidebar')
-            <!-- Left Sidebar End -->
+        @include('layouts.header')
+        <!-- ========== Left Sidebar Start ========== -->
+        @include('layouts.sidebar')
+        <!-- Left Sidebar End -->
 
 
 
-            <!-- ============================================================== -->
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->
-            <div class="main-content">
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
 
-                <div class="page-content">
-                    <div class="container-fluid">
+            <div class="page-content">
+                <div class="container-fluid">
 
-                       @yield('main-content')
+                    @yield('main-content')
 
-                    </div> <!-- container-fluid -->
-                </div>
-                <!-- End Page-content -->
-
-
-                @include('layouts.footer')
+                </div> <!-- container-fluid -->
             </div>
-            <!-- end main content-->
+            <!-- End Page-content -->
 
+
+            @include('layouts.footer')
         </div>
-        <!-- END layout-wrapper -->
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
 
 
 
-        <!-- Right Sidebar -->
-        {{-- <div class="right-bar">
+    <!-- Right Sidebar -->
+    {{-- <div class="right-bar">
             <div data-simplebar class="h-100">
                 <div class="rightbar-title d-flex align-items-center p-3">
 
@@ -175,26 +177,26 @@
 
             </div> <!-- end slimscroll-menu-->
         </div> --}}
-        <!-- /Right-bar -->
+    <!-- /Right-bar -->
 
-        <!-- Right bar overlay-->
-        {{-- <div class="rightbar-overlay"></div> --}}
-        <!-- JAVASCRIPT -->
-        <script src={{ asset("assets/libs/jquery/jquery.min.js") }}></script>
-        <script src={{ asset("assets/libs/bootstrap/js/bootstrap.bundle.min.js") }}></script>
-        <script src={{ asset("assets/libs/metismenu/metisMenu.min.js") }}></script>
-        <script src={{ asset("assets/libs/simplebar/simplebar.min.js") }}></script>
-        <script src={{ asset("assets/libs/node-waves/waves.min.js") }}></script>
-        <script src={{ asset("assets/libs/waypoints/lib/jquery.waypoints.min.js") }}></script>
-        <script src={{ asset("assets/libs/jquery.counterup/jquery.counterup.min.js") }}></script>
+    <!-- Right bar overlay-->
+    {{-- <div class="rightbar-overlay"></div> --}}
+    <!-- JAVASCRIPT -->
+    <script src={{ asset('assets/libs/jquery/jquery.min.js') }}></script>
+    <script src={{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}></script>
+    <script src={{ asset('assets/libs/metismenu/metisMenu.min.js') }}></script>
+    <script src={{ asset('assets/libs/simplebar/simplebar.min.js') }}></script>
+    <script src={{ asset('assets/libs/node-waves/waves.min.js') }}></script>
+    <script src={{ asset('assets/libs/waypoints/lib/jquery.waypoints.min.js') }}></script>
+    <script src={{ asset('assets/libs/jquery.counterup/jquery.counterup.min.js') }}></script>
 
-        <!-- Bootrstrap touchspin -->
-        <script src={{ asset("assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js") }}></script>
-        <!-- init js -->
-        <script src={{ asset("assets/js/pages/ecommerce-cart.init.js") }}></script>
+    <!-- Bootrstrap touchspin -->
+    <script src={{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}></script>
 
-        <!-- App js -->
-        <script src={{ asset("assets/js/app.js") }}></script>
-        @stack('scripts')
+    <!-- App js -->
+    <script src={{ asset('assets/js/app.js') }}></script>
+    @stack('scripts')
+
 </body>
+
 </html>
