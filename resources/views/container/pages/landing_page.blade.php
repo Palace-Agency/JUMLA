@@ -17,7 +17,7 @@
 @section('main-content')
     <h4 class="mb-3">Landing Page</h4>
     <div class="row">
-        <form action="" method="POST">
+        <form id="meta-form">
             @csrf
             <div class="col-12">
                 <div class="card">
@@ -26,7 +26,8 @@
                         <div class="my-3 row">
                             <label for="meta-title" class="col-md-2 col-form-label">Meta Title</label>
                             <div class="col-md-10">
-                                <input class="form-control" type="text" id="meta-title" name="meta_title"
+                                <input class="form-control" value="{{ old('meta_title', $page->meta_title) }}"
+                                    type="text" id="meta-title" name="meta_title"
                                     placeholder="Enter a descriptive meta title" required>
                                 <small class="text-muted d-block mb-2">
                                     The meta title appears as the clickable link in search engine results. It should be
@@ -40,7 +41,7 @@
                             <label for="meta-description" class="col-md-2 col-form-label">Meta Description</label>
                             <div class="col-md-10">
                                 <textarea class="form-control" name="meta_description" id="meta-description" rows="3"
-                                    placeholder="Enter a concise meta description" required></textarea>
+                                    placeholder="Enter a concise meta description" required>{{ old('meta_description', $page->meta_description) }}</textarea>
                                 <small class="text-muted d-block mb-2">
                                     The meta description is a short summary of the page's content. Aim for 150-160
                                     characters to improve SEO.
@@ -52,7 +53,8 @@
                         <div class="my-3 row">
                             <label for="meta-keywords" class="col-md-2 col-form-label">Meta Keywords</label>
                             <div class="col-md-10">
-                                <input class="form-control" type="text" id="meta-keywords" name="meta_keywords"
+                                <input class="form-control" value="{{ old('meta_keywords', $page->meta_keywords) }}"
+                                    type="text" id="meta-keywords" name="meta_keywords"
                                     placeholder="e.g., keyword1, keyword2, keyword3" required>
                                 <small class="text-muted d-block mb-2">
                                     Meta keywords are optional and include a list of relevant keywords for the page,
@@ -69,22 +71,580 @@
     </div>
     <h2 class="my-3">Sections List</h2>
     <div class="row">
-        @foreach ($sections as $section)
-            <div class="col-md-2 mb-3 text-center">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $section->name }}</h5>
-                        <p class="card-text"><span class="badge bg-success-subtle text-success font-size-12">
-                                {{ $section->status ? 'Show' : 'Hide' }}
-                            </span></p>
-                        <button class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#sectionModal{{ $section->id }}">
-                            Edit
-                        </button>
+        <div class="col-md-12 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                        @foreach ($sections as $section)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $section->id === 1 ? 'active' : '' }}" data-bs-toggle="tab"
+                                    href="#{{ $section->id }}" role="tab">
+                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                    <span class="d-none d-sm-block">{{ $section->name }}</span>
+                                </a>
+                            </li>
+                            {{-- <div class="card-body">
+                            <h5 class="card-title">{{ $section->name }}</h5>
+                            <p class="card-text"><span class="badge bg-success-subtle text-success font-size-12">
+                                    {{ $section->status ? 'Show' : 'Hide' }}
+                                </span></p>
+                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#sectionModal{{ $section->id }}">
+                                Edit
+                            </button>
+                        </div> --}}
+                        @endforeach
+                    </ul>
+
+                    <div class="tab-content p-3 text-muted">
+                        @foreach ($sections as $section)
+                            <div class="tab-pane {{ $section->id === 1 ? 'active' : '' }}" id="{{ $section->id }}"
+                                role="tabpanel">
+                                @if ($section->id === 1)
+                                    <!-- Fields specific to Header -->
+                                    <form id="header-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="title">Title</label>
+                                                            <input type="text"
+                                                                value="{{ old('title', $header_content->title) }}"
+                                                                class="form-control" name="title" id="title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="description">Description</label>
+                                                            <textarea class="form-control" placeholder="Enter the Description" name="description" id="description" rows="3">{{ old('description', $header_content->description) }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif ($section->id === 2)
+                                    <!-- Fields specific to About Us -->
+                                    <form id="aboutus-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="title">Title</label>
+                                                            <input type="text" class="form-control"
+                                                                value="{{ old('title', $about_us_content?->title) }}"
+                                                                name="title" id="title" placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"
+                                                                for="description">Description</label>
+                                                            <textarea class="form-control" placeholder="Enter the description" name="description" id="description"
+                                                                rows="3">{{ old('description', $about_us_content?->description) }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif ($section->id === 3)
+                                    <!-- Fields specific to Services -->
+                                    <form id="service-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="service-form-container row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="service-title">Title</label>
+                                                            <input type="text"
+                                                                value="{{ old('title', $serivce_content?->title) }}"
+                                                                class="form-control" name="title" id="service-title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"
+                                                                for="service-description">Description</label>
+                                                            <textarea class="form-control" placeholder="Enter the description" name="description" id="service-description"
+                                                                rows="3">{{ old('description', $serivce_content?->description) }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label class="form-label">Services</label>
+                                                    <div data-repeater-item class="mb-3 row">
+                                                        <!-- Service Title -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <input id="single-service-title" type="text"
+                                                                class="form-control"
+                                                                placeholder="Enter your service title" />
+                                                        </div>
+
+                                                        <!-- Service Description -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <textarea class="form-control" id="single-service-description" placeholder="Enter your service description"
+                                                                rows="3"></textarea>
+                                                        </div>
+
+                                                        <!-- Image Input with Label -->
+                                                        <div class="row align-items-center mt-3">
+                                                            <!-- Icon Label -->
+                                                            <div class="col-md-1 col-4">
+                                                                <label class="text-muted" for="image">Icon</label>
+                                                            </div>
+
+                                                            <!-- File Input -->
+                                                            <div class="col-md-9 col-6">
+                                                                <input id="single-service-icon" type="file"
+                                                                    accept=".jpg,.jpeg,.png" class=" form-control" />
+                                                            </div>
+
+                                                            <!-- Service Image Preview -->
+                                                            <div class="col-md-2 col-2 d-flex justify-content-center">
+                                                                <img id="service-img-preview" src=""
+                                                                    alt="Preview"
+                                                                    style="max-height: 2.2rem; max-width: 2.2rem; display: none; border: 1px solid #ccc; padding: 2px;" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <input service-data-create type="button" class="btn btn-success "
+                                                        value="Add" />
+                                                </div>
+                                                <div id="services-container" class="row mt-4">
+                                                    @isset($serivce_content->services)
+                                                        @foreach ($serivce_content->services as $service)
+                                                            <div class="col-md-4 mb-3 ms-3 service-card">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <img src="{{ asset('storage/uploads/content/landing-page/' . $service->icon) }}"
+                                                                            alt="Icon" class="img-fluid mb-3"
+                                                                            style="max-height: 50px;">
+                                                                        <h5 class="card-title">{{ $service->title }}</h5>
+                                                                        <p class="card-text">{{ $service->description }}</p>
+                                                                        <button class="btn btn-danger btn-sm delete-service"
+                                                                            data-title="{{ $service->title }}">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endisset
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif ($section->id === 4)
+                                    <!-- Fields specific to Track Record -->
+                                    <form id="track-record-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="record-form-container row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="record-title">Title</label>
+                                                            <input type="text"
+                                                                value="{{ old('title', $track_record_content?->title) }}"
+                                                                class="form-control" id="record-title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"
+                                                                for="record-description">Description</label>
+                                                            <textarea class="form-control" placeholder="Enter the description" id="record-description" rows="3">
+                                                            {{ old('description', $track_record_content?->description) }}
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label class="form-label">Records</label>
+                                                    <div data-repeater-item class="mb-3 row">
+                                                        <!-- Record Title -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <input id="single-record-title" name="title" type="text"
+                                                                class="form-control"
+                                                                placeholder="Enter your record number" />
+                                                        </div>
+
+                                                        <!-- Record Description -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <textarea id="single-record-description" name="description" class="form-control"
+                                                                placeholder="Enter your record description" id="description" rows="3"></textarea>
+                                                        </div>
+
+                                                        <!-- Record Image Input -->
+                                                        <div class="row align-items-center mt-3">
+                                                            <!-- Icon Label -->
+                                                            <div class="col-md-1 col-4">
+                                                                <label class="text-muted" for="image">Icon</label>
+                                                            </div>
+
+                                                            <!-- File Input -->
+                                                            <div class="col-md-9 col-6">
+                                                                <input id="single-record-icon" type="file"
+                                                                    accept=".jpg,.jpeg,.png" class=" form-control " />
+                                                            </div>
+
+                                                            <!-- Record Image Preview -->
+                                                            <div class="col-md-2 col-2 d-flex justify-content-center">
+                                                                <img id="record-img-preview" src=""
+                                                                    alt="Preview"
+                                                                    style="max-height: 2.2rem; max-width: 2.2rem; display: none; border: 1px solid #ccc; padding: 2px;" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <input record-data-create type="button" class="btn btn-success "
+                                                        value="Add" />
+                                                </div>
+                                                <div id="records-container" class="row mt-4">
+                                                    @isset($track_records)
+                                                        @foreach ($track_records as $track_record)
+                                                            <div class="col-md-4 mb-3 ms-3 service-card">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <img src="{{ asset('storage/uploads/content/landing-page/' . $track_record->icon) }}"
+                                                                            alt="Icon" class="img-fluid mb-3"
+                                                                            style="max-height: 50px;">
+                                                                        <h5 class="card-title">
+                                                                            {{ $track_record->record_number }}</h5>
+                                                                        <p class="card-text">{{ $track_record->record_title }}
+                                                                        </p>
+                                                                        <button class="btn btn-danger btn-sm delete-service"
+                                                                            data-title="{{ $track_record->record_number }}">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endisset
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif ($section->id === 5)
+                                    <!-- Fields specific to Locations -->
+                                    <form id="location-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="location-form-container row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="location-title">Title</label>
+                                                            <input type="text"
+                                                                value="{{ old('title', $location_content?->title) }}"
+                                                                name="title" class="form-control" id="location-title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"
+                                                                for="location-description">Description</label>
+                                                            <textarea class="form-control" name="description" placeholder="Enter the description" id="location-description"
+                                                                rows="3">{{ old('description', $location_content?->description) }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label class="form-label">Locations</label>
+                                                    <div data-repeater-item class="mb-3 row">
+                                                        <!-- Country Input -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <input id="single-location-country" type="text"
+                                                                class="form-control" placeholder="Enter the country" />
+                                                        </div>
+
+                                                        <!-- Flag Input -->
+                                                        <div class="row align-items-center mt-3">
+                                                            <!-- Flag Label -->
+                                                            <div class="col-md-1 col-4">
+                                                                <label class="text-muted" for="image">Flag</label>
+                                                            </div>
+
+                                                            <!-- File Input -->
+                                                            <div class="col-md-9 col-6">
+                                                                <input id="single-location-flag" type="file"
+                                                                    accept=".jpg,.jpeg,.png" class=" form-control " />
+                                                            </div>
+
+                                                            <!-- Location Image Preview -->
+                                                            <div class="col-md-2 col-2 d-flex justify-content-center">
+                                                                <img id="location-img-preview" src=""
+                                                                    alt="Preview"
+                                                                    style="max-width: 3.5rem; display: none; border: 1px solid #ccc; padding: 2px;" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <input location-data-create type="button" class="btn btn-success "
+                                                        value="Add" />
+                                                </div>
+                                                <div id="locations-container" class="row mt-4">
+                                                    @isset($locations)
+                                                        @foreach ($locations as $location)
+                                                            <div class="col-md-3 text-center mb-3 location-card">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <img src="{{ asset('storage/uploads/content/landing-page/' . $location->flag) }}"
+                                                                            alt="Flag" class="img-fluid mb-3"
+                                                                            style="max-height: 50px;">
+                                                                        <h5 class="card-country">{{ $location->country }}</h5>
+                                                                        <button class="btn btn-danger btn-sm delete-location"
+                                                                            data-country="{{ $location->country }}">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endisset
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif ($section->id === 6)
+                                    <!-- Fields specific to Partners -->
+                                    <form id="partner-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="partner-form-container row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="partner-title">Title</label>
+                                                            <input type="text"
+                                                                value="{{ old('title', $partner_content?->title) }}"
+                                                                name="title" class="form-control" id="partner-title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4">
+                                                    <label class="form-label">Partners</label>
+                                                    <div data-repeater-item class="mb-3 row">
+                                                        <!-- Logo Input -->
+                                                        <div class="row align-items-center mt-3">
+                                                            <!-- Logo Label -->
+                                                            <div class="col-md-1 col-4">
+                                                                <label class="text-muted" for="image">Logo</label>
+                                                            </div>
+
+                                                            <!-- File Input -->
+                                                            <div class="col-md-9 col-6">
+                                                                <input id="single-partner-logo" type="file"
+                                                                    accept=".jpg,.jpeg,.png" class=" form-control " />
+                                                            </div>
+
+                                                            <!-- Partner Image Preview -->
+                                                            <div class="col-md-2 col-2 d-flex justify-content-center">
+                                                                <img id="partner-img-preview" src=""
+                                                                    alt="Preview"
+                                                                    style="max-width: 3.5rem;max-height: 3.5rem; display: none; border: 1px solid #ccc; padding: 2px;" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <input partner-data-create type="button" class="btn btn-success "
+                                                        value="Add" />
+                                                </div>
+                                                <div id="partners-container" class="row mt-4">
+                                                    @isset($partner_logos)
+                                                        @foreach ($partner_logos as $partner)
+                                                            <div class="col-md-3 text-center mb-3 partner-card">
+                                                                <div class="card">
+                                                                    <div
+                                                                        class="card-body d-flex flex-column align-items-center ">
+                                                                        <img src="{{ asset('storage/uploads/content/landing-page/' . $partner->logo) }}"
+                                                                            alt="Logo" class="img-fluid mb-3"
+                                                                            style="max-height: 50px;">
+                                                                        <button class="btn btn-danger btn-sm delete-partner"
+                                                                            data-logo="{{ $partner->logo }}">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endisset
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif ($section->id === 7)
+                                    <!-- Fields specific to Blogs -->
+                                    <form id="blog-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="title">Title</label>
+                                                            <input type="text"
+                                                                value="{{ old('title', $blog_content?->title) }}"
+                                                                class="form-control" name="title" id="title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"
+                                                                for="description">Description</label>
+                                                            <textarea class="form-control" placeholder="Enter the Description" name="description" id="description"
+                                                                rows="3">{{ old('description', $blog_content?->description) }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif ($section->id === 8)
+                                    <!-- Fields specific to FAQ -->
+                                    <form id="faq-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="faq-form-container row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="faq-title">Title</label>
+                                                            <input type="text" name="title"
+                                                                value="{{ old('title', $faqs_content?->title) }}"
+                                                                class="form-control" id="faq-title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"
+                                                                for="faq-description">Description</label>
+                                                            <textarea class="form-control" name="description" placeholder="Enter the description" id="faq-description"
+                                                                rows="3">{{ old('description', $faqs_content?->description) }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label class="form-label">Frequently asked questions </label>
+                                                    <div data-repeater-item class="mb-3 row">
+                                                        <!-- FAQ Title -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <input id="single-faq-title" type="text"
+                                                                class="form-control" placeholder="Enter the question" />
+                                                        </div>
+
+                                                        <!-- FAQ Description -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <textarea class="form-control" id="single-faq-description" placeholder="Enter the answer" rows="3"></textarea>
+                                                        </div>
+
+                                                    </div>
+                                                    <input faq-data-create type="button" class="btn btn-success "
+                                                        value="Add" />
+                                                </div>
+                                                <div id="faqs-container" class="row mt-4">
+                                                    @isset($faqs)
+                                                        @foreach ($faqs as $faq)
+                                                            <div class="col-md-6 mb-3 faq-card">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">{{ $faq->question }}</h5>
+                                                                        <p class="card-text">{{ $faq->answer }}</p>
+                                                                        <button class="btn btn-danger btn-sm delete-faq"
+                                                                            data-title="{{ $faq->question }}">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endisset
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @elseif($section->id === 9)
+                                    <!-- Fields specific to Testimonials -->
+                                    <form id="testimonial-form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="title">Title</label>
+                                                            <input type="text"
+                                                                value="{{ old('title', $testimonial_content?->title) }}"
+                                                                class="form-control" name="title" id="title"
+                                                                placeholder="Enter the Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                @endif
+
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
     @foreach ($sections as $section)
         @include('container.pages.modals.landing_page', ['section' => $section])
@@ -184,12 +744,13 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         icon = e.target.result;
+                        image = fileInput.files[0];
 
                         // Create a new service object
                         const service = {
-                            title,
-                            description,
-                            icon
+                            title: title,
+                            description: description,
+                            icon: image
                         };
                         services.push(service);
 
@@ -233,12 +794,13 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         icon = e.target.result;
+                        image = fileInput.files[0];
 
                         // Create a new record object
                         const record = {
-                            title,
-                            description,
-                            icon
+                            title: title,
+                            description: description,
+                            icon: image
                         };
                         records.push(record);
 
@@ -284,11 +846,12 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         flag = e.target.result;
+                        image = fileInput.files[0];
 
                         // Create a new location object
                         const location = {
-                            country,
-                            flag
+                            country: country,
+                            flag: image
                         };
                         locations.push(location);
 
@@ -332,10 +895,11 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         logo = e.target.result;
+                        image = fileInput.files[0];
 
                         // Create a new partner object
                         const partner = {
-                            logo
+                            logo: image
                         };
                         partners.push(partner);
 
@@ -371,15 +935,15 @@
 
             //FAQ
             $('[faq-data-create]').on('click', function() {
-                const title = $('#single-faq-title').val();
-                const description = $('#single-faq-description').val();
+                const question = $('#single-faq-title').val();
+                const answer = $('#single-faq-description').val();
 
 
 
                 // Create a new faq object
                 const faq = {
-                    title,
-                    description,
+                    question,
+                    answer,
                 };
                 faqs.push(faq);
 
@@ -388,9 +952,9 @@
                         <div class="col-md-6 mb-3 faq-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">${title}</h5>
-                                    <p class="card-text">${description}</p>
-                                    <button class="btn btn-danger btn-sm delete-faq" data-title="${title}">Delete</button>
+                                    <h5 class="card-title">${question}</h5>
+                                    <p class="card-text">${answer}</p>
+                                    <button class="btn btn-danger btn-sm delete-faq" data-title="${question}">Delete</button>
                                 </div>
                             </div>
                         </div>`;
@@ -407,6 +971,361 @@
 
                 // Remove the faq from the array
                 faqs = faqs.filter((faq) => faq.title !== title);
+            });
+
+
+            $('#meta-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.metaDataStore') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#header-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.header') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#aboutus-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.aboutUs') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#service-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                services.forEach((service, index) => {
+                    formData.append(`services[${index}][title]`, service.title);
+                    formData.append(`services[${index}][description]`, service.description);
+                    formData.append(`services[${index}][icon]`, service.icon);
+                });
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.service') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#track-record-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                records.forEach((record, index) => {
+                    formData.append(`records[${index}][title]`, record.title);
+                    formData.append(`records[${index}][description]`, record.description);
+                    formData.append(`records[${index}][icon]`, record.icon);
+                });
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.record') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#location-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                locations.forEach((location, index) => {
+                    formData.append(`locations[${index}][country]`, location.country);
+                    formData.append(`locations[${index}][icon]`, location.flag);
+                });
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.location') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#partner-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                partners.forEach((partner) => {
+                    formData.append(`logos[]`, partner.logo);
+                });
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.partner') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#blog-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.blog') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+
+            $('#faq-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                formData.append('faqs', JSON.stringify(faqs));
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.faqs') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
+            });
+
+            $('#testimonial-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Saving...');
+
+                $.ajax({
+                    url: "{{ route('landing_page_page.testimonial') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            new Notify({
+                                status: 'success',
+                                title: 'Success!',
+                                text: "Data saved successfully!",
+                                position: 'right bottom'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred. Please try again.');
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Save');
+                    },
+                });
             });
         });
     </script>

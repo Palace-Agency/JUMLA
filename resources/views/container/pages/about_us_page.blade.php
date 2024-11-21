@@ -230,7 +230,7 @@
                                 <div class="mb-0">
                                     <label class="form-label" for="metadescription">Meta Description</label>
                                     <textarea class="form-control" name="meta_description" id="metadescription" rows="4"
-                                        placeholder="Enter your Meta Description">{{ old('meta_description', $content->meta_description ?? '') }}</textarea>
+                                        placeholder="Enter your Meta Description">{{ old('meta_description', $page->meta_description ?? '') }}</textarea>
                                     <small class="text-muted d-block mb-2">
                                         The meta description is a short summary of the page's content. Aim for 150-160
                                         characters to improve SEO.

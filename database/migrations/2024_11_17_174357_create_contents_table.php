@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('description');
-            $table->string('short_description');
+            $table->longText('description')->nullable();
+            $table->string('short_description')->nullable();
             $table->foreignId("section_id")->constrained("sections")->onDelete("cascade");
             $table->timestamps();
         });

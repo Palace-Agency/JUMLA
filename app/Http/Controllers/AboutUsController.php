@@ -17,7 +17,7 @@ class AboutUsController extends Controller
 public function store(Request $request)
 {
     $page = Page::where('name', '=', 'About us')->first();
-    // dd($request);
+
   try {
         DB::transaction(function () use ($request, $page) {
             if ($page) {
@@ -54,7 +54,6 @@ public function store(Request $request)
                             'image' => $imagename,
                             'content_id' => $content->id,
                         ]);
-
                 }
             }
 

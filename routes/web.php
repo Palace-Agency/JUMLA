@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServiceController;
@@ -37,6 +38,16 @@ Route::get('/service_page',[ PageController::class,'servicePage'])->name('pages.
 Route::post('/service_page',[ ServiceController::class,'store'])->name('service_page.store');
 Route::get('/about_us_page',[ PageController::class,'aboutUsPage'])->name('pages.about_us_page');
 Route::post('/about_us_page',[ AboutUsController::class,'store'])->name('about_us_page.store');
+Route::post('/landing_page/meta_data',[ LandingPageController::class,'metaData'])->name('landing_page_page.metaDataStore');
+Route::post('/landing_page/header',[ LandingPageController::class,'header'])->name('landing_page_page.header');
+Route::post('/landing_page/about_us',[ LandingPageController::class,'aboutUs'])->name('landing_page_page.aboutUs');
+Route::post('/landing_page/service',[ LandingPageController::class,'service'])->name('landing_page_page.service');
+Route::post('/landing_page/record',[ LandingPageController::class,'record'])->name('landing_page_page.record');
+Route::post('/landing_page/location',[ LandingPageController::class,'location'])->name('landing_page_page.location');
+Route::post('/landing_page/blog',[ LandingPageController::class,'blog'])->name('landing_page_page.blog');
+Route::post('/landing_page/testimonial',[ LandingPageController::class,'blog'])->name('landing_page_page.testimonial');
+Route::post('/landing_page/partner',[ LandingPageController::class,'partner'])->name('landing_page_page.partner');
+Route::post('/landing_page/faqs',[ LandingPageController::class,'faqs'])->name('landing_page_page.faqs');
 Route::get('/blogs',[ BlogController::class,'index'])->name('blogs.index');
 Route::post('/blogs',[ BlogController::class,'store'])->name('blogs.store');
 Route::put('/blogs/{id}',[ BlogController::class,'update'])->name('blogs.update');

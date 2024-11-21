@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class track_record extends Model
+class TrackRecord extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['record_number', 'record_title', 'icon'];
 }
