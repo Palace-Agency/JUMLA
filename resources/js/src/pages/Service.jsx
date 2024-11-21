@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/20/solid";
 import RoundedTransition from "../common/RoundedTransition/RoundedTransition";
 import Footer from "../components/footer/Footer";
+import usePageTracking from "../components/hooks/use-page-tracking";
 
 const features = [
     {
@@ -49,6 +50,7 @@ const features = [
 ];
 const Service = () => {
     const container = useRef(null);
+    usePageTracking();
     return (
         <>
             <div

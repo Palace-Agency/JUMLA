@@ -2,28 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Content;
+use App\Models\Page;
 use App\Models\Section;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     public function landingPage() {
-        $sections = Section::all();
+        $sections = Section::where('page_id',1)->get();
         // dd($sections);
         return view('container.pages.landing_page', compact('sections'));
     }
 
     public function servicePage() {
-        // $sections = Section::all();
-        // dd($sections);
-        return view('container.pages.service_page');
+        $content = Content::where('section_id', 10)->with(['images','services'])->first();
+        $page = Page::where('name', 'Services')->first();
+        return view('container.pages.service_page',compact('content','page'));
     }
 
     public function aboutUsPage() {
-        // $sections = Section::all();
-        // dd($sections);
-        return view('container.pages.about_us_page');
+        $content = Content::where('section_id', 11)->with(['images','records'])->first();
+        $page = Page::where('name', 'About us')->first();
+        // dd($content);
+        return view('container.pages.about_us_page',compact('content','page'));
     }
+
+
 
     public function updateStatus(Request $request)
     {

@@ -192,6 +192,10 @@
 
     <!-- Bootrstrap touchspin -->
     <script src={{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}></script>
+    <!-- Sweet Alerts js -->
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Notify js -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.js"></script>
 
     <!-- App js -->
     <script src={{ asset('assets/js/app.js') }}></script>

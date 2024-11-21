@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('content_images', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('status');
+            $table->string('image');
+            $table->foreignId('content_id')->constrained('contents')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('content_images');
     }
 };

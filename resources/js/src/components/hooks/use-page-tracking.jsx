@@ -12,7 +12,6 @@ const usePageTracking = () => {
             const timeSpent = endTime - startTime;
 
             // Send data to the server
-            console.log(location.pathname, timeSpent);
             // await fetch("/api/track-page", {
             //     method: "POST",
             //     headers: { "Content-Type": "application/json" },

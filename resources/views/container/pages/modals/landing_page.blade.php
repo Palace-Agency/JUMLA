@@ -18,7 +18,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="title">Title</label>
                                         <input type="text" class="form-control" name="title" id="title"
-                                            placeholder="Enter Title">
+                                            placeholder="Enter the Title">
                                     </div>
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="description">Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                                        <textarea class="form-control" placeholder="Enter the Description" name="description" id="description" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="title">Title</label>
                                         <input type="text" class="form-control" name="title" id="title"
-                                            placeholder="Enter Title">
+                                            placeholder="Enter the Title">
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="description">Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                                        <textarea class="form-control" placeholder="Enter the description" name="description" id="description" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="service-title">Title</label>
                                         <input type="text" class="form-control" name="title" id="service-title"
-                                            placeholder="Enter Title">
+                                            placeholder="Enter the Title">
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,8 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="service-description">Description</label>
-                                        <textarea class="form-control" name="description" id="service-description" rows="3"></textarea>
+                                        <textarea class="form-control" placeholder="Enter the description" name="description" id="service-description"
+                                            rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +124,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="record-title">Title</label>
                                         <input type="text" class="form-control" id="record-title"
-                                            placeholder="Enter Title">
+                                            placeholder="Enter the Title">
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +133,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="record-description">Description</label>
-                                        <textarea class="form-control" id="record-description" rows="3"></textarea>
+                                        <textarea class="form-control" placeholder="Enter the description" id="record-description" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +185,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="location-title">Title</label>
                                         <input type="text" class="form-control" id="location-title"
-                                            placeholder="Enter Title">
+                                            placeholder="Enter the Title">
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +194,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="location-description">Description</label>
-                                        <textarea class="form-control" id="location-description" rows="3"></textarea>
+                                        <textarea class="form-control" placeholder="Enter the description" id="location-description" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +240,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="partner-title">Title</label>
                                         <input type="text" class="form-control" id="partner-title"
-                                            placeholder="Enter Title">
+                                            placeholder="Enter the Title">
                                     </div>
                                 </div>
                             </div>
@@ -282,7 +283,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="faq-title">Title</label>
                                         <input type="text" class="form-control" id="faq-title"
-                                            placeholder="Enter Title">
+                                            placeholder="Enter the Title">
                                     </div>
                                 </div>
                             </div>
@@ -291,7 +292,7 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="faq-description">Description</label>
-                                        <textarea class="form-control" id="faq-description" rows="3"></textarea>
+                                        <textarea class="form-control" placeholder="Enter the description" id="faq-description" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -321,9 +322,7 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger waves-effect waves-light w-md"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>

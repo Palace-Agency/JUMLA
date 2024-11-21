@@ -32,6 +32,7 @@
                         <!-- Left Menu Start -->
                         <ul class="metismenu list-unstyled" id="side-menu">
 
+                            <li class="menu-title">Menu</li>
                             <li>
                                 <a href="{{ route('pages.dashboard') }}">
                                     <i class="uil-home-alt"></i>
@@ -57,6 +58,19 @@
                                 <a href="{{ route('pages.about_us_page') }}" class="waves-effect">
                                     <i class="uil-calender"></i>
                                     <span>About us</span>
+                                </a>
+                            </li>
+                            <li class="menu-title">Management</li>
+                            <li>
+                                <a href="{{ route('blogs.index') }}" class="waves-effect">
+                                    <i class="uil-calender"></i>
+                                    <span>Blogs</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contacts.index') }}" class="waves-effect">
+                                    <i class="uil-calender"></i>
+                                    <span>Contacts</span>
                                 </a>
                             </li>
 

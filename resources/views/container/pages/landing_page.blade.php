@@ -15,7 +15,7 @@
     </style>
 @endpush
 @section('main-content')
-    <h2 class="mb-3">Landing Page</h2>
+    <h4 class="mb-3">Landing Page</h4>
     <div class="row">
         <form action="" method="POST">
             @csrf
