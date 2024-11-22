@@ -7,10 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Title from "../../../components/Title";
 import { useMediaQuery } from "../../../components/hooks/use-media-query";
 
-const AboutUs = () => {
+const AboutUs = ({ content }) => {
     const isMobile = useMediaQuery("(max-width: 1150px)");
-    const phrase =
-        "We work to facilitate entry and prosperity in the field of e-commerce for individuals and companies in the Middle East, China and beyond.";
+    const phrase = content?.title;
     const description = useRef(null);
     const isInView = useInView(description);
     const navigate = useNavigate();
@@ -23,11 +22,7 @@ const AboutUs = () => {
             {isMobile ? (
                 <>
                     <div className="mx-auto pt-16 sm:pt-32 max-w-7xl px-6 lg:px-8">
-                        <div
-                            data-scroll
-                            data-scroll-speed={0.1}
-                            className="mx-auto max-w-2xl lg:text-center"
-                        >
+                        <div className="mx-auto max-w-2xl lg:text-center">
                             <Title title={"About us"} />
                             <p className="mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
                                 {phrase}
@@ -43,14 +38,10 @@ const AboutUs = () => {
                 </>
             ) : (
                 <div ref={description} className={styles.description}>
-                    <div
-                        data-scroll
-                        data-scroll-speed={0.3}
-                        className={styles.body}
-                    >
+                    <div className={styles.body}>
                         <Title title={"About us"} />
                         <p>
-                            {phrase.split(" ").map((word, index) => {
+                            {phrase?.split(" ").map((word, index) => {
                                 return (
                                     <span key={index} className={styles.mask}>
                                         <motion.span
@@ -78,13 +69,7 @@ const AboutUs = () => {
                                 textOverflow: "ellipsis",
                             }}
                         >
-                            E-JUMLA is a Moroccan company specialized in
-                            providing a full range of basic services and
-                            solutions for companies operating in the field of
-                            e-commerce. E-JUMLA is a Moroccan company
-                            specialized in providing a full range of basic
-                            services and solutions for companies operating in
-                            the field of e-commerce.
+                            {content?.description}
                         </motion.p>
 
                         <div onClick={handleClick}>

@@ -31,7 +31,7 @@ const faqs = [
     },
 ];
 
-const FAQ = () => {
+const FAQ = ({ content }) => {
     return (
         <div className="bg-white relative z-20 pt-10 sm:pt-32">
             <div
@@ -54,21 +54,22 @@ const FAQ = () => {
                 <div className="mx-auto max-w-2xl lg:text-center">
                     <Title title={"FAQ"} />
                     <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
-                        Frequently asked questions
+                        {content?.title}
                     </p>
                     <p className="mt-6 text-sm sm:text-lg text-gray-600">
-                        Have a different question and can’t find the answer
+                        {/* Have a different question and can’t find the answer
                         you’re looking for? Reach out to our support team by
                         <span className="text-indigo-600">
                             {" "}
                             sending us an email{" "}
                         </span>
-                        and we’ll get back to you as soon as we can.
+                        and we’ll get back to you as soon as we can. */}
+                        {content?.description}
                     </p>
                 </div>
                 <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
                     <Accordion type="single" collapsible>
-                        {faqs.map((faq, index) => (
+                        {content?.faqs.map((faq, index) => (
                             <AccordionItem key={index} value={`item-${index}`}>
                                 <AccordionTrigger className="text-lg font-semibold">
                                     {faq.question}

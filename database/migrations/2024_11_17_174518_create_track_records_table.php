@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('icon');
             $table->string('record_number');
             $table->string('record_title');
+            $table->foreignId('content_id')->constrained('contents')->onDelete('cascade');
             $table->timestamps();
         });
     }

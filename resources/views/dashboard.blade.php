@@ -8,6 +8,8 @@
     <title>Jumla</title>
     <link rel="shortcut icon" href={{ asset('assets/images/favicon.ico') }}>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.css" />
+    <link href={{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }} rel="stylesheet" type="text/css" />
     <!-- bootstrap-touchspin -->
     <link href={{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }} rel="stylesheet" />
 

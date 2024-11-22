@@ -28,6 +28,10 @@ class LandingPageController extends Controller
             ]);
         }
 
+        return response()->json([
+            'success' => 'Meta data saved successfully',
+        ]);
+
     }
 
     public function header(Request $request) {
@@ -44,6 +48,10 @@ class LandingPageController extends Controller
                 'section_id' => 1,
             ]);
         }
+
+        return response()->json([
+            'success' => 'Header data saved successfully',
+        ]);
     }
 
 
@@ -61,6 +69,10 @@ class LandingPageController extends Controller
                 'section_id' => 2,
             ]);
         }
+
+        return response()->json([
+            'success' => 'About us data saved successfully',
+        ]);
 
     }
 
@@ -121,7 +133,7 @@ class LandingPageController extends Controller
         });
 
         return response()->json([
-            'success' => 'Service saved successfully',
+            'success' => 'Service data saved successfully',
         ]);
     } catch (Exception $e) {
         return response()->json(
@@ -192,12 +204,12 @@ class LandingPageController extends Controller
               });
 
               return response()->json([
-                  'success' => 'Service saved successfully',
+                  'success' => 'Track records data saved successfully',
               ]);
           } catch (Exception $e) {
               return response()->json(
                   [
-                      'error' => 'Service creation failed: ' . $e->getMessage(),
+                      'error' => 'Track records creation failed: ' . $e->getMessage(),
                   ],
                   500,
               );
@@ -252,6 +264,7 @@ class LandingPageController extends Controller
                               Location::create([
                                'country' => $country,
                                'flag' => $iconname,
+                               'content_id' => $content->id,
                               ]);
                           }
                       }
@@ -259,12 +272,12 @@ class LandingPageController extends Controller
               });
 
               return response()->json([
-                  'success' => 'Service saved successfully',
+                  'success' => 'Locations data saved successfully',
               ]);
           } catch (Exception $e) {
               return response()->json(
                   [
-                      'error' => 'Service creation failed: ' . $e->getMessage(),
+                      'error' => 'Locations creation failed: ' . $e->getMessage(),
                   ],
                   500,
               );
@@ -297,6 +310,7 @@ class LandingPageController extends Controller
                         $imageData->storeAs('uploads/content/landing-page/', $imagename, 'public');
                         Partner::create([
                             'logo' => $imagename,
+                            'content_id' => $content->id,
                         ]);
                 }
             }
@@ -331,6 +345,10 @@ class LandingPageController extends Controller
                 'section_id' => 7,
             ]);
         }
+
+        return response()->json([
+            'success' => 'Blog data saved successfully',
+        ]);
     }
 
     public function faqs(Request $request)
@@ -370,6 +388,7 @@ class LandingPageController extends Controller
                         FAQ::create([
                             'question' => $faq['question'],
                             'answer' => $faq['answer'],
+                            'content_id' => $content->id,
                         ]);
                     }
                 }
@@ -378,12 +397,12 @@ class LandingPageController extends Controller
         });
 
         return response()->json([
-            'success' => 'Partner data saved successfully',
+            'success' => 'FAQ data saved successfully',
         ]);
     } catch (Exception $e) {
         return response()->json(
             [
-                'error' => 'Partner data creation failed: ' . $e->getMessage(),
+                'error' => 'FAQ data creation failed: ' . $e->getMessage(),
             ],
             500,
         );
@@ -402,6 +421,10 @@ class LandingPageController extends Controller
                 'section_id' => 9,
             ]);
         }
+
+        return response()->json([
+            'success' => 'Testimonials data saved successfully',
+        ]);
     }
 
 

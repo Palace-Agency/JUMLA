@@ -20,6 +20,7 @@ import {
     FormLabel,
     FormMessage,
 } from "../components/ui/form";
+import usePageTracking from "../components/hooks/use-page-tracking";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -69,6 +70,7 @@ export default function Contact() {
         // }
         console.log(email, first_name, last_name, message, phone_number);
     };
+    usePageTracking();
 
     return (
         <>

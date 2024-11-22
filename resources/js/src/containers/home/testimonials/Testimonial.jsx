@@ -30,7 +30,7 @@ const testimonials = [
     },
 ];
 
-const Testimonial = () => {
+const Testimonial = ({ content }) => {
     const container = useRef(null);
 
     return (
@@ -43,7 +43,7 @@ const Testimonial = () => {
             <div className="mx-auto mb-16 max-w-2xl lg:text-center">
                 <Title title={"Testimonials"} />
                 <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl ">
-                    We have worked with thousands of amazing people
+                    {content?.title}
                 </p>
             </div>
             <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">

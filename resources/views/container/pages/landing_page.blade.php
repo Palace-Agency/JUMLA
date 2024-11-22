@@ -105,7 +105,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label" for="title">Title</label>
                                                             <input type="text"
-                                                                value="{{ old('title', $header_content->title) }}"
+                                                                value="{{ old('title', $header_content?->title) }}"
                                                                 class="form-control" name="title" id="title"
                                                                 placeholder="Enter the Title">
                                                         </div>
@@ -116,7 +116,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="description">Description</label>
-                                                            <textarea class="form-control" placeholder="Enter the Description" name="description" id="description" rows="3">{{ old('description', $header_content->description) }}</textarea>
+                                                            <textarea class="form-control" placeholder="Enter the Description" name="description" id="description" rows="3">{{ old('description', $header_content?->description) }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -231,7 +231,7 @@
                                                 <div id="services-container" class="row mt-4">
                                                     @isset($serivce_content->services)
                                                         @foreach ($serivce_content->services as $service)
-                                                            <div class="col-md-4 mb-3 ms-3 service-card">
+                                                            <div class="col-md-5 mb-3 gap-3 service-card">
                                                                 <div class="card">
                                                                     <div class="card-body">
                                                                         <img src="{{ asset('storage/uploads/content/landing-page/' . $service->icon) }}"
@@ -265,7 +265,7 @@
                                                             <label class="form-label" for="record-title">Title</label>
                                                             <input type="text"
                                                                 value="{{ old('title', $track_record_content?->title) }}"
-                                                                class="form-control" id="record-title"
+                                                                class="form-control" name="title" id="record-title"
                                                                 placeholder="Enter the Title">
                                                         </div>
                                                     </div>
@@ -276,7 +276,8 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                 for="record-description">Description</label>
-                                                            <textarea class="form-control" placeholder="Enter the description" id="record-description" rows="3">
+                                                            <textarea class="form-control" name="description" placeholder="Enter the description" id="record-description"
+                                                                rows="3">
                                                             {{ old('description', $track_record_content?->description) }}
                                                             </textarea>
                                                         </div>
@@ -287,15 +288,15 @@
                                                     <div data-repeater-item class="mb-3 row">
                                                         <!-- Record Title -->
                                                         <div class="col-md-12 mt-3">
-                                                            <input id="single-record-title" name="title" type="text"
+                                                            <input id="single-record-title" type="text"
                                                                 class="form-control"
                                                                 placeholder="Enter your record number" />
                                                         </div>
 
                                                         <!-- Record Description -->
                                                         <div class="col-md-12 mt-3">
-                                                            <textarea id="single-record-description" name="description" class="form-control"
-                                                                placeholder="Enter your record description" id="description" rows="3"></textarea>
+                                                            <textarea id="single-record-description" class="form-control" placeholder="Enter your record description"
+                                                                id="description" rows="3"></textarea>
                                                         </div>
 
                                                         <!-- Record Image Input -->
@@ -640,9 +641,9 @@
             </div>
         </div>
     </div>
-    @foreach ($sections as $section)
+    {{-- @foreach ($sections as $section)
         @include('container.pages.modals.landing_page', ['section' => $section])
-    @endforeach
+    @endforeach --}}
 @endsection
 
 @push('scripts')

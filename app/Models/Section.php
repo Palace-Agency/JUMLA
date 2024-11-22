@@ -9,4 +9,13 @@ class Section extends Model
 {
     use HasFactory;
     protected $fillable = ['name','status','page_id'];
+
+    public function page() {
+        return $this->belongsTo(Page::class);
+    }
+
+    public function content() {
+        return $this->hasOne(Content::class);
+    }
+
 }

@@ -9,5 +9,9 @@ class TrackRecord extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['record_number', 'record_title', 'icon'];
+    protected $fillable = ['record_number', 'record_title', 'icon','content_id'];
+
+    public function content() {
+        return $this->belongsTo(Content::class);
+    }
 }

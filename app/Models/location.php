@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
     use HasFactory;
-    protected $fillable = ['country', 'flag'];
+    protected $fillable = ['country', 'flag', 'content_id'];
+
+    public function content() {
+        return $this->belongsTo(Content::class);
+    }
 
 }

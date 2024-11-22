@@ -124,7 +124,7 @@
                             <div class="p-4 border-top">
                                 <div data-repeater-item class="mb-3 row">
                                     <!-- Image Input with Label -->
-                                    <div class="row align-items-center mt-3">
+                                    <div class="row mt-3">
                                         <!-- File Input -->
                                         <div class="col-md-10 col-6">
                                             <input id="single-about-us-img" type="file" accept=".jpg,.jpeg,.png"
@@ -309,14 +309,11 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex mb-5 justify-content-end">
+            <button type="submit" class="btn btn-success"> <i class="uil uil-file-alt"></i> Save </button>
         </div>
         <!-- end row -->
 
-        <div class="row mb-4">
-            <div class="col ms-2">
-                <button type="submit" class="btn btn-success"> <i class="uil uil-file-alt"></i> Save </button>
-            </div>
-        </div>
     </form>
 @endsection
 

@@ -1,58 +1,52 @@
-import React, { useRef } from "react";
-import {
-    CloudArrowUpIcon,
-    LockClosedIcon,
-    ServerIcon,
-    ArrowPathIcon,
-    FingerPrintIcon,
-} from "@heroicons/react/20/solid";
+import React, { useEffect, useRef, useState } from "react";
 import RoundedTransition from "../common/RoundedTransition/RoundedTransition";
 import Footer from "../components/footer/Footer";
 import usePageTracking from "../components/hooks/use-page-tracking";
+import { useGetServiceContentQuery } from "../slices/serviceContentSlice";
+import { Helmet } from "react-helmet-async";
 
-const features = [
-    {
-        name: "Sourcing",
-        description:
-            "Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.",
-        icon: CloudArrowUpIcon,
-    },
-    {
-        name: "Import",
-        description:
-            "Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.",
-        icon: LockClosedIcon,
-    },
-    {
-        name: "Wholesale",
-        description:
-            "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
-        icon: ArrowPathIcon,
-    },
-    {
-        name: "Confirm orders",
-        description:
-            "Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.",
-        icon: FingerPrintIcon,
-    },
-    {
-        name: "Canning",
-        description:
-            "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
-        icon: ArrowPathIcon,
-    },
-    {
-        name: "Wrapping and packaging",
-        description:
-            "Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.",
-        icon: FingerPrintIcon,
-    },
-];
 const Service = () => {
+    const [metaTitle, setMetaTitle] = useState("");
+    const [metaKeywords, setMetaKeywords] = useState("");
+    const [metaDescription, setMetaDescription] = useState("");
+    const [content, setContent] = useState({});
+    const {
+        data: serviceContent,
+        isLoading,
+        isSuccess,
+        isError,
+        error,
+    } = useGetServiceContentQuery("");
+
+    useEffect(() => {
+        if (isSuccess && serviceContent) {
+            const serviceData =
+                serviceContent?.entities[
+                    Object.keys(serviceContent.entities)[0]
+                ];
+            if (serviceData) {
+                setMetaTitle(serviceData.meta_title || "");
+                setMetaKeywords(serviceData.meta_keywords || "");
+                setMetaDescription(serviceData.meta_description || "");
+                const { sections } = serviceData;
+                console.log(sections);
+
+                sections.forEach((section) => {
+                    setContent(section.content);
+                });
+            }
+        }
+    }, [isSuccess, serviceContent]);
+
     const container = useRef(null);
     usePageTracking();
     return (
         <>
+            <Helmet>
+                <meta property="title" content={metaTitle} />
+                <meta name="description" content={metaDescription} />
+                <meta property="keywords" content={metaKeywords} />
+            </Helmet>
             <div
                 ref={container}
                 className="relative z-10 isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0"
@@ -100,13 +94,10 @@ const Service = () => {
                                     Services
                                 </p>
                                 <h1 className="mt-2 text-pretty text-xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
-                                    A better workflow
+                                    {content.title}
                                 </h1>
                                 <p className="mt-4 text-xl/8 text-gray-700">
-                                    Aliquet nec orci mattis amet quisque
-                                    ullamcorper neque, nibh sem. At arcu, sit
-                                    dui mi, nibh dui, diam eget aliquam. Quisque
-                                    id at vitae feugiat egestas.
+                                    {content.short_description}
                                 </p>
                             </div>
                         </div>
@@ -121,45 +112,37 @@ const Service = () => {
                     <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                         <div className="lg:pr-4">
                             <div className="max-w-xl text-base/7 text-gray-700 lg:max-w-lg">
-                                <p>
-                                    Faucibus commodo massa rhoncus, volutpat.
-                                    Dignissim sed eget risus enim. Mattis mauris
-                                    semper sed amet vitae sed turpis id. Id
-                                    dolor praesent donec est. Odio penatibus
-                                    risus viverra tellus varius sit neque erat
-                                    velit. Faucibus commodo massa rhoncus,
-                                    volutpat. Dignissim sed eget risus enim.
-                                    Mattis mauris semper sed amet vitae sed
-                                    turpis id.
-                                </p>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: content.description,
+                                    }}
+                                ></div>
                                 <ul
                                     role="list"
                                     className="mt-8 space-y-8 text-gray-600"
                                 >
-                                    {features.map((feauture, index) => (
-                                        <li className="flex gap-x-3">
-                                            <feauture.icon
-                                                aria-hidden="true"
-                                                className="mt-1 h-5 w-5 flex-none text-indigo-600"
-                                            />
-                                            <span>
-                                                <strong className="font-semibold text-gray-900">
-                                                    {feauture.name}
-                                                </strong>{" "}
-                                                {feauture.description}
-                                            </span>
-                                        </li>
-                                    ))}
+                                    {content &&
+                                        content?.services &&
+                                        content?.services.map(
+                                            (feauture, index) => (
+                                                <li
+                                                    key={index}
+                                                    className="flex gap-x-3"
+                                                >
+                                                    <img
+                                                        src={`http://127.0.0.1:8000/storage/uploads/content/service/${feauture.icon}`}
+                                                        className="mt-1 h-5 w-5 flex-none  text-indigo-600"
+                                                    />
+                                                    <span>
+                                                        <strong className="font-semibold text-gray-900">
+                                                            {feauture.title}
+                                                        </strong>{" "}
+                                                        {feauture.description}
+                                                    </span>
+                                                </li>
+                                            )
+                                        )}
                                 </ul>
-                                <p className="mt-8">
-                                    Et vitae blandit facilisi magna lacus
-                                    commodo. Vitae sapien duis odio id et. Id
-                                    blandit molestie auctor fermentum dignissim.
-                                    Lacus diam tincidunt ac cursus in vel.
-                                    Mauris varius vulputate et ultrices hac
-                                    adipiscing egestas. Iaculis convallis ac
-                                    tempor et ut. Ac lorem vel integer orci.
-                                </p>
                             </div>
                         </div>
                     </div>

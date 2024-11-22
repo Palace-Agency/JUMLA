@@ -9,5 +9,9 @@ class FAQ extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['question','answer'];
+    protected $fillable = ['question','answer','content_id'];
+
+    public function content() {
+        return $this->belongsTo(Content::class);
+    }
 }

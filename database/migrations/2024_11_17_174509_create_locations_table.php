@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('country');
             $table->string('flag');
+            $table->foreignId('content_id')->constrained('contents')->onDelete('cascade');
             $table->timestamps();
         });
     }

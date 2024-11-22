@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { googleLogout } from "@react-oauth/google";
+// import { googleLogout } from "@react-oauth/google";
 import secureLocalStorage from "react-secure-storage";
 const setAuthenticated = (isAuthenticated) => {
     window.localStorage.setItem(
@@ -49,7 +49,7 @@ export const userSlice = createSlice({
             setUser(null);
             setToken(null);
             state.error = null;
-            googleLogout();
+            // googleLogout();
         },
         setError: (state, action) => {
             state.error = action.payload;

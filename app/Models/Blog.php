@@ -10,4 +10,8 @@ class Blog extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'tag', 'content', 'image'];
+
+    public function content() {
+        return $this->belongsTo(Content::class);
+    }
 }

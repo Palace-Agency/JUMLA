@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->id();
             $table->string('logo');
+            $table->foreignId('content_id')->constrained('contents')->onDelete('cascade');
             $table->timestamps();
         });
     }

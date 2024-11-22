@@ -44,7 +44,7 @@ Route::post('/landing_page/service',[ LandingPageController::class,'service'])->
 Route::post('/landing_page/record',[ LandingPageController::class,'record'])->name('landing_page_page.record');
 Route::post('/landing_page/location',[ LandingPageController::class,'location'])->name('landing_page_page.location');
 Route::post('/landing_page/blog',[ LandingPageController::class,'blog'])->name('landing_page_page.blog');
-Route::post('/landing_page/testimonial',[ LandingPageController::class,'blog'])->name('landing_page_page.testimonial');
+Route::post('/landing_page/testimonial',[ LandingPageController::class,'testimonial'])->name('landing_page_page.testimonial');
 Route::post('/landing_page/partner',[ LandingPageController::class,'partner'])->name('landing_page_page.partner');
 Route::post('/landing_page/faqs',[ LandingPageController::class,'faqs'])->name('landing_page_page.faqs');
 Route::get('/blogs',[ BlogController::class,'index'])->name('blogs.index');

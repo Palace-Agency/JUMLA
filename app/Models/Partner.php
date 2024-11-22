@@ -9,5 +9,9 @@ class Partner extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['logo'];
+    protected $fillable = ['logo','content_id'];
+
+    public function content() {
+        return $this->belongsTo(Content::class);
+    }
 }

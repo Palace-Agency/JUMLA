@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const images = [call_center, fast, importing, inventory, sourcing, packaging];
-const Header = () => {
+const Header = ({ content }) => {
     return (
         <div className="relative isolate px-6 pt-8 lg:px-8">
             <div
@@ -63,12 +63,10 @@ const Header = () => {
                     className="text-center"
                 >
                     <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
-                        Services to enrich your online business
+                        {content?.title}
                     </h1>
                     <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
-                        We seek to provide you with the services necessary to
-                        advance your business and develop your projects in the
-                        world of e-commerce.
+                        {content?.description}
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
                         <motion.button

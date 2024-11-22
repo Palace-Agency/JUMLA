@@ -25,4 +25,25 @@ class Content extends Model
         return $this->hasMany(ContentRecord::class);
     }
 
+    public function track_records() {
+        return $this->hasMany(TrackRecord::class);
+    }
+
+    public function partners() {
+        return $this->hasMany(Partner::class);
+    }
+
+    public function faqs() {
+        return $this->hasMany(FAQ::class);
+    }
+
+    public function locations() {
+        return $this->hasMany(Location::class);
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
 }

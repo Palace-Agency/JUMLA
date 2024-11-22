@@ -12,7 +12,7 @@ const stats = [
     { id: 3, name: "Imported container", value: 46000, icon: FiPackage },
 ];
 
-const State = () => {
+const State = ({ content }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
 
@@ -39,28 +39,31 @@ const State = () => {
                 <div className="mx-auto max-w-2xl lg:text-center">
                     <Title title={"Our track record"} />
                     <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
-                        Trusted by creators worldwide
+                        {content?.title}
                     </p>
                     <p className="mt-6 text-sm sm:text-lg text-gray-600">
-                        Lorem ipsum dolor sit amet consect adipisicing possimus.
+                        {content?.description}
                     </p>
                 </div>
                 <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
                     <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-                        {stats.map((stat) => (
+                        {content?.track_records.map((stat) => (
                             <div
                                 key={stat.id}
                                 className="mx-auto border border-1 border-orange-300 px-10 py-5 rounded-xl flex max-w-xs flex-col gap-y-4"
                             >
                                 <dt className="text-base/7 text-gray-600">
-                                    {stat.name}
+                                    {stat.record_title}
                                 </dt>
-                                <dd className="flex items-center gap-3 order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-                                    <stat.icon />
+                                <dd className="flex items-center gap-3 order-first text-3xl font-medium tracking-tight text-gray-900 sm:text-5xl">
+                                    <img
+                                        src={`http://127.0.0.1:8000/storage/uploads/content/landing-page/${stat.icon}`}
+                                        className="h-14 w-14"
+                                    />
                                     {isInView && (
                                         <CountUp
                                             start={0}
-                                            end={stat.value}
+                                            end={stat.record_number}
                                             duration={2}
                                             separator=","
                                         />

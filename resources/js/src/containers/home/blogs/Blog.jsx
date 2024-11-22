@@ -29,7 +29,7 @@ const blogs = [
     },
 ];
 
-const Blog = () => {
+const Blog = ({ content }) => {
     return (
         <div
             data-scroll
@@ -39,10 +39,10 @@ const Blog = () => {
             <div className="mx-auto max-w-2xl lg:text-center">
                 <Title title={"Blogs"} />
                 <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
-                    From the blog
+                    {content?.title}
                 </p>
                 <p className="mt-6 text-sm sm:text-lg text-gray-600">
-                    Learn how to grow your business with our expert advice.
+                    {content?.description}
                 </p>
             </div>
             <div

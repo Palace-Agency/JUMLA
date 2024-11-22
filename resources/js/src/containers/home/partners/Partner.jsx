@@ -3,10 +3,8 @@ import Title from "../../../components/Title";
 import { ameex, dhl, maersk, shopify } from "../../../constants/partners";
 import React from "react";
 
-const partners = [ameex, dhl, maersk, shopify];
-
-const Partner = () => {
-    const totalLogoWidth = partners.length * 100;
+const Partner = ({ content }) => {
+    const totalLogoWidth = content?.partners.length * 100;
 
     return (
         <div
@@ -17,7 +15,7 @@ const Partner = () => {
             <div className="mx-auto mb-16 max-w-2xl lg:text-center">
                 <Title title={"Our Partners"} />
                 <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl ">
-                    Trusted by the world’s most innovative companies
+                    {content?.title}
                 </p>
             </div>
             <div
@@ -40,11 +38,11 @@ const Partner = () => {
                         width: `${totalLogoWidth * 4}px`,
                     }}
                 >
-                    {[...partners, ...partners].map((partner, index) => (
+                    {content?.partners.map((partner, index) => (
                         <img
                             alt="partner"
                             key={index}
-                            src={partner}
+                            src={`http://127.0.0.1:8000/storage/uploads/content/landing-page/${partner.logo}`}
                             width={100}
                             height={100}
                             className="max-h-12 w-full object-contain"
