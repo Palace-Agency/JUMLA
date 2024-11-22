@@ -15,7 +15,9 @@
     </style>
 @endpush
 @section('main-content')
-    <h4 class="mb-3">Landing Page</h4>
+    <div class="page-title-box d-flex align-items-center justify-content-between">
+        <h4 class="mb-0">Landing page</h4>
+    </div>
     <div class="row">
         <form id="meta-form">
             @csrf
@@ -69,7 +71,9 @@
         </form>
 
     </div>
-    <h2 class="my-3">Sections List</h2>
+    <div class="page-title-box d-flex align-items-center justify-content-between">
+        <h4 class="mb-0">Sections</h4>
+    </div>
     <div class="row">
         <div class="col-md-12 mb-3">
             <div class="card">
@@ -83,16 +87,6 @@
                                     <span class="d-none d-sm-block">{{ $section->name }}</span>
                                 </a>
                             </li>
-                            {{-- <div class="card-body">
-                            <h5 class="card-title">{{ $section->name }}</h5>
-                            <p class="card-text"><span class="badge bg-success-subtle text-success font-size-12">
-                                    {{ $section->status ? 'Show' : 'Hide' }}
-                                </span></p>
-                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#sectionModal{{ $section->id }}">
-                                Edit
-                            </button>
-                        </div> --}}
                         @endforeach
                     </ul>
 

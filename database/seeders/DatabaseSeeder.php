@@ -6,7 +6,9 @@ namespace Database\Seeders;
 
 use App\Models\Page;
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,10 +19,6 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
 
         $data_pages = [
             [
@@ -130,5 +128,22 @@ class DatabaseSeeder extends Seeder
         if (!Section::first()) {
             Section::insert($data_sections);
         }
+        $data_users = [
+                [
+                'name' => 'Mohamed othman',
+                'email' => 'mohamed@gmail.com',
+                'password' => Hash::make('password'),
+                'is_admin' => true,
+                // 'is_active' => null,
+                // 'is_subscribed' => null,
+                'image' => 'default_user_image.jpg',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            ];
+            if (!User::first()) {
+                User::insert($data_users);
+            }
     }
+
 }

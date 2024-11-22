@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
@@ -30,9 +31,7 @@ use Illuminate\Support\Facades\Route;
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::get('/dashboard', function () {
-    return view('container.dashboard');
-})->name('pages.dashboard');
+Route::get('/dashboard', [DashboardController::class,'index'])->name('pages.dashboard');
 Route::get('/landing_page',[ PageController::class,'landingPage'])->name('pages.landing_page');
 Route::get('/service_page',[ PageController::class,'servicePage'])->name('pages.service_page');
 Route::post('/service_page',[ ServiceController::class,'store'])->name('service_page.store');
