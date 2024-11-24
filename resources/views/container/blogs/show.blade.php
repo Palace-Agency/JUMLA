@@ -15,7 +15,7 @@
             <img src="{{ asset('storage/uploads/blog/' . $blog->image) }}"
                 style="width:400px; height:200px; object-fit: cover;" class="mx-auto d-block" alt="{{ $blog->title }}" />
             <div class="card-body">
-                <div class="d-flex items-center gap-3">
+                <div class="d-flex align-items-start gap-3">
                     <a href="{{ route('blogs.show', ['blog' => $blog]) }}" class="text-secondary">
                         <h5 class="card-title">{{ $blog->title }}</h5>
                     </a>

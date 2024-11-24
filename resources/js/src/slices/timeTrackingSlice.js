@@ -1,4 +1,3 @@
-import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
 export const timeTrackingApiSlice = apiSlice.injectEndpoints({

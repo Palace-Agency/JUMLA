@@ -6,6 +6,8 @@ import React from "react";
 const Partner = ({ content }) => {
     const totalLogoWidth = content?.partners.length * 100;
 
+    const partners = [...content?.partners, ...content?.partners];
+
     return (
         <div
             data-scroll
@@ -35,10 +37,10 @@ const Partner = ({ content }) => {
                     style={{
                         display: "flex",
                         whiteSpace: "nowrap",
-                        width: `${totalLogoWidth * 4}px`,
+                        width: `${totalLogoWidth * 6}px`,
                     }}
                 >
-                    {content?.partners.map((partner, index) => (
+                    {partners?.map((partner, index) => (
                         <img
                             alt="partner"
                             key={index}

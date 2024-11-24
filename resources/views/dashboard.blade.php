@@ -1,3 +1,6 @@
+@php
+    $settings = App\Models\SystemSetting::find(1);
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,8 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Jumla</title>
-    <link rel="shortcut icon" href={{ asset('assets/images/favicon.ico') }}>
+    <title>{{ $settings->website_name }}</title>
+    <link rel="shortcut icon"
+        href={{ isset($settings) && $settings->favicon ? asset('storage/uploads/settings/' . $settings->favicon) : '' }}>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.css" />
     <link href={{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }} rel="stylesheet" type="text/css" />

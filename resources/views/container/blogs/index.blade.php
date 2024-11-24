@@ -48,12 +48,19 @@
     <script src={{ asset('assets/js/pages/bootstrap-toasts.init.js') }}></script>
     <script>
         $(document).ready(function() {
+            const editors = document.querySelectorAll('.editor');
 
-            ClassicEditor
-                .create(document.querySelector('#classic-editor'))
-                .catch(error => {
-                    console.error(error);
-                });
+            editors.forEach((textarea, index) => {
+                ClassicEditor
+                    .create(textarea)
+                    .then(editor => {
+                        console.log(`CKEditor initialized for textarea #${index}`);
+                    })
+                    .catch(error => {
+                        console.error('CKEditor initialization error:', error);
+                    });
+            });
+
             ClassicEditor
                 .create(document.querySelector('#add-classic-editor'))
                 .catch(error => {
@@ -78,6 +85,21 @@
                 }
             });
 
+
+            $('#blog-title').keyup(function() {
+                var title = $(this).val();
+                var slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                $('#blog-slug').val(slug);
+            });
+
+            $(document).on('keyup', '.edit-blog-slug', function() {
+                var $titleInput = $(this);
+                var title = $titleInput.val();
+                var slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+                $titleInput.closest('.col-md-12').next('.col-md-12').find('input[name="slug"]').val(slug);
+            });
+
             $('#blog-form').on('submit', function(e) {
                 e.preventDefault();
 
@@ -85,6 +107,7 @@
                 let submitButton = $(this).find('button[type="submit"]');
 
                 submitButton.prop('disabled', true).text('Saving...');
+                let slug = $('#blog-slug').val();
 
                 $.ajax({
                     url: "{{ route('blogs.store') }}",
@@ -118,7 +141,7 @@
             });
 
 
-            $('#update-blog-form').on('submit', function(e) {
+            $('.update-blog-form').on('submit', function(e) {
                 e.preventDefault();
 
                 let formData = new FormData(this);
@@ -128,7 +151,7 @@
                 submitButton.prop('disabled', true).text('Updating...');
 
                 $.ajax({
-                    url: `/blogs/${blogId}`,
+                    url: `/our-blogs/${blogId}`,
                     method: "POST",
                     data: formData,
                     processData: false,
@@ -138,10 +161,11 @@
                     },
                     success: function(response) {
                         if (response.success) {
-                            $('#update-blog-form')[0].reset();
-                            $('#blog-img-preview').hide();
+                            // $(e.target)[0].reset();
 
-                            $('#offcanvasUpdate').offcanvas('hide');
+                            // $(`#blog-img-preview${blogId}`).hide();
+
+                            $(`#offcanvasUpdate${blogId}`).offcanvas('hide');
 
                             new Notify({
                                 status: 'success',

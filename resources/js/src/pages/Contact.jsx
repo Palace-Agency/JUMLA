@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Field, Switch } from "@headlessui/react";
 import RoundedTransition from "../common/RoundedTransition/RoundedTransition";
 import Footer from "../components/footer/Footer";
@@ -6,6 +6,7 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
+import { Checkbox } from "../components/ui/checkbox";
 import { PhoneInput } from "../components/ui/phone-input";
 import { cn } from "../components/lib/utils";
 import { FaSpinner } from "react-icons/fa6";
@@ -19,8 +20,20 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from "../components/ui/form";
 import usePageTracking from "../components/hooks/use-page-tracking";
+import { useContactMutation } from "../slices/contactSlice";
+import { toast } from "sonner";
+import {
+    Dialog,
+    DialogContent,
+    DialogTrigger,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+} from "../components/ui/dialog";
+import { useGetSettingQuery } from "../slices/settingsSlice";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -28,10 +41,44 @@ const formSchema = z.object({
     last_name: z.string().min(4),
     message: z.string().min(10).max(200),
     phone_number: z.string().min(10),
+    privacy: z.literal(true).refine((val) => val === true, {
+        message: "You must accept the terms and conditions.",
+    }),
 });
 export default function Contact() {
+    const [settings, setSettings] = useState({
+        privacy_policy: "",
+    });
+    const [contact] = useContactMutation();
     const [agreed, setAgreed] = useState(false);
     const container = useRef(null);
+    const containerRef = useRef(null);
+    const { data: setting, isLoading, isSuccess } = useGetSettingQuery("");
+
+    useEffect(() => {
+        if (isSuccess) {
+            const settingData = setting.entities[1];
+            if (settingData) {
+                setSettings({
+                    privacy_policy: settingData.privacy_policy,
+                });
+            }
+        }
+    }, [isSuccess, setting]);
+    const SafeHtml = ({ htmlContent }) => {
+        useEffect(() => {
+            if (containerRef.current) {
+                const shadowRoot = containerRef.current.attachShadow({
+                    mode: "open",
+                });
+                const wrapper = document.createElement("div");
+                wrapper.innerHTML = htmlContent;
+                shadowRoot.appendChild(wrapper);
+            }
+        }, [htmlContent]);
+
+        return <div ref={containerRef}></div>;
+    };
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -41,6 +88,7 @@ export default function Contact() {
             last_name: "",
             message: "",
             phone_number: "",
+            privacy: false,
         },
     });
 
@@ -56,19 +104,18 @@ export default function Contact() {
         message,
         phone_number,
     }) => {
-        // try {
-        //     await getCsrfToken();
-        //     const { user } = await login({ email, password }).unwrap();
-        //     if (user.email_verified_at) {
-        //         window.location.href = HOME;
-        //     } else {
-        //         window.location.href = "/verify";
-        //         await sentCode({ email }).unwrap();
-        //     }
-        // } catch (error) {
-        //     setError("email", { message: error.data.errors.email.join() });
-        // }
-        console.log(email, first_name, last_name, message, phone_number);
+        try {
+            await contact({
+                email,
+                first_name,
+                last_name,
+                message,
+                phone_number,
+            }).unwrap();
+            toast.success("Message sent successfully!");
+        } catch (error) {
+            setError("email", { message: error.data.errors.email.join() });
+        }
     };
     usePageTracking();
 
@@ -206,33 +253,60 @@ export default function Contact() {
                                     )}
                                 />
                             </div>
-                            <Field className="flex gap-x-4 sm:col-span-2">
-                                <div className="flex h-6 items-center">
-                                    <Switch
-                                        checked={agreed}
-                                        onChange={setAgreed}
-                                        className="group flex w-8 flex-none cursor-pointer rounded-full bg-gray-200 p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 data-[checked]:bg-indigo-600"
-                                    >
-                                        <span className="sr-only">
-                                            Agree to policies
-                                        </span>
-                                        <span
-                                            aria-hidden="true"
-                                            className="h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out group-data-[checked]:translate-x-3.5"
-                                        />
-                                    </Switch>
-                                </div>
-                                <Label className="text-sm/6 text-gray-600">
-                                    By selecting this, you agree to our{" "}
-                                    <a
-                                        href="#"
-                                        className="font-semibold text-indigo-600"
-                                    >
-                                        privacy&nbsp;policy
-                                    </a>
-                                    .
-                                </Label>
-                            </Field>
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
+                                    name="privacy"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                                            <FormControl>
+                                                <Checkbox
+                                                    checked={field.value}
+                                                    onCheckedChange={
+                                                        field.onChange
+                                                    }
+                                                />
+                                            </FormControl>
+                                            <div className="space-y-1 leading-none">
+                                                <FormLabel>
+                                                    Accept terms and conditions{" "}
+                                                </FormLabel>
+                                                <FormDescription>
+                                                    You agree to our{" "}
+                                                    <Dialog>
+                                                        <DialogTrigger asChild>
+                                                            <button
+                                                                type="button"
+                                                                className="text-indigo-600 underline hover:text-indigo-500"
+                                                            >
+                                                                Terms of Service
+                                                                and Privacy
+                                                                Policy.
+                                                            </button>
+                                                        </DialogTrigger>
+                                                        <DialogContent className="max-w-4xl h-auto max-h-[80vh] overflow-y-auto rounded-lg p-6">
+                                                            <DialogHeader>
+                                                                <DialogTitle>
+                                                                    Privacy
+                                                                    Policy
+                                                                </DialogTitle>
+                                                                <DialogDescription>
+                                                                    <SafeHtml
+                                                                        htmlContent={
+                                                                            settings.privacy_policy
+                                                                        }
+                                                                    />
+                                                                </DialogDescription>
+                                                            </DialogHeader>
+                                                        </DialogContent>
+                                                    </Dialog>{" "}
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                         </div>
                         <div className="mt-10">
                             <Button

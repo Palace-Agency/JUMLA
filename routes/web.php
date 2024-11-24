@@ -7,7 +7,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PixelController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SystemSettingController;
+use App\Http\Controllers\UserTrackingController;
+use App\Models\Pixel;
+use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,12 +52,20 @@ Route::post('/landing_page/blog',[ LandingPageController::class,'blog'])->name('
 Route::post('/landing_page/testimonial',[ LandingPageController::class,'testimonial'])->name('landing_page_page.testimonial');
 Route::post('/landing_page/partner',[ LandingPageController::class,'partner'])->name('landing_page_page.partner');
 Route::post('/landing_page/faqs',[ LandingPageController::class,'faqs'])->name('landing_page_page.faqs');
-Route::get('/blogs',[ BlogController::class,'index'])->name('blogs.index');
-Route::post('/blogs',[ BlogController::class,'store'])->name('blogs.store');
-Route::put('/blogs/{id}',[ BlogController::class,'update'])->name('blogs.update');
-Route::get('/blogs/{blog}',[ BlogController::class,'show'])->name('blogs.show');
-Route::delete('/blogs/{id}',[ BlogController::class,'destroy'])->name('blogs.destroy');
+Route::get('/our-blogs',[ BlogController::class,'index'])->name('blogs.index');
+Route::post('/our-blogs',[ BlogController::class,'store'])->name('blogs.store');
+Route::put('/our-blogs/{id}',[ BlogController::class,'update'])->name('blogs.update');
+Route::get('/our-blogs/{blog}',[ BlogController::class,'show'])->name('blogs.show');
+Route::delete('/our-blogs/{id}',[ BlogController::class,'destroy'])->name('blogs.destroy');
 Route::get('/contacts',[ ContactController::class,'index'])->name('contacts.index');
+Route::post('/contacts-reply',[ ContactController::class,'reply'])->name('contacts.reply');
+Route::get('/user-tracking',[ UserTrackingController::class,'index'])->name('tracking.index');
+Route::get('/country-stats', [UserTrackingController::class, 'countryStats'])->name('country.stats');
+Route::get('/page-stats', [UserTrackingController::class, 'pageStats'])->name('page.stats');
+Route::get('/pixels', [PixelController::class, 'index'])->name('pixels.index');
+Route::post('/pixels', [PixelController::class, 'store'])->name('pixels.store');
+Route::get('/settings', [SystemSettingController::class, 'index'])->name('settings.index');
+Route::post('/settings', [SystemSettingController::class, 'store'])->name('settings.store');
 Route::post('/landing_page/{section}',[ PageController::class,'update'])->name('sections.update');
 Route::post('/sections/update-status', [PageController::class, 'updateStatus'])->name('sections.update.status');
 
@@ -60,5 +73,7 @@ Route::post('/sections/update-status', [PageController::class, 'updateStatus'])-
 require __DIR__.'/auth.php';
 
 Route::get('/{any?}', function () {
-    return view('welcome');
+    $pixels = Pixel::all();
+    $settings = SystemSetting::find(1);
+    return view('welcome', compact('settings','pixels'));
 });

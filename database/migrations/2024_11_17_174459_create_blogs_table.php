@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->longText('content');
             $table->string('tag');
+            $table->string('estimate_reading_time');
             $table->string('image');
             $table->timestamps();
         });

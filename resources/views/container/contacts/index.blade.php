@@ -46,20 +46,19 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4>Categories List</h4>
+                <h4>Contacts List</h4>
             </div>
             <div class="card-body">
-                <div class="actions">
-                    <button id="toggleBulkDelete" class="btn btn-primary d-flex justify-start w-fit" type="button">
+                {{-- <div class="actions gap-2"> --}}
+                {{-- <button id="toggleBulkDelete" class="btn btn-primary d-flex justify-start w-fit" type="button">
                         Select all
                     </button>
-                    <div class="multiple-delete-container hidden">
-                        <button id="deleteSelectedBtn" class="btn btn-danger d-flex justify-end w-fit" type="button"
-                            style="padding: 5px; margin-left:7px">
-                            <i data-feather="trash-2" style="width:20px"></i>
+                    <div class="multiple-delete-container hidden mr-3">
+                        <button id="deleteSelectedBtn" class="btn btn-success d-flex justify-end w-fit" type="button">
+                            Reply
                         </button>
                     </div>
-                </div>
+                </div> --}}
                 <div class="table-responsive theme-scrollbar">
                     <table class="table" id="contacts-table">
                         <thead>
@@ -70,18 +69,19 @@
                                 <th style="width: 20%">Name</th>
                                 <th style="width: 20%">Email</th>
                                 <th style="width: 50%">Message</th>
+                                <th>Replied</th>
                                 <th style="width: 50%">Date</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
         </div>
-        {{-- @foreach ($categories as $category)
-            @include('dashboards.admin.categories.edit', ['category' => $category])
+        @foreach ($contacts as $contact)
+            @include('container.contacts.form', ['contact' => $contact])
         @endforeach
-        @include('dashboards.admin.categories.create') --}}
+        @include('container.contacts.form')
     </div>
 @endsection
 @push('scripts')
@@ -135,15 +135,19 @@
                         name: 'message'
                     },
                     {
+                        data: 'replied',
+                        name: 'replied'
+                    },
+                    {
                         data: 'created_at',
                         name: 'created_at'
                     },
-                    // {
-                    //     data: 'action',
-                    //     name: 'action',
-                    //     orderable: false,
-                    //     searchable: false
-                    // }
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
                 ],
                 createdRow: function(row, data, dataIndex) {
                     $(row).attr('key', data.id);
@@ -187,111 +191,116 @@
                 }
             });
 
-            $(".err").text("");
-            $('.modal.fade').on('hidden.bs.modal', function() {
-                $('.err').text('');
-            });
-
-            $(document).on('click', '.deleteCategory', function(e) {
+            $('.reply-form').on('submit', function(e) {
                 e.preventDefault();
-                var categoryId = $(this).data('id');
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+
+                submitButton.prop('disabled', true).text('Sending...');
+
+
                 Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
+                    title: `Do you want to send the message ?`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
+                    confirmButtonText: "Yes, send it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '',
-                            type: 'DELETE',
-                            data: {
-                                _token: '{{ csrf_token() }}'
-                            },
+                            url: "{{ route('contacts.reply') }}",
+                            method: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
                             success: function(response) {
                                 if (response.success) {
                                     table.ajax.reload(null, false);
                                     new Notify({
                                         status: 'success',
                                         title: 'Success!',
-                                        text: response.success,
+                                        text: response.message,
                                         position: 'right bottom'
                                     });
                                 }
                             },
-                            error: function(xhr, status, error) {
-                                console.error(xhr.responseText);
-                            }
-                        });
-                    }
+                            error: function(xhr) {
+                                alert('An error occurred. Please try again.');
+                            },
+                            complete: function() {
+                                submitButton.prop('disabled', false).text('Send');
+                            },
+                        })
+                    } else {
+                        submitButton.prop('disabled', false).text('Send');
+                    };
                 });
             });
 
-            // Bulk action delete
-            $("#toggleBulkDelete").click(function() {
-                $(".checkbox-column").toggleClass("hidden");
-                $(".multiple-delete-container").toggleClass("hidden");
-                let isHidden = $(".checkbox-column").hasClass("hidden");
-                $(this).text(isHidden ? "Select All" : "Cancel");
-            });
+
+            // $("#toggleBulkDelete").click(function() {
+            //     $(".checkbox-column").toggleClass("hidden");
+            //     $(".multiple-delete-container").toggleClass("hidden");
+            //     let isHidden = $(".checkbox-column").hasClass("hidden");
+            //     $(this).text(isHidden ? "Select All" : "Cancel");
+            // });
 
 
-            $("#main_checkbox").change(function() {
-                $(".checkbox-input").prop('checked', $(this).prop("checked"));
-            });
+            // $("#main_checkbox").change(function() {
+            //     $(".checkbox-input").prop('checked', $(this).prop("checked"));
+            // });
 
-            $("#deleteSelectedBtn").click(function() {
-                var selectedIds = $(".checkbox-input:checked").map(function() {
-                    return $(this).data('id');
-                }).get();
+            // $("#deleteSelectedBtn").click(function() {
+            //     var selectedIds = $(".checkbox-input:checked").map(function() {
+            //         return $(this).data('id');
+            //     }).get();
 
-                if (selectedIds.length > 0) {
-                    Swal.fire({
-                        title: `You are deleting ${selectedIds.length} ${selectedIds.length === 1 ? "category" : "categories"} ... Are you sure?`,
-                        text: "You won't be able to revert this!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, delete it!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: "",
-                                type: "POST",
-                                data: {
-                                    ids: selectedIds,
-                                    _token: "{{ csrf_token() }}"
-                                },
-                                success: function(response) {
-                                    table.ajax.reload(null, false);
-                                    Swal.fire({
-                                        title: "Deleted!",
-                                        text: `Your ${selectedIds.length} ${selectedIds.length === 1 ? "category" : "categories"}  has been deleted.`,
-                                        icon: "success",
-                                        showConfirmButton: false,
-                                    })
+            //     if (selectedIds.length > 0) {
+            //         Swal.fire({
+            //             title: `You are deleting ${selectedIds.length} ${selectedIds.length === 1 ? "category" : "categories"} ... Are you sure?`,
+            //             text: "You won't be able to revert this!",
+            //             icon: "warning",
+            //             showCancelButton: true,
+            //             confirmButtonColor: "#3085d6",
+            //             cancelButtonColor: "#d33",
+            //             confirmButtonText: "Yes, delete it!"
+            //         }).then((result) => {
+            //             if (result.isConfirmed) {
+            //                 $.ajax({
+            //                     url: "",
+            //                     type: "POST",
+            //                     data: {
+            //                         ids: selectedIds,
+            //                         _token: "{{ csrf_token() }}"
+            //                     },
+            //                     success: function(response) {
+            //                         table.ajax.reload(null, false);
+            //                         Swal.fire({
+            //                             title: "Deleted!",
+            //                             text: `Your ${selectedIds.length} ${selectedIds.length === 1 ? "category" : "categories"}  has been deleted.`,
+            //                             icon: "success",
+            //                             showConfirmButton: false,
+            //                         })
 
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error(xhr.responseText);
-                                }
-                            });
+            //                     },
+            //                     error: function(xhr, status, error) {
+            //                         console.error(xhr.responseText);
+            //                     }
+            //                 });
 
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        title: "No Categories selected",
-                        text: "Please select Categories to delete.",
-                        icon: "warning",
-                        confirmButtonColor: "#3085d6",
-                    });
-                }
-            });
+            //             }
+            //         });
+            //     } else {
+            //         Swal.fire({
+            //             title: "No Categories selected",
+            //             text: "Please select Categories to delete.",
+            //             icon: "warning",
+            //             confirmButtonColor: "#3085d6",
+            //         });
+            //     }
+            // });
         });
     </script>
 @endpush

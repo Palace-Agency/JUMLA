@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->longText('message');
+            $table->boolean('replied')->default(false);
             $table->timestamps();
         });
     }

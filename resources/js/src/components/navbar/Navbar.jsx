@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useRef, useLayoutEffect } from "react";
 import styles from "./style.module.scss";
 import { logo } from "../../constants/logo";
@@ -11,6 +11,8 @@ import Nav from "./nav/Nav";
 import CustomizeLink from "../navbar/Link/CustomizeLink";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useGetSettingQuery } from "../../slices/settingsSlice";
+import { Skeleton } from "../ui/skeleton";
 
 const navItems = [
     {
@@ -32,6 +34,22 @@ const navItems = [
 ];
 
 const Navbar = () => {
+    const [settings, setSettings] = useState({
+        logo: "",
+    });
+
+    const { data: setting, isLoading, isSuccess } = useGetSettingQuery("");
+
+    useEffect(() => {
+        if (isSuccess) {
+            const settingData = setting.entities[1];
+            if (settingData) {
+                setSettings({
+                    logo: settingData.logo,
+                });
+            }
+        }
+    }, [isSuccess, setting]);
     const [isActive, setIsActive] = useState(false);
     const button = useRef(null);
     const pathname = useLocation();
@@ -72,7 +90,15 @@ const Navbar = () => {
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
                         <span className="sr-only">Jumla</span>
-                        <img alt="" src={logo} className="h-8 w-auto" />
+                        {isLoading ? (
+                            <Skeleton className="h-8 w-[113px]" />
+                        ) : (
+                            <img
+                                alt="Logo"
+                                src={`http://127.0.0.1:8000/storage/uploads/settings/${settings.logo}`}
+                                className="h-8 w-auto"
+                            />
+                        )}
                     </a>
                 </div>
                 <div

@@ -5,6 +5,7 @@ import { useTimeTrackingMutation } from "../../slices/timeTrackingSlice";
 const usePageTracking = () => {
     const [tracking] = useTimeTrackingMutation();
     const [country, setCountry] = useState(null);
+    const [ipAdresse, setIpAdresse] = useState(null);
     const location = useLocation();
     const page = location.pathname;
     const [startTime, setStartTime] = useState(Date.now());
@@ -17,6 +18,7 @@ const usePageTracking = () => {
                 );
                 const data = await response.json();
                 setCountry(data.country_name);
+                setIpAdresse(data.ip);
             } catch (error) {
                 console.error("Error fetching geolocation:", error);
             }
@@ -31,7 +33,12 @@ const usePageTracking = () => {
             const timeSpent = endTime - startTime;
 
             if (country) {
-                await tracking({ page, timeSpent, country }).unwrap();
+                await tracking({
+                    page,
+                    timeSpent,
+                    country,
+                    ipAdresse,
+                }).unwrap();
             } else {
                 console.warn("Country not available during page exit");
             }
@@ -39,7 +46,7 @@ const usePageTracking = () => {
 
         handlePageEnter();
         return handlePageExit;
-    }, [location, country, tracking]);
+    }, [location, country, ipAdresse, tracking]);
 };
 
 export default usePageTracking;

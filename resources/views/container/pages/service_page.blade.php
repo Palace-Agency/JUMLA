@@ -405,7 +405,6 @@
                     formData.append(`services[${index}][icon]`, service.icon);
                 });
 
-                console.log(formData)
                 $.ajax({
                     url: "{{ route('service_page.store') }}",
                     method: "POST",

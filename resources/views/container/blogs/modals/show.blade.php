@@ -18,7 +18,8 @@
                 <div class="  border border-bottom-0 my-4 mx-auto"
                     style="border-color: #80808054 !important;width: 70% !important;"></div>
                 <p class="card-text">{!! $blog->content !!}</p>
-                <div class="mt-3 d-flex justify-content-end">
+                <div class="mt-5 d-flex items-center justify-content-between">
+                    <p class="card-text">Read in {{ $blog->estimate_reading_time }}</p>
                     <p class="card-text">Created {{ $blog->created_at->format('d M Y') }}</p>
                 </div>
             </div>

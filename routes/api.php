@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\api\BlogController;
 use App\Http\Controllers\api\ContentController;
+use App\Http\Controllers\api\SettingController;
 use App\Http\Controllers\api\TimeTrackingController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PixelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +28,10 @@ Route::get('/home-content',[ContentController::class,'homeContent']);
 Route::get('/service-content',[ContentController::class,'serviceContent']);
 Route::get('/aboutus-content',[ContentController::class,'aboutUsContent']);
 Route::post('/time-tracking',[TimeTrackingController::class,'timeTracking']);
+Route::post('/contacts',[ContactController::class,'store']);
+Route::get('/system-settings',[SettingController::class,'index']);
+Route::get('/pixels',[PixelController::class,'getPixels']);
+Route::get('/get-Allblogs',[BlogController::class,'getAllblogs']);
+Route::get('/get-blogs',[BlogController::class,'getLatestblogs']);
+Route::post('/get-blog',[BlogController::class,'getBlog']);
 

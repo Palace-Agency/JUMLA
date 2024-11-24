@@ -12,13 +12,23 @@
                     <div data-repeater-item class="mb-3 row">
                         <div class="col-md-12 mt-3">
                             <label class="form-label">Title</label>
-                            <input name="title" id="blog-title" type="text" class="form-control"
+                            <input name="title" id="blog-title" required type="text" class="form-control"
                                 placeholder="Enter your blog title" />
                         </div>
                         <div class="col-md-12 mt-3">
+                            <label class="form-label">Slug</label>
+                            <input name="slug" readonly id="blog-slug" type="text" class="form-control"
+                                required />
+                        </div>
+                        <div class="col-md-12 mt-3">
                             <label class="form-label">Tag</label>
-                            <input name="tag" id="blog-tag" type="text" class="form-control"
+                            <input name="tag" id="blog-tag" required type="text" class="form-control"
                                 placeholder="Enter your blog tag" />
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <label class="form-label">Reading time</label>
+                            <input name="estimate_reading_time" id="blog-reading-time" required type="text"
+                                class="form-control" placeholder="Enter your estimate reading time, Ex: 3 minutes" />
                         </div>
                         <div class="col-md-12 mt-3">
                             <label class="form-label">Content</label>
@@ -29,7 +39,7 @@
                             <!-- File Input -->
                             <div class="col-md-12">
                                 <label class="form-label">Blog image</label>
-                                <input name="image" id="blog-img" type="file" accept=".jpg,.jpeg,.png"
+                                <input name="image" id="blog-img" required type="file" accept=".jpg,.jpeg,.png"
                                     class=" form-control " />
                             </div>
 

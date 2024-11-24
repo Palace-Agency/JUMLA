@@ -1,52 +1,25 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
-const seetingsAdapter = createEntityAdapter({
+const settingAdapter = createEntityAdapter({
     selectId: (setting) => setting.id,
 });
 
-const initialState = seetingsAdapter.getInitialState();
+const initialState = settingAdapter.getInitialState();
 
-export const settingsApiSlice = apiSlice.injectEndpoints({
+export const settingApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getLanguages: builder.query({
-            query: () => `/languages`,
+        getSetting: builder.query({
+            query: () => `/system-settings`,
             transformResponse: (responseData) => {
-                const languages = responseData.languages;
-                return seetingsAdapter.setAll(initialState, languages);
+                return settingAdapter.setAll(initialState, responseData);
             },
             providesTags: (result, error, arg) => [
-                { type: "Languages", id: "LIST" },
-                ...result.ids.map((id) => ({ type: "Languages", id })),
-            ],
-        }),
-        getCountries: builder.query({
-            query: () => `/countries`,
-            transformResponse: (responseData) => {
-                const countries = responseData.countries;
-                return seetingsAdapter.setAll(initialState, countries);
-            },
-            providesTags: (result, error, arg) => [
-                { type: "Countries", id: "LIST" },
-                ...result.ids.map((id) => ({ type: "Countries", id })),
-            ],
-        }),
-        getCurrencies: builder.query({
-            query: () => `/currencies`,
-            transformResponse: (responseData) => {
-                const currencies = responseData.currencies;
-                return seetingsAdapter.setAll(initialState, currencies);
-            },
-            providesTags: (result, error, arg) => [
-                { type: "Currencies", id: "LIST" },
-                ...result.ids.map((id) => ({ type: "Currencies", id })),
+                { type: "Setting", id: "LIST" },
+                ...result.ids.map((id) => ({ type: "Setting", id })),
             ],
         }),
     }),
 });
 
-export const {
-    useGetLanguagesQuery,
-    useGetCountriesQuery,
-    useGetCurrenciesQuery,
-} = settingsApiSlice;
+export const { useGetSettingQuery } = settingApiSlice;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import {
     AboutUs,
@@ -15,6 +15,8 @@ import FAQ from "../containers/home/faq/FAQ";
 import { useGetHomeContentQuery } from "../slices/homeContentSlice";
 import { Helmet } from "react-helmet-async";
 import usePageTracking from "../components/hooks/use-page-tracking";
+import LoadingPage from "../components/Loading/LoadingPage";
+import { useGetLatestBlogQuery } from "../slices/BlogsSlice";
 
 const Home = () => {
     const {
@@ -24,6 +26,8 @@ const Home = () => {
         isError,
         error,
     } = useGetHomeContentQuery("");
+
+    const { data: latestBlogs, isSuccessLoading } = useGetLatestBlogQuery("");
 
     let headerSection = null;
     let aboutUsSection = null;
@@ -82,36 +86,44 @@ const Home = () => {
             const locomotiveScroll = new LocomotiveScroll();
         })();
     }, []);
-    usePageTracking();
 
+    usePageTracking();
     return (
         <>
-            <Helmet>
-                <meta
-                    property="title"
-                    content={content?.entities[1]?.meta_title}
-                />
-                <meta
-                    name="description"
-                    content={content?.entities[1]?.meta_description}
-                />
-                <meta
-                    property="keywords"
-                    content={content?.entities[1]?.meta_keywords}
-                />
-            </Helmet>
-            <div className="container">
-                <Header content={headerSection} />
-                <AboutUs content={aboutUsSection} />
-                <Service content={servicesSection} />
-                <State content={trackRecordSection} />
-                <Location content={locationsSection} />
-                <Partner content={partnersSection} />
-                <Blog content={blogsSection} />
-                <FAQ content={faqSection} />
-            </div>
-            <Testimonial content={testimonialsSection} />
-            <Footer />
+            {isLoading ? (
+                <>
+                    <LoadingPage />
+                </>
+            ) : (
+                <>
+                    <Helmet>
+                        <meta
+                            property="title"
+                            content={content?.entities[1]?.meta_title}
+                        />
+                        <meta
+                            name="description"
+                            content={content?.entities[1]?.meta_description}
+                        />
+                        <meta
+                            property="keywords"
+                            content={content?.entities[1]?.meta_keywords}
+                        />
+                    </Helmet>
+                    <div className="container">
+                        <Header content={headerSection} />
+                        <AboutUs content={aboutUsSection} />
+                        <Service content={servicesSection} />
+                        <State content={trackRecordSection} />
+                        <Location content={locationsSection} />
+                        <Partner content={partnersSection} />
+                        <Blog blogs={latestBlogs} content={blogsSection} />
+                        <FAQ content={faqSection} />
+                    </div>
+                    <Testimonial content={testimonialsSection} />
+                    <Footer />
+                </>
+            )}
         </>
     );
 };

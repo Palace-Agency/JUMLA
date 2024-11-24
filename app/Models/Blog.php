@@ -9,9 +9,13 @@ class Blog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'tag', 'content', 'image'];
+    protected $fillable = ['title','estimate_reading_time', 'tag','slug', 'content', 'image'];
 
     public function content() {
         return $this->belongsTo(Content::class);
+    }
+
+    public function blog_tracking() {
+        return $this->hasMany(BlogTracking::class);
     }
 }

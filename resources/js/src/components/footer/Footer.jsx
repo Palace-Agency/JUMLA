@@ -1,30 +1,46 @@
-import styles from "./style.module.scss";
-import React, { useRef } from "react";
-import { useScroll, motion, useTransform, useSpring } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { useScroll, motion, useTransform } from "framer-motion";
 import Rounded from "../../common/RoundedButton/Rounded";
 import Magnetic from "../../common/Magnetic/Magnetic";
-import { logo } from "../../constants/logo";
 import { Link } from "react-router-dom";
+import { useGetSettingQuery } from "../../slices/settingsSlice";
+import styles from "./style.module.scss";
 
 const navItems = [
-    {
-        title: "Home",
-        href: "/",
-    },
-    {
-        title: "Services",
-        href: "/services",
-    },
-    {
-        title: "About us",
-        href: "/about-us",
-    },
-    {
-        title: "Contact us",
-        href: "/contact-us",
-    },
+    { title: "Home", href: "/" },
+    { title: "Services", href: "/services" },
+    { title: "About us", href: "/about-us" },
+    { title: "Contact us", href: "/contact-us" },
 ];
+
 const Footer = () => {
+    const [settings, setSettings] = useState({
+        logo: "",
+        email: "",
+        phone: "",
+        facebook_url: "",
+        tiktok_url: "",
+        instagram_url: "",
+    });
+
+    const { data: setting, isLoading, isSuccess } = useGetSettingQuery("");
+
+    useEffect(() => {
+        if (isSuccess) {
+            const settingData = setting.entities[1];
+            if (settingData) {
+                setSettings({
+                    logo: settingData.logo,
+                    email: settingData.email,
+                    phone: settingData.phone,
+                    facebook_url: settingData.facebook_url,
+                    tiktok_url: settingData.tiktok_url,
+                    instagram_url: settingData.instagram_url,
+                });
+            }
+        }
+    }, [isSuccess, setting]);
+
     const container = useRef(null);
     const { scrollYProgress } = useScroll({
         target: container,
@@ -33,13 +49,19 @@ const Footer = () => {
     const x = useTransform(scrollYProgress, [0, 1], [0, 100]);
     const y = useTransform(scrollYProgress, [0, 1], [-500, 0]);
     const rotate = useTransform(scrollYProgress, [0, 1], [120, 90]);
+
     return (
         <motion.div style={{ y }} ref={container} className={styles.contact}>
             <div className={styles.body}>
                 <div className={styles.title}>
                     <span>
                         <div className={styles.imageContainer}>
-                            <img fill={true} alt={"image"} src={logo} />
+                            {settings.logo && (
+                                <img
+                                    alt="Logo"
+                                    src={`http://127.0.0.1:8000/storage/uploads/settings/${settings.logo}`}
+                                />
+                            )}
                         </div>
                         <h2>Let's work</h2>
                     </span>
@@ -71,10 +93,10 @@ const Footer = () => {
                 </div>
                 <div className={styles.nav}>
                     <Rounded>
-                        <p>CONTACT@EJUMLA.MA</p>
+                        <p>{settings.email}</p>
                     </Rounded>
                     <Rounded>
-                        <p>+212 666-668701</p>
+                        <p>{settings.phone}</p>
                     </Rounded>
                 </div>
                 <div className="mt-10 p-5 md:flex items-center justify-center gap-10">
@@ -84,14 +106,14 @@ const Footer = () => {
                     </h2>
                     <div className="flex flex-col gap-3">
                         <div className="mt-6 flex max-w-md gap-x-4">
-                            <label for="email-address" className="sr-only">
+                            <label htmlFor="email-address" className="sr-only">
                                 Email address
                             </label>
                             <input
                                 id="email-address"
                                 name="email"
                                 type="email"
-                                autocomplete="email"
+                                autoComplete="email"
                                 required
                                 className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
                                 placeholder="Enter your email"

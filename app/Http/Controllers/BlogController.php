@@ -22,14 +22,16 @@ public function index()
 
     public function store(Request $request)
 {
+
     $blog = $request->validate([
         'title' => 'required|string|max:255',
+        'slug' => 'required|string|max:255',
+        'estimate_reading_time' => 'required|string|max:255',
         'content' => 'required|string',
         'tag' => 'required|string|max:100',
         'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
-    // dd($blog);
 
 if ($request->hasFile('image')) {
     $file = $request->file('image');
@@ -40,10 +42,12 @@ if ($request->hasFile('image')) {
 
 
 $blog = Blog::create([
-    'title' => $request->title,
-    'content' => $request->content,
-    'tag' => $request->tag,
-    'image' => $filename,
+    'title' => trim($request->title),
+    'slug' => trim($request->slug),
+    'estimate_reading_time' => trim($request->estimate_reading_time),
+    'content' => trim($request->content),
+    'tag' => trim($request->tag),
+    'image' => trim($filename),
 ]);
 
 
@@ -68,6 +72,8 @@ public function update(Request $request, string $id)
 
     $request->validate([
         'title' => 'required|string|max:255',
+        'slug' => 'required|string|max:255',
+        'estimate_reading_time' => 'required|string|max:255',
         'content' => 'required|string',
         'tag' => 'required|string|max:100',
         'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -87,10 +93,12 @@ public function update(Request $request, string $id)
     }
 
     $blog->update([
-        'title' => $request->title,
-        'content' => $request->content,
-        'tag' => $request->tag,
-        'image' => $filename,
+        'title' => trim($request->title),
+        'slug' => trim($request->slug),
+        'estimate_reading_time' => trim($request->estimate_reading_time),
+        'content' => trim($request->content),
+        'tag' => trim($request->tag),
+        'image' => trim($filename),
     ]);
 
     return response()->json([

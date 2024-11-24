@@ -9,7 +9,7 @@ class PageTracking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['country','time_spent','page_id'];
+    protected $fillable = ['ip_adresse','country','time_spent','page_id','visited_at'];
 
     public function page() {
         return $this->belongsTo(Page::class);

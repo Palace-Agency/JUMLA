@@ -86,7 +86,7 @@
                           </button>
                       </div>
 
-                      <div class="dropdown d-inline-block">
+                      {{-- <div class="dropdown d-inline-block">
                           <button type="button" class="btn header-item noti-icon waves-effect"
                               id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                               aria-expanded="false">
@@ -188,7 +188,7 @@
                                   </div>
                               </div>
                           </div>
-                      </div>
+                      </div> --}}
 
                       <div class="dropdown d-inline-block">
                           <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -201,19 +201,10 @@
                           </button>
                           <div class="dropdown-menu dropdown-menu-end">
                               <!-- item-->
-                              <a class="dropdown-item" href="#"><i
-                                      class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i>
-                                  <span class="align-middle">View Profile</span></a>
-                              <a class="dropdown-item" href="#"><i
-                                      class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span
-                                      class="align-middle">My Wallet</span></a>
                               <a class="dropdown-item d-block" href="#"><i
                                       class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span
                                       class="align-middle">Settings</span> <span
                                       class="badge bg-success-subtle text-success rounded-pill mt-1 ms-2">03</span></a>
-                              <a class="dropdown-item" href="#"><i
-                                      class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span
-                                      class="align-middle">Lock screen</span></a>
                               <a class="dropdown-item" href="#"><i
                                       class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i>
                                   <span class="align-middle">Sign out</span></a>
@@ -238,7 +229,7 @@
                                   <li class="nav-item dropdown">
                                       <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages"
                                           role="button">
-                                          <i class="uil-flask me-2"></i>Pages<div class="arrow-down"></div>
+                                          <i class="uil-window me-2"></i>Pages<div class="arrow-down"></div>
                                       </a>
 
                                       <div class="dropdown-menu" aria-labelledby="topnav-pages">
@@ -256,14 +247,32 @@
                                   </li>
                                   <li class="nav-item">
                                       <a class="nav-link" href="{{ route('blogs.index') }}">
-                                          <i class="uil-home-alt me-2"></i>
+                                          <i class="uil-blogger-alt me-2"></i>
                                           Blogs
                                       </a>
                                   </li>
                                   <li class="nav-item">
                                       <a class="nav-link" href="{{ route('contacts.index') }}">
-                                          <i class="uil-home-alt me-2"></i>
+                                          <i class="uil-comment-lines  me-2"></i>
                                           Contact us
+                                      </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" href="{{ route('tracking.index') }}">
+                                          <i class="uil-chart me-2"></i>
+                                          Tracking
+                                      </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" href="{{ route('pixels.index') }}">
+                                          <i class="uil-globe me-2"></i>
+                                          Pixels
+                                      </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" href="{{ route('settings.index') }}">
+                                          <i class="uil-wrench  me-2"></i>
+                                          System Setting
                                       </a>
                                   </li>
                               </ul>

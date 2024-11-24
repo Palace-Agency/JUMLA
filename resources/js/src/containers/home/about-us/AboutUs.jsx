@@ -6,6 +6,7 @@ import Rounded from "../../../common/RoundedButton/Rounded";
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../../../components/Title";
 import { useMediaQuery } from "../../../components/hooks/use-media-query";
+import { cn } from "../../../components/lib/utils";
 
 const AboutUs = ({ content }) => {
     const isMobile = useMediaQuery("(max-width: 1150px)");
@@ -21,7 +22,11 @@ const AboutUs = ({ content }) => {
         <>
             {isMobile ? (
                 <>
-                    <div className="mx-auto pt-16 sm:pt-32 max-w-7xl px-6 lg:px-8">
+                    <div
+                        data-scroll
+                        data-scroll-speed={0.2}
+                        className="mx-auto pt-16 sm:pt-40 max-w-7xl px-6 lg:px-8"
+                    >
                         <div className="mx-auto max-w-2xl lg:text-center">
                             <Title title={"About us"} />
                             <p className="mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
@@ -37,48 +42,68 @@ const AboutUs = ({ content }) => {
                     </div>
                 </>
             ) : (
-                <div ref={description} className={styles.description}>
-                    <div className={styles.body}>
-                        <Title title={"About us"} />
-                        <p>
-                            {phrase?.split(" ").map((word, index) => {
-                                return (
-                                    <span key={index} className={styles.mask}>
-                                        <motion.span
-                                            variants={slideUp}
-                                            custom={index}
-                                            animate={
-                                                isInView ? "open" : "closed"
-                                            }
+                <>
+                    <Title className={"pt-10 sm:pt-32"} title={"About us"} />
+                    <div
+                        ref={description}
+                        data-scroll
+                        data-scroll-speed={0.2}
+                        className={cn(
+                            styles.description,
+                            "container mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl text-center"
+                        )}
+                    >
+                        <div className={styles.body}>
+                            <p>
+                                {phrase?.split(" ").map((word, index) => {
+                                    return (
+                                        <span
                                             key={index}
+                                            className={styles.mask}
                                         >
-                                            {word}
-                                        </motion.span>
-                                    </span>
-                                );
-                            })}
-                        </p>
-                        <motion.p
-                            variants={opacity}
-                            animate={isInView ? "open" : "closed"}
-                            style={{
-                                display: "-webkit-box",
-                                WebkitBoxOrient: "vertical",
-                                overflow: "hidden",
-                                WebkitLineClamp: 3,
-                                textOverflow: "ellipsis",
-                            }}
-                        >
-                            {content?.description}
-                        </motion.p>
+                                            <motion.span
+                                                variants={slideUp}
+                                                custom={index}
+                                                animate={
+                                                    isInView ? "open" : "closed"
+                                                }
+                                                key={index}
+                                            >
+                                                {word}
+                                            </motion.span>
+                                        </span>
+                                    );
+                                })}
+                            </p>
+                            <motion.p
+                                variants={opacity}
+                                animate={isInView ? "open" : "closed"}
+                                style={{
+                                    display: "-webkit-box",
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    WebkitLineClamp: 5,
+                                    textOverflow: "ellipsis",
+                                }}
+                            >
+                                {content?.description}
+                            </motion.p>
 
-                        <div onClick={handleClick}>
-                            <Rounded className={styles.button}>
-                                <p>More</p>
-                            </Rounded>
+                            <div onClick={handleClick}>
+                                <Rounded className={styles.button}>
+                                    <p>More</p>
+                                </Rounded>
+                            </div>
                         </div>
+                        {/* <div className={styles.image}>
+                            <img
+                                src={about_us}
+                                alt="About us"
+                                className={styles.img}
+                            />
+                        </div> */}
                     </div>
-                </div>
+                </>
             )}
         </>
     );

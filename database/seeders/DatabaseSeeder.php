@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Page;
+use App\Models\Pixel;
 use App\Models\Section;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -143,6 +144,42 @@ class DatabaseSeeder extends Seeder
             ];
             if (!User::first()) {
                 User::insert($data_users);
+            }
+
+        $data_pixels = [
+                [
+                'social_media' => 'facebook',
+                'code' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+                [
+                'social_media' => 'tiktok',
+                'code' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+                [
+                'social_media' => 'snapchat',
+                'code' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+                [
+                'social_media' => 'google',
+                'code' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+                [
+                'social_media' => 'twiter',
+                'code' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            ];
+            if (!Pixel::first()) {
+                Pixel::insert($data_pixels);
             }
     }
 
