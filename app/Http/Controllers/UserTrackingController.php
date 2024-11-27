@@ -27,7 +27,7 @@ class UserTrackingController extends Controller
 
 
     public function countryStats() {
-        $query = PageTracking::selectRaw('country, COUNT(DISTINCT ip_adresse) as user_count, AVG(time_spent) as avg_time_spent')
+        $query = PageTracking::selectRaw('country, COUNT(DISTINCT visitor_id) as user_count, AVG(time_spent) as avg_time_spent')
         ->groupBy('country');
           if (request()->ajax()) {
                return DataTables::of($query)

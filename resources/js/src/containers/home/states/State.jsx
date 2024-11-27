@@ -45,20 +45,20 @@ const State = ({ content }) => {
                         {content?.description}
                     </p>
                 </div>
-                <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-                    <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+                <div className=" flex justify-center mt-16  sm:mt-20 ">
+                    <div className="grid grid-cols-1 gap-x-8 gap-y-16 rounded-3xl md:grid-cols-2 lg:grid-cols-4">
                         {content?.track_records.map((stat) => (
                             <div
                                 key={stat.id}
-                                className="mx-auto border border-1 border-orange-300 px-10 py-5 rounded-xl flex max-w-xs flex-col gap-y-4"
+                                className="items-center min-w-[150px] shadow-md aspect-[1155/678] justify-center px-10 py-5 rounded-xl flex flex-col gap-y-4 "
                             >
-                                <dt className="text-base/7 text-gray-600">
+                                <div className="text-base/7 text-gray-600">
                                     {stat.record_title}
-                                </dt>
-                                <dd className="flex items-center gap-3 order-first text-3xl font-medium tracking-tight text-gray-900 sm:text-5xl">
+                                </div>
+                                <div className="flex items-center gap-3 order-first text-2xl text-gray-900 sm:text-5xl">
                                     <img
                                         src={`http://127.0.0.1:8000/storage/uploads/content/landing-page/${stat.icon}`}
-                                        className="h-14 w-14"
+                                        className="h-12 w-12"
                                     />
                                     {isInView && (
                                         <CountUp
@@ -66,12 +66,13 @@ const State = ({ content }) => {
                                             end={stat.record_number}
                                             duration={2}
                                             separator=","
+                                            className="text-3xl"
                                         />
                                     )}
-                                </dd>
+                                </div>
                             </div>
                         ))}
-                    </dl>
+                    </div>
                 </div>
             </div>
             <div

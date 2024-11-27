@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\ContentRecord;
 use App\Models\ContentService;
 use App\Models\FAQ;
 use App\Models\Location;
@@ -22,9 +23,9 @@ class LandingPageController extends Controller
         $page = Page::where('name', '=', 'Landing page')->first();
         if ($page) {
             $page->update([
-                'meta_title' => $request['meta_title'],
-                'meta_description' => $request['meta_description'],
-                'meta_keywords' => $request['meta_keywords'],
+                'meta_title' => trim($request['meta_title']),
+                'meta_description' => trim($request['meta_description']),
+                'meta_keywords' => trim($request['meta_keywords']),
             ]);
         }
 
@@ -38,13 +39,13 @@ class LandingPageController extends Controller
         $content = Content::where('section_id', 1)->first();
         if ($content) {
             $content->update([
-                'title' => $request['title'],
-                'description' => $request['description'],
+                'title' => trim($request['title']),
+                'description' => trim($request['description']),
             ]);
         } else {
             $content = Content::create([
-                'title' => $request['title'],
-                'description' => $request['description'],
+                'title' => trim($request['title']),
+                'description' => trim($request['description']),
                 'section_id' => 1,
             ]);
         }
@@ -59,13 +60,13 @@ class LandingPageController extends Controller
         $content = Content::where('section_id', 2)->first();
         if ($content) {
             $content->update([
-                'title' => $request['title'],
-                'description' => $request['description'],
+                'title' => trim($request['title']),
+                'description' => trim($request['description']),
             ]);
         } else {
             $content = Content::create([
-                'title' => $request['title'],
-                'description' => $request['description'],
+                'title' => trim($request['title']),
+                'description' => trim($request['description']),
                 'section_id' => 2,
             ]);
         }
@@ -84,23 +85,23 @@ class LandingPageController extends Controller
             $content = Content::where('section_id', 3)->first();
             if ($content) {
                 $content->update([
-                    'title' => $request['title'],
-                    'description' => $request['description'],
+                    'title' => trim($request['title']),
+                    'description' => trim($request['description']),
                 ]);
             } else {
                 $content = Content::create([
-                    'title' => $request['title'],
-                    'description' => $request['description'],
+                    'title' => trim($request['title']),
+                    'description' => trim($request['description']),
                     'section_id' => 3,
                 ]);
             }
 
             if (isset($services) && isset($icons)) {
                 foreach ($services as $index => $service) {
-                    $title = $service['title'];
-                    $description = $service['description'];
+                    $title = trim($service['title']);
+                    $description = trim($service['description']);
                     $icon = $icons[$index];
-                    $existingService = ContentService::where('title', $service['title'])->where('content_id', $content->id)->first();
+                    $existingService = ContentService::where('title', trim($service['title']))->where('content_id', $content->id)->first();
                     if ($existingService ) {
                         $iconName = $existingService->icon;
                              $oldIconePath = storage_path("app/public/uploads/content/landing-page/" . $iconName);
@@ -154,23 +155,23 @@ class LandingPageController extends Controller
                   $content = Content::where('section_id', 4)->first();
                   if ($content) {
                       $content->update([
-                          'title' => $request['title'],
-                          'description' => $request['description'],
+                          'title' => trim($request['title']),
+                          'description' => trim($request['description']),
                       ]);
                   } else {
                       $content = Content::create([
-                          'title' => $request['title'],
-                          'description' => $request['description'],
+                          'title' => trim($request['title']),
+                          'description' => trim($request['description']),
                           'section_id' => 4,
                       ]);
                   }
 
                   if (isset($records) && isset($icons)) {
                       foreach ($records as $index => $record) {
-                          $number = $record['title'];
-                          $description = $record['description'];
+                          $number = trim($record['title']);
+                          $description = trim($record['description']);
                           $icon = $icons[$index];
-                          $existingRecord = TrackRecord::where('record_number', $record['title'])->where('record_title', $record['description'])->first();
+                          $existingRecord = TrackRecord::where('record_number', trim($record['title']))->where('record_title', $record['description'])->first();
                           if ($existingRecord) {
                               $iconName = $existingRecord->icon;
                                    $oldIconePath = storage_path("app/public/uploads/content/landing-page/" . $iconName);
@@ -225,22 +226,22 @@ class LandingPageController extends Controller
                   $content = Content::where('section_id', 5)->first();
                   if ($content) {
                       $content->update([
-                          'title' => $request['title'],
-                          'description' => $request['description'],
+                          'title' => trim($request['title']),
+                          'description' => trim($request['description']),
                       ]);
                   } else {
                       $content = Content::create([
-                          'title' => $request['title'],
-                          'description' => $request['description'],
+                          'title' => trim($request['title']),
+                          'description' => trim($request['description']),
                           'section_id' => 5,
                       ]);
                   }
 
                   if (isset($locations) && isset($icons)) {
                       foreach ($locations as $index => $location) {
-                          $country = $location['country'];
+                          $country = trim($location['country']);
                           $icon = $icons[$index];
-                          $existinglocation = Location::where('country', $location['country'])->first();
+                          $existinglocation = Location::where('country', trim($location['country']))->first();
                           if ($existinglocation) {
                                    $iconName = $existinglocation->icon;
                                    $oldIconePath = storage_path("app/public/uploads/content/landing-page/" . $iconName);
@@ -294,11 +295,11 @@ class LandingPageController extends Controller
 
             if ($content) {
                 $content->update([
-                    'title' => $request['title'],
+                    'title' => trim($request['title']),
                 ]);
             } else {
                 $content = Content::create([
-                    'title' => $request['title'],
+                    'title' => trim($request['title']),
                     'section_id' => 6,
                 ]);
             }
@@ -335,13 +336,13 @@ class LandingPageController extends Controller
         $content = Content::where('section_id', 7)->first();
         if ($content) {
             $content->update([
-                'title' => $request['title'],
-                'description' => $request['description'],
+                'title' => trim($request['title']),
+                'description' => trim($request['description']),
             ]);
         } else {
             $content = Content::create([
-                'title' => $request['title'],
-                'description' => $request['description'],
+                'title' => trim($request['title']),
+                'description' => trim($request['description']),
                 'section_id' => 7,
             ]);
         }
@@ -361,13 +362,13 @@ class LandingPageController extends Controller
 
             if ($content) {
                 $content->update([
-                    'title' => $request['title'],
-                    'description' => $request['description'],
+                    'title' => trim($request['title']),
+                    'description' => trim($request['description']),
                 ]);
             } else {
                 $content = Content::create([
-                    'title' => $request['title'],
-                    'description' => $request['description'],
+                    'title' => trim($request['title']),
+                    'description' => trim($request['description']),
                     'section_id' => 8,
                 ]);
             }
@@ -381,13 +382,13 @@ class LandingPageController extends Controller
 
                     if ($existingFaq) {
                         $existingFaq->update([
-                            'question' => $faq['question'],
-                            'answer' => $faq['answer'],
+                            'question' => trim($faq['question']),
+                            'answer' => trim($faq['answer']),
                         ]);
                     } else {
                         FAQ::create([
-                            'question' => $faq['question'],
-                            'answer' => $faq['answer'],
+                            'question' => trim($faq['question']),
+                            'answer' => trim($faq['answer']),
                             'content_id' => $content->id,
                         ]);
                     }
@@ -413,11 +414,11 @@ class LandingPageController extends Controller
         $content = Content::where('section_id', 9)->first();
         if ($content) {
             $content->update([
-                'title' => $request['title'],
+                'title' => trim($request['title']),
             ]);
         } else {
             $content = Content::create([
-                'title' => $request['title'],
+                'title' => trim($request['title']),
                 'section_id' => 9,
             ]);
         }
@@ -428,120 +429,161 @@ class LandingPageController extends Controller
     }
 
 
+    public function serviceDelete($id) {
+        $service = ContentService::find($id);
+
+        if (!$service) {
+            return response()->json([
+                'error' => 'Service not found',
+            ], 404);
+        }
+
+        try {
+            DB::transaction(function () use ($service) {
+                   if (is_string($service->icon)) {
+                       $iconPath = storage_path("app/public/uploads/content/landing-page/" . $service->icon);
+
+                       if (File::exists($iconPath)) {
+                           File::delete($iconPath);
+                       }
+                   }
+
+                   $service->delete();
+            });
+
+            return response()->json([
+                'success' => 'Service deleted successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Service deletion failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    public function recordDelete($id) {
+        $record = TrackRecord::find($id);
+
+
+        if (!$record) {
+            return response()->json([
+                'error' => 'Record not found',
+            ], 404);
+        }
+
+        try {
+            DB::transaction(function () use ($record) {
+                   if (is_string($record->icon)) {
+                       $iconPath = storage_path("app/public/uploads/content/landing-page/" . $record->icon);
+
+                       if (File::exists($iconPath)) {
+                           File::delete($iconPath);
+                       }
+                   }
+
+                   $record->delete();
+            });
+
+            return response()->json([
+                'success' => 'Record deleted successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Record deletion failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function locationDelete($id) {
+        $location = Location::find($id);
+
+
+        if (!$location) {
+            return response()->json([
+                'error' => 'Location not found',
+            ], 404);
+        }
+
+        try {
+            DB::transaction(function () use ($location) {
+                   if (is_string($location->flag)) {
+                       $iconPath = storage_path("app/public/uploads/content/landing-page/" . $location->flag);
+
+                       if (File::exists($iconPath)) {
+                           File::delete($iconPath);
+                       }
+                   }
+
+                   $location->delete();
+            });
+
+            return response()->json([
+                'success' => 'Location deleted successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Location deletion failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function PartnerDelete($id) {
+        $partner = Partner::find($id);
+
+
+        if (!$partner) {
+            return response()->json([
+                'error' => 'Partner not found',
+            ], 404);
+        }
+
+        try {
+            DB::transaction(function () use ($partner) {
+                   if (is_string($partner->logo)) {
+                       $iconPath = storage_path("app/public/uploads/content/landing-page/" . $partner->logo);
+
+                       if (File::exists($iconPath)) {
+                           File::delete($iconPath);
+                       }
+                   }
+
+                   $partner->delete();
+            });
+
+            return response()->json([
+                'success' => 'Partner deleted successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Partner deletion failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function faqDelete($id) {
+        $faq = FAQ::find($id);
+
+
+        if (!$faq) {
+            return response()->json([
+                'error' => 'FAQ not found',
+            ], 404);
+        }
+
+
+
+        $faq->delete();
+
+        return response()->json([
+            'success' => 'FAQ deleted successfully',
+        ], 200);
+
+    }
+
+
 }
 
 
-    //   public function store(Request $request)
-    //   {
-    //       $page = Page::where('name', '=', 'Services')->first();
-    //       $services = $request->input('services');
-    //       $icons = $request->file('services.*.icon');
-    //       try {
-    //           DB::transaction(function () use ($request, $page, $services,$icons) {
-    //               if ($page) {
-    //                   $page->update([
-    //                       'meta_title' => $request['meta_title'],
-    //                       'meta_description' => $request['meta_description'],
-    //                       'meta_keywords' => $request['meta_keywords'],
-    //                   ]);
-    //               }
-
-    //               $content = Content::where('section_id', 10)->with('images')->first();
-    //               if ($content && $content->images->isNotEmpty()) {
-    //                  $existingImage = $content->images->first();
-
-    //                   if ($existingImage) {
-    //                       $existingImage->delete();
-
-    //                       $oldImagePath = storage_path("app/public/uploads/content/service/" . $existingImage->image);
-    //                       $fileExists = file_exists($oldImagePath);
-    //                       if ($fileExists) {
-    //                           File::delete($oldImagePath);
-    //                       }
-
-    //                       $file = $request->file('image');
-    //                       $extension = $file->getClientOriginalExtension();
-    //                       $imagename = time() . '.' . $extension;
-    //                       $file->storeAs('uploads/content/service/', $imagename, 'public');
-    //                   }
-    //               } else {
-    //                   if ($request->hasFile('image')) {
-    //                       $file = $request->file('image');
-    //                       $extension = $file->getClientOriginalExtension();
-    //                       $imagename = time() . '.' . $extension;
-    //                       $file->storeAs('uploads/content/service/', $imagename, 'public');
-    //                   }
-    //               }
-
-    //               if ($content) {
-    //                   $content->update([
-    //                       'title' => $request['title'],
-    //                       'short_description' => $request['short_description'],
-    //                       'description' => $request['description'],
-    //                   ]);
-    //                   if ($request->hasFile('image')) {
-    //                       $content->images()->create(['image' => $imagename]);
-    //                     }
-    //               } else {
-    //                   $content = Content::create([
-    //                       'title' => $request['title'],
-    //                       'short_description' => $request['short_description'],
-    //                       'description' => $request['description'],
-    //                       'section_id' => 10,
-    //                   ]);
-    //                   if ($request->hasFile('image')) {
-    //                       $content->images()->create(['image' => $imagename]);
-    //                   }
-    //               }
-
-    //               if (isset($services) && isset($icons)) {
-    //                   foreach ($services as $index => $service) {
-    //                       $title = $service['title'];
-    //                       $description = $service['description'];
-    //                       $icon = $icons[$index];
-    //                       $existingService = ContentService::where('title', $service['title'])->where('content_id', $content->id)->first();
-    //                       if ($existingService ) {
-    //                           $iconName = $existingService->icon;
-    //                                $oldIconePath = storage_path("app/public/uploads/content/service/" . $iconName);
-    //                                $fileExists = file_exists($oldIconePath);
-    //                                if ($fileExists) {
-    //                                    File::delete($oldIconePath);
-    //                                }
-    //                                $extension = $icon->getClientOriginalExtension();
-    //                                $iconname = uniqid() . '.' . $extension;
-    //                                $icon->storeAs('uploads/content/service/', $iconname, 'public');
-
-    //                               $existingService->update([
-    //                               'description' => $description,
-    //                               'icon' => $iconname,
-    //                                ]);
-    //                       }
-    //                       else {
-    //                           $extension = $icon->getClientOriginalExtension();
-    //                           $iconname = uniqid() . '.' . $extension;
-    //                           $icon->storeAs('uploads/content/service/', $iconname, 'public');
-    //                           ContentService::create([
-    //                            'title' => $title ,
-    //                            'description' => $description,
-    //                            'icon' => $iconname,
-    //                            'content_id' => $content->id,
-    //                           ]);
-    //                       }
-    //                   }
-    //               }
-    //           });
-
-    //           return response()->json([
-    //               'success' => 'Service saved successfully',
-    //           ]);
-    //       } catch (Exception $e) {
-    //           return response()->json(
-    //               [
-    //                   'error' => 'Service creation failed: ' . $e->getMessage(),
-    //               ],
-    //               500,
-    //           );
-    //       }
-    //   }
 
 

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pixel;
+use App\Models\PixelInformation;
 use Illuminate\Http\Request;
 
 class PixelController extends Controller
 {
     public function index() {
-        $pixels = Pixel::all()->keyBy('social_media');
+        $pixels = Pixel::with('pixel_information')->get()->keyBy('social_media');
         return view('container.pixel.index',compact('pixels'));
     }
 
@@ -21,26 +22,49 @@ class PixelController extends Controller
     public function store(Request $request)
     {
         $pixelType = $request->input('type');
-        $pixelCode = $request->input($pixelType . '_code');
 
-        if (!$pixelType || !$pixelCode) {
-            return response()->json(['success' => false, 'message' => 'Pixel type or code is missing'], 400);
-        }
 
-        // Update the pixel based on its type
-        $updated = $this->updatePixel($pixelType, $pixelCode);
+        $pixel = Pixel::where('social_media', $pixelType)->first();
 
-        if ($updated) {
-            return response()->json(['success' => true, 'message' => ucfirst($pixelType) . ' pixel updated successfully.']);
+        $pixels = json_decode($request->input('pixels'), true);
+
+        if ($pixel) {
+            foreach ($pixels as $pixelData) {
+                PixelInformation::create([
+                    'country_targeted' => $pixelData['country'],
+                    'script' => $pixelData['script'],
+                    'noscript' => $pixelData['noscript'],
+                    'pixel_id' => $pixel->id,
+                ]);
+            }
+            return response()->json(['success'=> true,'message' => 'Pixel added succesfully']);
+
         } else {
-            return response()->json(['success' => false, 'message' => ucfirst($pixelType) . ' pixel not found.'], 404);
+            return response()->json(['message' => 'Pixel not found'], 404);
         }
+
     }
 
-    private function updatePixel($type, $code)
-    {
-        return Pixel::where('social_media', $type)->update(['code' => $code]) > 0;
+    public function PixelDelete($id) {
+        $pixel = PixelInformation::find($id);
+
+
+        if (!$pixel) {
+            return response()->json([
+                'error' => 'Pixel not found',
+            ], 404);
+        }
+
+
+
+        $pixel->delete();
+
+        return response()->json([
+            'success' => 'Pixel deleted successfully',
+        ], 200);
+
     }
+
 
 
 }

@@ -148,7 +148,7 @@ const AboutUs = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-28 flex gap-9 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
+                            <div className="mt-28 flex justify-center gap-3 md:gap-9 md:p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                                 {groupedImages &&
                                     groupedImages.map((group, groupIndex) => (
                                         <div
@@ -166,7 +166,7 @@ const AboutUs = () => {
                                                         1
                                                     }`}
                                                     src={`http://127.0.0.1:8000/storage/uploads/content/about-us/${img.image}`}
-                                                    className="w-[304px] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[274px]"
+                                                    className="w-[150px] md:w-[304px] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[274px]"
                                                 />
                                             ))}
                                         </div>

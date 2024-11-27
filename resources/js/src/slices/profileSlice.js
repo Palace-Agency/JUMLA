@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getToken, setCredentials, setError } from "./userSlice";
+import { setCredentials, setError } from "./userSlice";
 
 export const profileSlice = createApi({
     reducerPath: "profileApi",
@@ -24,8 +24,8 @@ export const profileSlice = createApi({
                 body: data,
             }),
             transformResponse: (response) => {
-                const { user, token, message } = response;
-                return { user, token, message };
+                const { user, message } = response;
+                return { user, message };
             },
             onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
                 try {

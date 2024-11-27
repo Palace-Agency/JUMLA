@@ -9,10 +9,12 @@ class BlogTracking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ip_adresse','time_spent','blog_id'];
+    protected $fillable = ['visitor_id','time_spent','blog_id','visited_at'];
 
-    public function blogs() {
-        return $this->belongsTo(Blog::class);
-    }
+public function blogs()
+{
+    return $this->belongsTo(Blog::class, 'blog_id');
+}
+
 
 }

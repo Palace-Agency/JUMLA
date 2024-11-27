@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Title from "../../../components/Title";
 import React from "react";
+import Rounded from "../../../common/RoundedButton/Rounded";
+import { motion } from "framer-motion";
 
 const stripHtmlTags = (htmlContent) => {
     const doc = new DOMParser().parseFromString(htmlContent, "text/html");
@@ -8,11 +10,16 @@ const stripHtmlTags = (htmlContent) => {
 };
 
 const Blog = ({ blogs, content }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate("/blogs");
+    };
     return (
         <div
             data-scroll
             data-scroll-speed={0.1}
-            className="mx-auto max-w-7xl px-6 lg:px-8"
+            className="mx-auto rlative max-w-7xl px-6 lg:px-8"
         >
             <div className="mx-auto max-w-2xl lg:text-center">
                 <Title title={"Blogs"} />
@@ -23,6 +30,11 @@ const Blog = ({ blogs, content }) => {
                     {content?.description}
                 </p>
             </div>
+            {/* <div>
+                <Rounded className={styles.button_blog}>
+                    <p>More</p>
+                </Rounded>
+            </div> */}
             <div
                 data-scroll
                 data-scroll-speed={0.02}
@@ -33,7 +45,7 @@ const Blog = ({ blogs, content }) => {
                         {blogs.ids.map((id) => (
                             <div
                                 key={id}
-                                className="w-full z-50 h-full space-y-3 py-3"
+                                className="w-full z-30 h-full space-y-3 py-3"
                             >
                                 <img
                                     alt="Blog image"
@@ -76,14 +88,16 @@ const Blog = ({ blogs, content }) => {
                         ))}
                     </>
                 )}
-                {/* {blogs.map((blog) => (
-                    <div
-                        key={blog.title}
-                        className="w-full h-full space-y-3 py-3"
-                    >
-
-                    </div>
-                ))} */}
+            </div>
+            <div className="mt-10 flex items-center justify-center gap-x-6">
+                <motion.button
+                    onClick={handleClick}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="rounded-md z-30 bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                    See more <span aria-hidden="true">→</span>
+                </motion.button>
             </div>
         </div>
     );

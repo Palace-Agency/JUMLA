@@ -1,22 +1,7 @@
-// src/api/authApiSlice.js
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getToken, setCredentials, setError } from "./userSlice";
+import { apiSlice } from "../api/apiSlice";
+import { setCredentials, setError } from "./userSlice";
 
-export const authApiSlice = createApi({
-    reducerPath: "authApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_BACKEND_URL + "/api",
-        prepareHeaders: (headers) => {
-            const token = getToken();
-            console.log(token);
-            if (token) {
-                headers.set("Authorization", `Bearer ${token}`);
-            }
-            headers.set("Content-Type", "application/json");
-            return headers;
-        },
-    }),
-    tagTypes: ["User"],
+export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: ({ email, password }) => ({
@@ -25,99 +10,9 @@ export const authApiSlice = createApi({
                 body: { email, password },
             }),
             transformResponse: (response) => {
-                const { user, token } = response;
-                return { user, token };
-            },
-            onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(setCredentials(data));
-                } catch (error) {
-                    dispatch(setError("Login failed"));
-                }
-            },
-        }),
-        register: builder.mutation({
-            query: ({ email, password }) => ({
-                url: "/client/register",
-                method: "POST",
-                body: { email, password },
-            }),
-            transformResponse: (response) => {
-                const { user, token } = response;
-                return { user, token };
-            },
-            onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(setCredentials(data));
-                } catch (error) {
-                    dispatch(setError("Login failed"));
-                }
-            },
-        }),
-        verify: builder.mutation({
-            query: ({ email, pin }) => ({
-                url: "/client/verify",
-                method: "POST",
-                body: { email, pin },
-            }),
-            transformResponse: (response) => {
-                const { message } = response;
-                return { message };
-            },
-        }),
-        sentVerificationCode: builder.mutation({
-            query: ({ email }) => ({
-                url: "/client/resend-verification-code",
-                method: "POST",
-                body: { email },
-            }),
-            transformResponse: (response) => {
-                const { message } = response;
-                return { message };
-            },
-        }),
-        googleAuth: builder.mutation({
-            query: (user) => ({
-                url: "/auth/google",
-                method: "POST",
-                body: { user },
-            }),
-            transformResponse: (response) => {
-                const { user, token } = response;
-                return { user, token };
-            },
-            onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(setCredentials(data));
-                } catch (error) {
-                    dispatch(setError("Login failed"));
-                }
-            },
-        }),
-        verifyEmail: builder.mutation({
-            query: ({ email }) => ({
-                url: "/client/reset-password/send-verification-code",
-                method: "POST",
-                body: { email },
-            }),
-            transformResponse: (response) => {
-                const { message } = response;
-                return { message };
-            },
-        }),
-        verifyCode: builder.mutation({
-            query: ({ email, pin }) => ({
-                url: "/client/reset-password/verify-code",
-                method: "POST",
-                body: { email, pin },
-            }),
-            transformResponse: (response) => {
                 console.log(response);
-                const { message, user } = response;
-                return { message, user };
+                const { user } = response;
+                return { user };
             },
             onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
                 try {
@@ -126,17 +21,6 @@ export const authApiSlice = createApi({
                 } catch (error) {
                     dispatch(setError("Login failed"));
                 }
-            },
-        }),
-        resendVerificationCode: builder.mutation({
-            query: ({ email }) => ({
-                url: "/client/reset-password/resend-verification-code",
-                method: "POST",
-                body: { email },
-            }),
-            transformResponse: (response) => {
-                const { message } = response;
-                return { message };
             },
         }),
         resetPassword: builder.mutation({
@@ -153,14 +37,4 @@ export const authApiSlice = createApi({
     }),
 });
 
-export const {
-    useLoginMutation,
-    useRegisterMutation,
-    useVerifyMutation,
-    useSentVerificationCodeMutation,
-    useGoogleAuthMutation,
-    useVerifyEmailMutation,
-    useVerifyCodeMutation,
-    useResendVerificationCodeMutation,
-    useResetPasswordMutation,
-} = authApiSlice;
+export const { useLoginMutation, useResetPasswordMutation } = authApiSlice;

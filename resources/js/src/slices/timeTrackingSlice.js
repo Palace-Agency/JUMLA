@@ -9,7 +9,15 @@ export const timeTrackingApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        blogTimeTracking: builder.mutation({
+            query: (data) => ({
+                url: "/blog-tracking",
+                method: "POST",
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useTimeTrackingMutation } = timeTrackingApiSlice;
+export const { useTimeTrackingMutation, useBlogTimeTrackingMutation } =
+    timeTrackingApiSlice;

@@ -63,7 +63,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="service-title">Title</label>
-                                            <input type="text" name="title"
+                                            <input required type="text" name="title"
                                                 value="{{ old('title', $content->title ?? '') }}" class="form-control"
                                                 id="service-title" placeholder="Enter your Title">
                                         </div>
@@ -75,7 +75,7 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="service-description">Short
                                                 description</label>
-                                            <textarea class="form-control" name="short_description" placeholder="Enter your Short Description"
+                                            <textarea required class="form-control" name="short_description" placeholder="Enter your Short Description"
                                                 id="service-description" rows="3">{{ old('short_description', $content->short_description ?? '') }}</textarea>
                                         </div>
                                     </div>
@@ -84,7 +84,8 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="service-description">Description</label>
-                                            <textarea name="description" id="description-classic-editor" class="form-control" placeholder="Enter your description">{{ old('description', $content->description ?? '') }}</textarea>
+                                            <textarea required name="description" id="description-classic-editor" class="form-control"
+                                                placeholder="Enter your description">{{ old('description', $content->description ?? '') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +93,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="service-image">Service Image</label>
-                                            <input id="service-image"
+                                            <input required id="service-image"
                                                 value="{{ isset($content) && $content->images->first() ? Storage::url('uploads/content/service/' . $content->images->first()->image) : '' }}"
                                                 name="image" type="file" accept=".jpg,.jpeg,.png"
                                                 class="form-control" />
@@ -229,7 +230,7 @@
                                 <div class="col-sm-6">
                                     <div class="mb-3">
                                         <label class="form-label" for="metatitle">Meta title</label>
-                                        <input id="metatitle" value="{{ old('meta_title', $page->meta_title) }}"
+                                        <input required id="metatitle" value="{{ old('meta_title', $page->meta_title) }}"
                                             name="meta_title" type="text" class="form-control" name="meta_title"
                                             placeholder="Enter your Meta title">
                                         <small class="text-muted d-block mb-2">
@@ -244,9 +245,10 @@
                                 <div class="col-sm-6">
                                     <div class="mb-3">
                                         <label class="form-label" for="metakeywords">Meta Keywords</label>
-                                        <input id="metakeywords" value="{{ old('meta_keywords', $page->meta_keywords) }}"
-                                            name="meta_keywords" type="text" class="form-control"
-                                            name="meta_keywords" placeholder="Enter your Meta Keywords">
+                                        <input required id="metakeywords"
+                                            value="{{ old('meta_keywords', $page->meta_keywords) }}" name="meta_keywords"
+                                            type="text" class="form-control" name="meta_keywords"
+                                            placeholder="Enter your Meta Keywords">
                                         <small class="text-muted d-block mb-2">
                                             Meta keywords are optional and include a list of relevant keywords for the
                                             page,
@@ -258,7 +260,7 @@
 
                             <div class="mb-0">
                                 <label class="form-label" for="metadescription">Meta Description</label>
-                                <textarea name="meta_description" class="form-control" id="metadescription" rows="4"
+                                <textarea required name="meta_description" class="form-control" id="metadescription" rows="4"
                                     placeholder="Enter your Meta Description">{{ old('meta_description', $page->meta_description) }}</textarea>
                                 <small class="text-muted d-block mb-2">
                                     The meta description is a short summary of the page's content. Aim for 150-160

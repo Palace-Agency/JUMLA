@@ -36,7 +36,11 @@ use Illuminate\Support\Facades\Route;
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
+Route::middleware('auth')->group(function () {
 Route::get('/dashboard', [DashboardController::class,'index'])->name('pages.dashboard');
+Route::get('/dashboard/page-views', [DashboardController::class, 'getPageViews']);
+Route::get('/dashboard/active-users', [DashboardController::class, 'getActiveUsersData']);
+Route::get('/dashboard/active-users-by-country', [DashboardController::class, 'getActiveUsersByCountry']);
 Route::get('/landing_page',[ PageController::class,'landingPage'])->name('pages.landing_page');
 Route::get('/service_page',[ PageController::class,'servicePage'])->name('pages.service_page');
 Route::post('/service_page',[ ServiceController::class,'store'])->name('service_page.store');
@@ -46,6 +50,11 @@ Route::post('/landing_page/meta_data',[ LandingPageController::class,'metaData']
 Route::post('/landing_page/header',[ LandingPageController::class,'header'])->name('landing_page_page.header');
 Route::post('/landing_page/about_us',[ LandingPageController::class,'aboutUs'])->name('landing_page_page.aboutUs');
 Route::post('/landing_page/service',[ LandingPageController::class,'service'])->name('landing_page_page.service');
+Route::delete('/landing_page/service/{id}',[ LandingPageController::class,'serviceDelete'])->name('landing_page_page.serviceDelete');
+Route::delete('/landing_page/record/{id}',[ LandingPageController::class,'recordDelete'])->name('landing_page_page.recordDelete');
+Route::delete('/landing_page/location/{id}',[ LandingPageController::class,'locationDelete'])->name('landing_page_page.locationDelete');
+Route::delete('/landing_page/partner/{id}',[ LandingPageController::class,'partnerDelete'])->name('landing_page_page.partnerDelete');
+Route::delete('/landing_page/faq/{id}',[ LandingPageController::class,'faqDelete'])->name('landing_page_page.faqDelete');
 Route::post('/landing_page/record',[ LandingPageController::class,'record'])->name('landing_page_page.record');
 Route::post('/landing_page/location',[ LandingPageController::class,'location'])->name('landing_page_page.location');
 Route::post('/landing_page/blog',[ LandingPageController::class,'blog'])->name('landing_page_page.blog');
@@ -64,16 +73,17 @@ Route::get('/country-stats', [UserTrackingController::class, 'countryStats'])->n
 Route::get('/page-stats', [UserTrackingController::class, 'pageStats'])->name('page.stats');
 Route::get('/pixels', [PixelController::class, 'index'])->name('pixels.index');
 Route::post('/pixels', [PixelController::class, 'store'])->name('pixels.store');
+Route::delete('/pixels/{id}', [PixelController::class, 'PixelDelete']);
 Route::get('/settings', [SystemSettingController::class, 'index'])->name('settings.index');
 Route::post('/settings', [SystemSettingController::class, 'store'])->name('settings.store');
 Route::post('/landing_page/{section}',[ PageController::class,'update'])->name('sections.update');
 Route::post('/sections/update-status', [PageController::class, 'updateStatus'])->name('sections.update.status');
-
+});
 
 require __DIR__.'/auth.php';
 
-Route::get('/{any?}', function () {
+Route::get('/{any}', function () {
     $pixels = Pixel::all();
     $settings = SystemSetting::find(1);
     return view('welcome', compact('settings','pixels'));
-});
+})->where('any', '.*');

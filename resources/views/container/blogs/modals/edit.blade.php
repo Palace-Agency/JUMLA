@@ -43,7 +43,7 @@
                         <div class="row align-items-center mt-3">
                             <div class="col-md-12">
                                 <label class="form-label">Blog image</label>
-                                <input name="image" id="blog-img" type="file" accept=".jpg,.jpeg,.png"
+                                <input required name="image" id="blog-img" type="file" accept=".jpg,.jpeg,.png"
                                     class="form-control" />
                             </div>
 

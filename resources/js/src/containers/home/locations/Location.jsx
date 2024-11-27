@@ -1,13 +1,23 @@
 import Title from "../../../components/Title";
 import React from "react";
+import { earth } from "../../../constants/images";
 
 const Location = ({ content }) => {
     return (
-        <div
-            data-scroll
-            data-scroll-speed={0.1}
-            className="mx-auto max-w-7xl px-6 lg:px-8"
-        >
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+            <div
+                className="absolute h-[650px] -top-11 inset-0"
+                style={{
+                    backgroundImage: `url(${earth})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                    opacity: 0.2,
+                    zIndex: -1,
+                }}
+            ></div>
+
+            {/* Content */}
             <div className="mx-auto max-w-2xl lg:text-center">
                 <Title title={"Our Locations"} />
                 <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
@@ -17,6 +27,7 @@ const Location = ({ content }) => {
                     {content?.description}
                 </p>
             </div>
+
             <div
                 data-scroll
                 data-scroll-speed={0.02}

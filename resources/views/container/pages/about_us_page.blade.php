@@ -64,7 +64,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="service-title">Title</label>
-                                            <input type="text" value="{{ old('title', $content->title ?? '') }}"
+                                            <input required type="text" value="{{ old('title', $content->title ?? '') }}"
                                                 class="form-control" name="title" id="service-title"
                                                 placeholder="Enter your Title">
                                         </div>
@@ -75,7 +75,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="service-description">Short description</label>
-                                            <textarea class="form-control" name="short_description" placeholder="Enter your Short Description"
+                                            <textarea required class="form-control" name="short_description" placeholder="Enter your Short Description"
                                                 id="service-description" rows="3">{{ old('short_description', $content->short_description ?? '') }}</textarea>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="service-description">Description</label>
-                                            <textarea name="description" name="description" id="description-classic-editor" class="form-control"
+                                            <textarea required name="description" name="description" id="description-classic-editor" class="form-control"
                                                 placeholder="Enter your description">{{ old('description', $content->description ?? '') }}</textarea>
                                         </div>
                                     </div>
@@ -199,8 +199,8 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="metatitle">Meta title</label>
-                                            <input value="{{ old('meta_title', $page->meta_title ?? '') }}" id="metatitle"
-                                                name="meta_title" type="text" class="form-control"
+                                            <input required value="{{ old('meta_title', $page->meta_title ?? '') }}"
+                                                id="metatitle" name="meta_title" type="text" class="form-control"
                                                 placeholder="Enter your Meta title">
                                             <small class="text-muted d-block mb-2">
                                                 The meta title appears as the clickable link in search engine results. It
@@ -214,7 +214,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="metakeywords">Meta Keywords</label>
-                                            <input id="metakeywords"
+                                            <input required id="metakeywords"
                                                 value="{{ old('meta_keywords', $page->meta_keywords ?? '') }}"
                                                 name="meta_keywords" type="text" class="form-control"
                                                 placeholder="Enter your Meta Keywords">
@@ -229,7 +229,7 @@
 
                                 <div class="mb-0">
                                     <label class="form-label" for="metadescription">Meta Description</label>
-                                    <textarea class="form-control" name="meta_description" id="metadescription" rows="4"
+                                    <textarea required class="form-control" name="meta_description" id="metadescription" rows="4"
                                         placeholder="Enter your Meta Description">{{ old('meta_description', $page->meta_description ?? '') }}</textarea>
                                     <small class="text-muted d-block mb-2">
                                         The meta description is a short summary of the page's content. Aim for 150-160

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('page_trackings', function (Blueprint $table) {
             $table->id();
-            $table->string('ip_adresse');
+            $table->string('visitor_id');
             $table->string('country');
             $table->integer('time_spent');
             $table->foreignId('page_id')->constrained('pages')->onDelete('cascade');

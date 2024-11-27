@@ -46,7 +46,7 @@ public function store(Request $request)
                     $imagename = time() . '.' . $extension;
                     $file->storeAs('uploads/content/service/', $imagename, 'public');
                 }
-            } else {
+        } else {
                 if ($request->hasFile('image')) {
                     $file = $request->file('image');
                     $extension = $file->getClientOriginalExtension();

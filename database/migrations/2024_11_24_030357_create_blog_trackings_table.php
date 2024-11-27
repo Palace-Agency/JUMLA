@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('blog_trackings', function (Blueprint $table) {
             $table->id();
-            $table->string('ip_adresse');
+            $table->string('visitor_id');
             $table->string('time_spent');
             $table->foreignId('blog_id')->constrained('blogs')->onDelete('cascade');
+            $table->timestamps('visited_at');
             $table->timestamps();
         });
     }

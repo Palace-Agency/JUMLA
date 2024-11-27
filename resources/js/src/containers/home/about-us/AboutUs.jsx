@@ -22,11 +22,7 @@ const AboutUs = ({ content }) => {
         <>
             {isMobile ? (
                 <>
-                    <div
-                        data-scroll
-                        data-scroll-speed={0.2}
-                        className="mx-auto pt-16 sm:pt-40 max-w-7xl px-6 lg:px-8"
-                    >
+                    <div className="mx-auto pt-16 sm:pt-40 max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl lg:text-center">
                             <Title title={"About us"} />
                             <p className="mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
@@ -95,13 +91,6 @@ const AboutUs = ({ content }) => {
                                 </Rounded>
                             </div>
                         </div>
-                        {/* <div className={styles.image}>
-                            <img
-                                src={about_us}
-                                alt="About us"
-                                className={styles.img}
-                            />
-                        </div> */}
                     </div>
                 </>
             )}

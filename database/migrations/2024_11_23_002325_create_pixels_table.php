@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('pixels', function (Blueprint $table) {
             $table->id();
             $table->string('social_media');
-            $table->longText('code')->nullable();
             $table->timestamps();
         });
     }

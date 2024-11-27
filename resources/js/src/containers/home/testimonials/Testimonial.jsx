@@ -38,7 +38,7 @@ const Testimonial = ({ content }) => {
             ref={container}
             data-scroll
             data-scroll-speed={0.1}
-            className="mx-auto z-10 bg-white relative pt-10 sm:pt-32 max-w-7xl px-6 lg:px-8"
+            className="mx-auto z-10 bg-white relative pt-10 sm:pt-32 px-6 lg:px-8"
         >
             <div className="mx-auto mb-16 max-w-2xl lg:text-center">
                 <Title title={"Testimonials"} />
@@ -64,7 +64,7 @@ const Testimonial = ({ content }) => {
                                         />
                                     </svg>
                                     <blockquote>
-                                        <p className="text-2xl font-medium text-gray-900 dark:text-white">
+                                        <p className="text-sm md:text-2xl font-medium text-gray-900 dark:text-white">
                                             {testimonial.testimonial}
                                         </p>
                                     </blockquote>

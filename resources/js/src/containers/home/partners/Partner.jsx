@@ -1,12 +1,17 @@
-import { motion } from "framer-motion";
 import Title from "../../../components/Title";
-import { ameex, dhl, maersk, shopify } from "../../../constants/partners";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const Partner = ({ content }) => {
-    const totalLogoWidth = content?.partners.length * 100;
+    const logosRef = useRef(null);
 
-    const partners = [...content?.partners, ...content?.partners];
+    useEffect(() => {
+        const ul = logosRef.current;
+        if (ul) {
+            const clone = ul.cloneNode(true);
+            clone.setAttribute("aria-hidden", "true");
+            ul.parentNode.appendChild(clone);
+        }
+    }, []);
 
     return (
         <div
@@ -23,34 +28,39 @@ const Partner = ({ content }) => {
             <div
                 data-scroll
                 data-scroll-speed={0.02}
-                className="mx-auto mt-10 overflow-hidden"
+                className="w-full inline-flex overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)] flex-nowrap mt-10"
             >
-                <motion.div
-                    className="flex space-x-8"
-                    animate={{ x: [0, -200] }}
-                    transition={{
-                        ease: "linear",
-                        duration: 10,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                    }}
-                    style={{
-                        display: "flex",
-                        whiteSpace: "nowrap",
-                        width: `${totalLogoWidth * 6}px`,
-                    }}
+                <ul
+                    ref={logosRef}
+                    className="flex items-center justify-center md:justify-start [&_li]:mx-14 [&_img]:max-w-none animate-infinite-scroll"
                 >
-                    {partners?.map((partner, index) => (
-                        <img
-                            alt="partner"
-                            key={index}
-                            src={`http://127.0.0.1:8000/storage/uploads/content/landing-page/${partner.logo}`}
-                            width={100}
-                            height={100}
-                            className="max-h-12 w-full object-contain"
-                        />
+                    {...content?.partners.map((partner, index) => (
+                        <li className="w-32 h-32 flex items-center">
+                            <img
+                                alt="partner"
+                                key={index}
+                                src={`http://127.0.0.1:8000/storage/uploads/content/landing-page/${partner.logo}`}
+                                width={100}
+                                height={100}
+                                className="w-full"
+                            />
+                        </li>
                     ))}
-                </motion.div>
+                </ul>
+                <ul className="flex items-center justify-center md:justify-start [&_li]:mx-14 [&_img]:max-w-none animate-infinite-scroll">
+                    {...content?.partners.map((partner, index) => (
+                        <li className="w-32 h-32 flex items-center">
+                            <img
+                                alt="partner"
+                                key={index}
+                                src={`http://127.0.0.1:8000/storage/uploads/content/landing-page/${partner.logo}`}
+                                width={100}
+                                height={100}
+                                className="w-full"
+                            />
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );

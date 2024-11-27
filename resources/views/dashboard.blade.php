@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $settings->website_name }}</title>
     <link rel="shortcut icon"
-        href={{ isset($settings) && $settings->favicon ? asset('storage/uploads/settings/' . $settings->favicon) : '' }}>
+        href={{ isset($settings) && $settings->favicon ? url('storage/uploads/settings/' . $settings->favicon) : '' }}>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.css" />
     <link href={{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }} rel="stylesheet" type="text/css" />
@@ -28,8 +28,10 @@
 
 <body data-layout="horizontal" data-topbar="dark">
 
+
     <!-- Begin page -->
     <div id="layout-wrapper">
+
 
 
         @include('layouts.header')

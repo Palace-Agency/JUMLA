@@ -104,7 +104,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="title">Title</label>
-                                                            <input type="text"
+                                                            <input type="text" required
                                                                 value="{{ old('title', $header_content?->title) }}"
                                                                 class="form-control" name="title" id="title"
                                                                 placeholder="Enter the Title">
@@ -116,7 +116,8 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="description">Description</label>
-                                                            <textarea class="form-control" placeholder="Enter the Description" name="description" id="description" rows="3">{{ old('description', $header_content?->description) }}</textarea>
+                                                            <textarea required class="form-control" placeholder="Enter the Description" name="description" id="description"
+                                                                rows="3">{{ old('description', $header_content?->description) }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -136,7 +137,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="title">Title</label>
-                                                            <input type="text" class="form-control"
+                                                            <input required type="text" class="form-control"
                                                                 value="{{ old('title', $about_us_content?->title) }}"
                                                                 name="title" id="title" placeholder="Enter the Title">
                                                         </div>
@@ -148,7 +149,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                 for="description">Description</label>
-                                                            <textarea class="form-control" placeholder="Enter the description" name="description" id="description"
+                                                            <textarea required class="form-control" placeholder="Enter the description" name="description" id="description"
                                                                 rows="3">{{ old('description', $about_us_content?->description) }}</textarea>
                                                         </div>
                                                     </div>
@@ -169,7 +170,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="service-title">Title</label>
-                                                            <input type="text"
+                                                            <input type="text" required
                                                                 value="{{ old('title', $serivce_content?->title) }}"
                                                                 class="form-control" name="title" id="service-title"
                                                                 placeholder="Enter the Title">
@@ -182,8 +183,8 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                 for="service-description">Description</label>
-                                                            <textarea class="form-control" placeholder="Enter the description" name="description" id="service-description"
-                                                                rows="3">{{ old('description', $serivce_content?->description) }}</textarea>
+                                                            <textarea required class="form-control" placeholder="Enter the description" name="description"
+                                                                id="service-description" rows="3">{{ old('description', $serivce_content?->description) }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,6 +215,10 @@
                                                             <div class="col-md-9 col-6">
                                                                 <input id="single-service-icon" type="file"
                                                                     accept=".jpg,.jpeg,.png" class=" form-control" />
+                                                                <small class="text-muted d-block mb-2">
+                                                                    The icon should be white for better
+                                                                    appearance <span class="text-danger">*</span>
+                                                                </small>
                                                             </div>
 
                                                             <!-- Service Image Preview -->
@@ -228,10 +233,11 @@
                                                     <input service-data-create type="button" class="btn btn-success "
                                                         value="Add" />
                                                 </div>
-                                                <div id="services-container" class="row mt-4">
+                                                <div id="#" class="row mt-4">
                                                     @isset($serivce_content->services)
                                                         @foreach ($serivce_content->services as $service)
-                                                            <div class="col-md-5 mb-3 gap-3 service-card">
+                                                            <div id="service-row-{{ $service->id }}"
+                                                                class="col-md-5 mb-3 gap-3">
                                                                 <div class="card">
                                                                     <div class="card-body">
                                                                         <img src="{{ asset('storage/uploads/content/landing-page/' . $service->icon) }}"
@@ -239,8 +245,9 @@
                                                                             style="max-height: 50px;">
                                                                         <h5 class="card-title">{{ $service->title }}</h5>
                                                                         <p class="card-text">{{ $service->description }}</p>
-                                                                        <button class="btn btn-danger btn-sm delete-service"
-                                                                            data-title="{{ $service->title }}">Delete</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm delete-service-bg"
+                                                                            data-id="{{ $service->id }}">Delete</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -263,7 +270,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="record-title">Title</label>
-                                                            <input type="text"
+                                                            <input required type="text"
                                                                 value="{{ old('title', $track_record_content?->title) }}"
                                                                 class="form-control" name="title" id="record-title"
                                                                 placeholder="Enter the Title">
@@ -276,8 +283,8 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                 for="record-description">Description</label>
-                                                            <textarea class="form-control" name="description" placeholder="Enter the description" id="record-description"
-                                                                rows="3">
+                                                            <textarea required class="form-control" name="description" placeholder="Enter the description"
+                                                                id="record-description" rows="3">
                                                             {{ old('description', $track_record_content?->description) }}
                                                             </textarea>
                                                         </div>
@@ -310,6 +317,10 @@
                                                             <div class="col-md-9 col-6">
                                                                 <input id="single-record-icon" type="file"
                                                                     accept=".jpg,.jpeg,.png" class=" form-control " />
+                                                                <small class="text-muted d-block mb-2">
+                                                                    The icon should be black for better
+                                                                    appearance <span class="text-danger">*</span>
+                                                                </small>
                                                             </div>
 
                                                             <!-- Record Image Preview -->
@@ -327,7 +338,8 @@
                                                 <div id="records-container" class="row mt-4">
                                                     @isset($track_records)
                                                         @foreach ($track_records as $track_record)
-                                                            <div class="col-md-4 mb-3 ms-3 service-card">
+                                                            <div id="record-container-{{ $track_record->id }}"
+                                                                class="col-md-4 mb-3 ms-3 service-card">
                                                                 <div class="card">
                                                                     <div class="card-body">
                                                                         <img src="{{ asset('storage/uploads/content/landing-page/' . $track_record->icon) }}"
@@ -337,8 +349,9 @@
                                                                             {{ $track_record->record_number }}</h5>
                                                                         <p class="card-text">{{ $track_record->record_title }}
                                                                         </p>
-                                                                        <button class="btn btn-danger btn-sm delete-service"
-                                                                            data-title="{{ $track_record->record_number }}">Delete</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm delete-record-bg"
+                                                                            data-id="{{ $track_record->id }}">Delete</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -361,7 +374,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="location-title">Title</label>
-                                                            <input type="text"
+                                                            <input required type="text"
                                                                 value="{{ old('title', $location_content?->title) }}"
                                                                 name="title" class="form-control" id="location-title"
                                                                 placeholder="Enter the Title">
@@ -374,8 +387,8 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                 for="location-description">Description</label>
-                                                            <textarea class="form-control" name="description" placeholder="Enter the description" id="location-description"
-                                                                rows="3">{{ old('description', $location_content?->description) }}</textarea>
+                                                            <textarea required class="form-control" name="description" placeholder="Enter the description"
+                                                                id="location-description" rows="3">{{ old('description', $location_content?->description) }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -416,15 +429,17 @@
                                                 <div id="locations-container" class="row mt-4">
                                                     @isset($locations)
                                                         @foreach ($locations as $location)
-                                                            <div class="col-md-3 text-center mb-3 location-card">
+                                                            <div id="location-container-{{ $location->id }}"
+                                                                class="col-md-3 text-center mb-3 location-card">
                                                                 <div class="card">
                                                                     <div class="card-body">
                                                                         <img src="{{ asset('storage/uploads/content/landing-page/' . $location->flag) }}"
                                                                             alt="Flag" class="img-fluid mb-3"
                                                                             style="max-height: 50px;">
                                                                         <h5 class="card-country">{{ $location->country }}</h5>
-                                                                        <button class="btn btn-danger btn-sm delete-location"
-                                                                            data-country="{{ $location->country }}">Delete</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm delete-location-bg"
+                                                                            data-id="{{ $location->id }}">Delete</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -447,7 +462,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="partner-title">Title</label>
-                                                            <input type="text"
+                                                            <input required type="text"
                                                                 value="{{ old('title', $partner_content?->title) }}"
                                                                 name="title" class="form-control" id="partner-title"
                                                                 placeholder="Enter the Title">
@@ -486,15 +501,17 @@
                                                 <div id="partners-container" class="row mt-4">
                                                     @isset($partner_logos)
                                                         @foreach ($partner_logos as $partner)
-                                                            <div class="col-md-3 text-center mb-3 partner-card">
+                                                            <div id="partner-container-{{ $partner->id }}"
+                                                                class="col-md-3 text-center mb-3 partner-card">
                                                                 <div class="card">
                                                                     <div
                                                                         class="card-body d-flex flex-column align-items-center ">
                                                                         <img src="{{ asset('storage/uploads/content/landing-page/' . $partner->logo) }}"
                                                                             alt="Logo" class="img-fluid mb-3"
                                                                             style="max-height: 50px;">
-                                                                        <button class="btn btn-danger btn-sm delete-partner"
-                                                                            data-logo="{{ $partner->logo }}">Delete</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm delete-partner-bg"
+                                                                            data-id="{{ $partner->id }}">Delete</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -517,7 +534,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="title">Title</label>
-                                                            <input type="text"
+                                                            <input required type="text"
                                                                 value="{{ old('title', $blog_content?->title) }}"
                                                                 class="form-control" name="title" id="title"
                                                                 placeholder="Enter the Title">
@@ -530,7 +547,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                 for="description">Description</label>
-                                                            <textarea class="form-control" placeholder="Enter the Description" name="description" id="description"
+                                                            <textarea required class="form-control" placeholder="Enter the Description" name="description" id="description"
                                                                 rows="3">{{ old('description', $blog_content?->description) }}</textarea>
                                                         </div>
                                                     </div>
@@ -551,7 +568,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="faq-title">Title</label>
-                                                            <input type="text" name="title"
+                                                            <input required type="text" name="title"
                                                                 value="{{ old('title', $faqs_content?->title) }}"
                                                                 class="form-control" id="faq-title"
                                                                 placeholder="Enter the Title">
@@ -564,7 +581,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                 for="faq-description">Description</label>
-                                                            <textarea class="form-control" name="description" placeholder="Enter the description" id="faq-description"
+                                                            <textarea required class="form-control" name="description" placeholder="Enter the description" id="faq-description"
                                                                 rows="3">{{ old('description', $faqs_content?->description) }}</textarea>
                                                         </div>
                                                     </div>
@@ -590,13 +607,15 @@
                                                 <div id="faqs-container" class="row mt-4">
                                                     @isset($faqs)
                                                         @foreach ($faqs as $faq)
-                                                            <div class="col-md-6 mb-3 faq-card">
+                                                            <div id="faq-container-{{ $faq->id }}"
+                                                                class="col-md-6 mb-3 faq-card">
                                                                 <div class="card">
                                                                     <div class="card-body">
                                                                         <h5 class="card-title">{{ $faq->question }}</h5>
                                                                         <p class="card-text">{{ $faq->answer }}</p>
-                                                                        <button class="btn btn-danger btn-sm delete-faq"
-                                                                            data-title="{{ $faq->question }}">Delete</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm delete-faq-bg"
+                                                                            data-id="{{ $faq->id }}">Delete</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -619,7 +638,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="title">Title</label>
-                                                            <input type="text"
+                                                            <input required type="text"
                                                                 value="{{ old('title', $testimonial_content?->title) }}"
                                                                 class="form-control" name="title" id="title"
                                                                 placeholder="Enter the Title">
@@ -761,7 +780,7 @@
                                 </div>
                             </div>
                         </div>`;
-                        $('#services-container').append(card);
+                        $('##').append(card);
                     };
                     reader.readAsDataURL(fileInput.files[0]);
                 } else {
@@ -774,6 +793,230 @@
                 const title = $(this).data('title');
                 $(this).closest('.service-card').remove();
                 services = services.filter((service) => service.title !== title);
+            });
+
+
+            // Handle Delete Button Click
+            $('.delete-service-bg').on('click', function() {
+                var serviceId = $(this).data('id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/landing_page/service/${serviceId}`,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    new Notify({
+                                        status: 'success',
+                                        title: 'Success!',
+                                        text: response.success,
+                                        position: 'right bottom'
+                                    });
+                                    $(`#service-row-${serviceId}`).remove();
+                                } else {
+                                    new Notify({
+                                        status: 'error',
+                                        title: 'Error!',
+                                        text: response.error,
+                                        position: 'right bottom'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+
+
+            // Handle Delete Button Click
+            $('.delete-record-bg').on('click', function() {
+                var recordId = $(this).data('id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/landing_page/record/${recordId}`,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    new Notify({
+                                        status: 'success',
+                                        title: 'Success!',
+                                        text: response.success,
+                                        position: 'right bottom'
+                                    });
+                                    $(`#record-container-${recordId}`).remove();
+                                } else {
+                                    new Notify({
+                                        status: 'error',
+                                        title: 'Error!',
+                                        text: response.error,
+                                        position: 'right bottom'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+            // Handle Delete Button Click
+            $('.delete-location-bg').on('click', function() {
+                var locationId = $(this).data('id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/landing_page/location/${locationId}`,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    new Notify({
+                                        status: 'success',
+                                        title: 'Success!',
+                                        text: response.success,
+                                        position: 'right bottom'
+                                    });
+                                    $(`#location-container-${locationId}`).remove();
+                                } else {
+                                    new Notify({
+                                        status: 'error',
+                                        title: 'Error!',
+                                        text: response.error,
+                                        position: 'right bottom'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+            // Handle Delete Button Click
+            $('.delete-partner-bg').on('click', function() {
+                var partnerId = $(this).data('id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/landing_page/partner/${partnerId}`,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    new Notify({
+                                        status: 'success',
+                                        title: 'Success!',
+                                        text: response.success,
+                                        position: 'right bottom'
+                                    });
+                                    $(`#partner-container-${partnerId}`).remove();
+                                } else {
+                                    new Notify({
+                                        status: 'error',
+                                        title: 'Error!',
+                                        text: response.error,
+                                        position: 'right bottom'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+            // Handle Delete Button Click
+            $('.delete-faq-bg').on('click', function() {
+                var faqId = $(this).data('id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/landing_page/faq/${faqId}`,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    new Notify({
+                                        status: 'success',
+                                        title: 'Success!',
+                                        text: response.success,
+                                        position: 'right bottom'
+                                    });
+                                    $(`#faq-container-${faqId}`).remove();
+                                } else {
+                                    new Notify({
+                                        status: 'error',
+                                        title: 'Error!',
+                                        text: response.error,
+                                        position: 'right bottom'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
             });
 
 
@@ -1096,6 +1339,7 @@
                                 text: "Data saved successfully!",
                                 position: 'right bottom'
                             });
+                            // $('#services-container').reload();
                         }
                     },
                     error: function(xhr) {
@@ -1151,6 +1395,7 @@
 
                 let formData = new FormData(this);
                 let submitButton = $(this).find('button[type="submit"]');
+                let locationsContainer = $('#locations-container')
 
                 submitButton.prop('disabled', true).text('Saving...');
 

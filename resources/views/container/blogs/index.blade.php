@@ -206,7 +206,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `/blogs/${blogId}`,
+                            url: `/landing_page/service/${blogId}`,
                             type: 'DELETE',
                             data: {
                                 _token: '{{ csrf_token() }}'

@@ -6,6 +6,7 @@
     justify-content: center;
     background-color: #141516;
     position: relative;
+
     .body {
         padding-top: 200px;
         width: 100%;
@@ -19,34 +20,40 @@
             margin-left: 200px;
             margin-right: 200px;
             position: relative;
+
             span {
                 display: flex;
                 align-items: center;
+
                 .imageContainer {
                     width: 300px;
                     height: 100px;
                     position: relative;
                     overflow: hidden;
+
                     img {
-                        // object-fit: cover;
                         width: 300px;
                         height: 100px;
                     }
                 }
+
                 h2 {
                     margin-left: 0.3em;
                 }
             }
+
             h2 {
                 font-size: 5vw;
                 margin: 0px;
                 font-weight: 300;
             }
+
             .buttonContainer {
                 position: absolute;
                 left: calc(100% - 400px);
                 top: calc(100% - 75px);
             }
+
             .button {
                 width: 180px;
                 height: 180px;
@@ -58,6 +65,7 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+
                 p {
                     margin: 0px;
                     font-size: 16px;
@@ -66,12 +74,14 @@
                     position: relative;
                 }
             }
+
             svg {
                 position: absolute;
                 top: 30%;
                 left: 100%;
             }
         }
+
         .nav {
             display: flex;
             gap: 20px;
@@ -79,6 +89,7 @@
             margin-left: 200px;
             margin-right: 200px;
         }
+
         .underline {
             &::after {
                 content: "";
@@ -92,27 +103,32 @@
                 transform: translateX(-50%);
                 transition: width 0.2s linear;
             }
+
             &:hover {
                 &::after {
                     width: 100%;
                 }
             }
         }
+
         .info {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
             padding: 20px;
+
             div {
                 display: flex;
                 gap: 10px;
                 align-items: flex-end;
+
                 p,
                 h3 {
                     margin: 0px;
                     padding: 2.5px;
                     cursor: pointer;
                 }
+
                 p {
                     &::after {
                         content: "";
@@ -126,17 +142,20 @@
                         transform: translateX(-50%);
                         transition: width 0.2s linear;
                     }
+
                     &:hover {
                         &::after {
                             width: 100%;
                         }
                     }
                 }
+
                 span {
                     display: flex;
                     flex-direction: column;
                     gap: 15px;
                 }
+
                 h3 {
                     color: grey;
                     cursor: default;
@@ -145,5 +164,54 @@
                 }
             }
         }
+    }
+}
+
+/* Media Queries */
+@media screen and (max-width: 1200px) {
+    .contact .body {
+        padding-top: 150px;
+    }
+    .contact .body .title h2 {
+        font-size: 4vw;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    .contact .body .title {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .contact .body .title h2 {
+        font-size: 3vw;
+    }
+    .contact .body .title .button {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .contact {
+        flex-direction: column;
+    }
+    .contact .body {
+        padding-top: 100px;
+    }
+    .contact .body .title {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .contact .body .title .buttonContainer {
+        display: none;
+    }
+    .contact .body .nav {
+        flex-direction: column;
+        margin: 0 20px;
+        gap: 10px;
+    }
+    .contact .body .info {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

@@ -99,8 +99,8 @@ const Footer = () => {
                         <p>{settings.phone}</p>
                     </Rounded>
                 </div>
-                <div className="mt-10 p-5 md:flex items-center justify-center gap-10">
-                    <h2 className="text-4xl font-semibold tracking-tight text-white">
+                <div className="mt-10 p-5 flex-col flex md:flex-row items-center justify-center gap-10">
+                    <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-white">
                         Want product news and updates?
                         <br /> Sign up for our newsletter.
                     </h2>
@@ -132,11 +132,10 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center mt-16 justify-center gap-9">
                     {navItems.map((item) => (
-                        <Magnetic>
+                        <Magnetic key={item.href}>
                             <Link
                                 className="underline font-semibold"
                                 to={item.href}
-                                key={item.href}
                             >
                                 {item.title}
                             </Link>

@@ -17,6 +17,7 @@ import { Helmet } from "react-helmet-async";
 import usePageTracking from "../components/hooks/use-page-tracking";
 import LoadingPage from "../components/Loading/LoadingPage";
 import { useGetLatestBlogQuery } from "../slices/BlogsSlice";
+import CookieConsentBanner from "../components/CookieConsentBanner";
 
 const Home = () => {
     const {
@@ -110,6 +111,7 @@ const Home = () => {
                             content={content?.entities[1]?.meta_keywords}
                         />
                     </Helmet>
+                    <CookieConsentBanner />
                     <div className="container">
                         <Header content={headerSection} />
                         <AboutUs content={aboutUsSection} />
