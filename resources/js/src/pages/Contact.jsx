@@ -1,14 +1,123 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Field, Switch } from "@headlessui/react";
 import RoundedTransition from "../common/RoundedTransition/RoundedTransition";
 import Footer from "../components/footer/Footer";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
+import { Checkbox } from "../components/ui/checkbox";
 import { PhoneInput } from "../components/ui/phone-input";
+import { cn } from "../components/lib/utils";
+import { FaSpinner } from "react-icons/fa6";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    FormDescription,
+} from "../components/ui/form";
+import usePageTracking from "../components/hooks/use-page-tracking";
+import { useContactMutation } from "../slices/contactSlice";
+import { toast } from "sonner";
+import {
+    Dialog,
+    DialogContent,
+    DialogTrigger,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+} from "../components/ui/dialog";
+import { useGetSettingQuery } from "../slices/settingsSlice";
 
+const formSchema = z.object({
+    email: z.string().email(),
+    first_name: z.string().min(4),
+    last_name: z.string().min(4),
+    message: z.string().min(10).max(200),
+    phone_number: z.string().min(10),
+    privacy: z.literal(true).refine((val) => val === true, {
+        message: "You must accept the terms and conditions.",
+    }),
+});
 export default function Contact() {
+    const [settings, setSettings] = useState({
+        privacy_policy: "",
+    });
+    const [contact] = useContactMutation();
     const [agreed, setAgreed] = useState(false);
     const container = useRef(null);
+    const containerRef = useRef(null);
+    const { data: setting, isLoading, isSuccess } = useGetSettingQuery("");
+
+    useEffect(() => {
+        if (isSuccess) {
+            const settingData = setting.entities[1];
+            if (settingData) {
+                setSettings({
+                    privacy_policy: settingData.privacy_policy,
+                });
+            }
+        }
+    }, [isSuccess, setting]);
+    const SafeHtml = ({ htmlContent }) => {
+        useEffect(() => {
+            if (containerRef.current) {
+                const shadowRoot = containerRef.current.attachShadow({
+                    mode: "open",
+                });
+                const wrapper = document.createElement("div");
+                wrapper.innerHTML = htmlContent;
+                shadowRoot.appendChild(wrapper);
+            }
+        }, [htmlContent]);
+
+        return <div ref={containerRef}></div>;
+    };
+
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+            first_name: "",
+            last_name: "",
+            message: "",
+            phone_number: "",
+            privacy: false,
+        },
+    });
+
+    const {
+        setError,
+        formState: { isSubmitting },
+    } = form;
+
+    const onSubmit = async ({
+        email,
+        first_name,
+        last_name,
+        message,
+        phone_number,
+    }) => {
+        try {
+            await contact({
+                email,
+                first_name,
+                last_name,
+                message,
+                phone_number,
+            }).unwrap();
+            toast.success("Message sent successfully!");
+        } catch (error) {
+            setError("email", { message: error.data.errors.email.join() });
+        }
+    };
+    usePageTracking();
 
     return (
         <>
@@ -37,133 +146,182 @@ export default function Contact() {
                         voluptate.
                     </p>
                 </div>
-                <form
-                    action="#"
-                    method="POST"
-                    className="mx-auto mt-16 max-w-xl sm:mt-20"
-                >
-                    <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                        <div>
-                            <Label
-                                htmlFor="first-name"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                First name
-                            </Label>
-                            <div className="mt-2.5">
-                                <Input
-                                    id="first-name"
-                                    name="first-name"
-                                    type="text"
-                                    autoComplete="given-name"
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-3 mx-auto mt-16 max-w-xl sm:mt-20"
+                    >
+                        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name="first_name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                First name
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div>
-                            <Label
-                                htmlFor="last-name"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Last name
-                            </Label>
-                            <div className="mt-2.5">
-                                <Input
-                                    id="last-name"
-                                    name="last-name"
-                                    type="text"
-                                    autoComplete="family-name"
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name="last_name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                Last name
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <Label
-                                htmlFor="email"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Email
-                            </Label>
-                            <div className="mt-2.5">
-                                <Input
-                                    id="email"
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
                                     name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                E-mail
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="example@domain.com"
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <Label
-                                htmlFor="phone-number"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Phone number
-                            </Label>
-                            <div className="mt-2.5">
-                                <PhoneInput
-                                    id="phone-number"
-                                    name="phone-number"
-                                    type="tel"
-                                    autoComplete="tel"
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
+                                    name="phone_number"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                Phone
+                                            </FormLabel>
+                                            <FormControl>
+                                                <PhoneInput
+                                                    className={"rounded-full"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <label
-                                htmlFor="message"
-                                className="block text-sm/6 font-semibold text-gray-900"
-                            >
-                                Message
-                            </label>
-                            <div className="mt-2.5">
-                                <textarea
-                                    id="message"
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
                                     name="message"
-                                    rows={4}
-                                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
-                                    defaultValue={""}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="block text-sm/6 font-semibold text-gray-900">
+                                                Message
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Textarea
+                                                    className={"rounded-lg"}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className="sm:col-span-2">
+                                <FormField
+                                    control={form.control}
+                                    name="privacy"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                                            <FormControl>
+                                                <Checkbox
+                                                    checked={field.value}
+                                                    onCheckedChange={
+                                                        field.onChange
+                                                    }
+                                                />
+                                            </FormControl>
+                                            <div className="space-y-1 leading-none">
+                                                <FormLabel>
+                                                    Accept terms and conditions{" "}
+                                                </FormLabel>
+                                                <FormDescription>
+                                                    You agree to our{" "}
+                                                    <Dialog>
+                                                        <DialogTrigger asChild>
+                                                            <button
+                                                                type="button"
+                                                                className="text-indigo-600 underline hover:text-indigo-500"
+                                                            >
+                                                                Terms of Service
+                                                                and Privacy
+                                                                Policy.
+                                                            </button>
+                                                        </DialogTrigger>
+                                                        <DialogContent className="max-w-4xl h-auto max-h-[80vh] overflow-y-auto rounded-lg p-6">
+                                                            <DialogHeader>
+                                                                <DialogTitle>
+                                                                    Privacy
+                                                                    Policy
+                                                                </DialogTitle>
+                                                                <DialogDescription>
+                                                                    <SafeHtml
+                                                                        htmlContent={
+                                                                            settings.privacy_policy
+                                                                        }
+                                                                    />
+                                                                </DialogDescription>
+                                                            </DialogHeader>
+                                                        </DialogContent>
+                                                    </Dialog>{" "}
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </div>
+                                        </FormItem>
+                                    )}
                                 />
                             </div>
                         </div>
-                        <Field className="flex gap-x-4 sm:col-span-2">
-                            <div className="flex h-6 items-center">
-                                <Switch
-                                    checked={agreed}
-                                    onChange={setAgreed}
-                                    className="group flex w-8 flex-none cursor-pointer rounded-full bg-gray-200 p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 data-[checked]:bg-indigo-600"
-                                >
-                                    <span className="sr-only">
-                                        Agree to policies
-                                    </span>
-                                    <span
-                                        aria-hidden="true"
-                                        className="h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out group-data-[checked]:translate-x-3.5"
-                                    />
-                                </Switch>
-                            </div>
-                            <Label className="text-sm/6 text-gray-600">
-                                By selecting this, you agree to our{" "}
-                                <a
-                                    href="#"
-                                    className="font-semibold text-indigo-600"
-                                >
-                                    privacy&nbsp;policy
-                                </a>
-                                .
-                            </Label>
-                        </Field>
-                    </div>
-                    <div className="mt-10">
-                        <button
-                            type="submit"
-                            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            Let's talk
-                        </button>
-                    </div>
-                </form>
+                        <div className="mt-10">
+                            <Button
+                                type="submit"
+                                className={"w-full mt-4 bg-indigo-600"}
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting && (
+                                    <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
+                                )}
+                                Let's talk
+                            </Button>
+                        </div>
+                    </form>
+                </Form>
             </div>
             <RoundedTransition container={container} />
             <Footer />

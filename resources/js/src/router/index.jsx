@@ -6,6 +6,9 @@ import Service from "../pages/Service";
 import Contact from "../pages/Contact";
 import AboutUs from "../pages/AboutUs";
 import React from "react";
+import Blogs from "../pages/blog/Blogs";
+import BlogDetail from "../pages/blog/BlogDetail";
+import Login from "../pages/Login";
 
 // export const DOCTOR_BASE_ROUTE = "/doctor";
 
@@ -28,6 +31,18 @@ export const router = createBrowserRouter([
             {
                 path: "/about-us",
                 element: <AboutUs />,
+            },
+            {
+                path: "/blogs",
+                element: <Blogs />,
+            },
+            {
+                path: "/blogs/:slug",
+                element: <BlogDetail />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
             },
             {
                 path: "*",

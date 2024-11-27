@@ -30,7 +30,7 @@ const testimonials = [
     },
 ];
 
-const Testimonial = () => {
+const Testimonial = ({ content }) => {
     const container = useRef(null);
 
     return (
@@ -38,12 +38,12 @@ const Testimonial = () => {
             ref={container}
             data-scroll
             data-scroll-speed={0.1}
-            className="mx-auto z-10 bg-white relative pt-10 sm:pt-32 max-w-7xl px-6 lg:px-8"
+            className="mx-auto z-10 bg-white relative pt-10 sm:pt-32 px-6 lg:px-8"
         >
             <div className="mx-auto mb-16 max-w-2xl lg:text-center">
                 <Title title={"Testimonials"} />
                 <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl ">
-                    We have worked with thousands of amazing people
+                    {content?.title}
                 </p>
             </div>
             <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
@@ -64,7 +64,7 @@ const Testimonial = () => {
                                         />
                                     </svg>
                                     <blockquote>
-                                        <p className="text-2xl font-medium text-gray-900 dark:text-white">
+                                        <p className="text-sm md:text-2xl font-medium text-gray-900 dark:text-white">
                                             {testimonial.testimonial}
                                         </p>
                                     </blockquote>

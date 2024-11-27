@@ -8,35 +8,12 @@ import {
 } from "../../../components/ui/accordion";
 import React from "react";
 
-const faqs = [
-    {
-        question: "Why can't you hear a pterodactyl go to the bathroom?",
-        answer: "Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.",
-    },
-    {
-        question: "What do you call someone with no body and no nose?",
-        answer: "Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.",
-    },
-    {
-        question: "Why did the invisible man turn down the job offer?",
-        answer: "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
-    },
-    {
-        question: "Why do you never see elephants hiding in trees?",
-        answer: "Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.",
-    },
-    {
-        question: "What's the best thing about Switzerland?",
-        answer: "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
-    },
-];
-
-const FAQ = () => {
+const FAQ = ({ content }) => {
     return (
         <div className="bg-white relative z-20 pt-10 sm:pt-32">
             <div
                 aria-hidden="true"
-                className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+                className="absolute inset-x-0 -top-40 -z-50 transform-gpu overflow-hidden blur-3xl sm:-top-80"
             >
                 <div
                     style={{
@@ -54,26 +31,20 @@ const FAQ = () => {
                 <div className="mx-auto max-w-2xl lg:text-center">
                     <Title title={"FAQ"} />
                     <p className="mt-2 text-pretty text-2xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
-                        Frequently asked questions
+                        {content?.title}
                     </p>
                     <p className="mt-6 text-sm sm:text-lg text-gray-600">
-                        Have a different question and can’t find the answer
-                        you’re looking for? Reach out to our support team by
-                        <span className="text-indigo-600">
-                            {" "}
-                            sending us an email{" "}
-                        </span>
-                        and we’ll get back to you as soon as we can.
+                        {content?.description}
                     </p>
                 </div>
                 <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
                     <Accordion type="single" collapsible>
-                        {faqs.map((faq, index) => (
+                        {content?.faqs.map((faq, index) => (
                             <AccordionItem key={index} value={`item-${index}`}>
-                                <AccordionTrigger className="text-lg font-semibold">
+                                <AccordionTrigger className="text-start text-base md:text-center md:text-lg font-semibold">
                                     {faq.question}
                                 </AccordionTrigger>
-                                <AccordionContent className="text-base">
+                                <AccordionContent className="text-start md:text-center text-sm lg:text-base">
                                     {faq.answer}
                                 </AccordionContent>
                             </AccordionItem>
@@ -83,7 +54,7 @@ const FAQ = () => {
             </div>
             <div
                 aria-hidden="true"
-                className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+                className="absolute -z-50 inset-x-0 top-[calc(100%-13rem)] transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
             >
                 <div
                     style={{
